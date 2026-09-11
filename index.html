@@ -1625,6 +1625,13 @@
       position:sticky; top:0; z-index:600;
     }
     #mobileTopbar .mobileBrand{font-size:16px; font-weight:700; flex:1;}
+    /* ---------- ⚙️🔗💬 کمپیکٹ ہیڈر آئیکنز — Home Business Card سے یہاں منتقل ---------- */
+    .topbarIconsRow{display:flex; align-items:center; gap:6px; flex:0 0 auto;}
+    .topbarIconBtn{
+      width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.2); border:none; color:#fff;
+      font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; line-height:1;
+    }
+    .topbarIconBtn svg{display:block; margin:0 auto;}
     #connStatusBadge{
       flex:0 0 auto; font-size:10.5px; font-weight:800; padding:3px 10px; border-radius:20px;
       letter-spacing:.2px; transition:background-color .25s ease, color .25s ease;
@@ -2017,12 +2024,19 @@
          (فارمیٹ: Weekday + HHMM + am/pm + Day + Month + Year) تاکہ نمبر یاد نہ رہے تو بھی تازگی کی تصدیق ہو سکے ---------- -->
     <div style="display:flex; flex-direction:column; align-items:flex-start; gap:1px;">
       <span id="testBuildLabel" class="mobileBrand testBuildGlow" style="display:inline;">سپلائر بک</span>
-      <span class="nastaleeqSparkle">جاگدے رہـنا۔۔۔۔ساڈے تے نہ رہـنا</span>
     </div>
+
+    <!-- ---------- ⚙️🔗💬 کمپیکٹ آئیکنز — پہلے نیچے بڑے "Home Business Card" ڈبے میں تھے، اب سیدھا اوپر ہیڈر میں ---------- -->
+    <div class="topbarIconsRow">
+      <button class="topbarIconBtn" id="topbarSettingsBtn" onclick="toggleHomeSettingsPanel(event, 'topbarSettingsBtn')" title="سیٹنگز">⚙️</button>
+      <button class="topbarIconBtn" onclick="shareAppLink()" title="یہ ایپ شیئر کریں"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="display:block;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></button>
+      <button class="topbarIconBtn" onclick="openDevChat('support')" title="ڈویلپر سے بات کریں">💬</button>
+    </div>
+
     <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بہت چھوٹا بلڈ نمبر — Online بیج کے بالکل نیچے، صاف سفید رنگ میں تاکہ آسانی سے پڑھا جا سکے ---------- -->
-      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0312PM</span>
+      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0326PM</span>
     </div>
   </div>
 
@@ -2092,8 +2106,9 @@
         <button onclick="openActivatePinLockModal()" style="background:#92400e; color:#fff; border:none; border-radius:8px; padding:7px 12px; font-size:12px; font-weight:800; cursor:pointer; white-space:nowrap;">فعال کریں</button>
       </div>
 
-      <!-- ---------- 🏪 HOME BUSINESS CARD ---------- -->
-      <div class="homeBusinessCard">
+      <!-- ---------- 🏪 HOME BUSINESS CARD — دہرائی ہٹانے کے لیے چھپا دیا گیا (نام/آئیکنز اب اوپر ہیڈر میں ہیں)،
+           اندرونی عناصر جان بوجھ کر رکھے گئے ہیں کیونکہ renderHomeBusinessCard() انہیں براہِ راست استعمال کرتا ہے ---------- -->
+      <div class="homeBusinessCard" style="display:none;">
         <button class="hbcEditBtn admin-only" onclick="goTo('myaccount')" title="بزنس کارڈ / لوگو میں ترمیم کریں">✏️</button>
         <div class="hbcTopRow">
           <div class="hbcLogoWrap" onclick="triggerBusinessLogoUpload()" title="لوگو تبدیل کریں">
@@ -5968,7 +5983,7 @@ const HOME_TILE_GROUPS_ADMIN = [
     {icon:'💳', label:'ادائیگیوں کا ریکارڈ', screen:'payments'},
   ]},
   { section: '📊 ڈیش بورڈ', tiles: [
-    {icon:'📊', label:'ڈیش بورڈ', screen:'dashboard'},
+    {icon:'📊', label:'ڈیش بورڈ', screen:'dashboard', hidden:true},
     {icon:'📈', label:'Trend Analysis', screen:'trends', hidden:true},
   ]},
   { section: '🖨️ Reports', tiles: [
