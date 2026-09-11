@@ -1,0 +1,15 @@
+{
+  "name": "Supplier Book",
+  "short_name": "Supplier Book",
+  "description": "سپلائر بک - آرڈر مینجمنٹ ایپ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f3a5e",
+  "theme_color": "#0f3a5e",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
