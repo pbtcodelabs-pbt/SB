@@ -1,11 +1,13 @@
-const CACHE_NAME = 'SB11SEPFR0400PM';
+const CACHE_NAME = 'SB11SEPFR0428PM';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './icon-512-maskable.png'
+  './icon-512-maskable.png',
+  './fonts/JameelNooriNastaleeqRegular.ttf',
+  './fonts/JameelNooriNastaleeqKasheeda.ttf'
 ];
 
 // ---------- ⚠️ اہم درستگی: پہلے cache.addAll() استعمال ہوتا تھا — اس کا اصول یہ ہے کہ اگر ایک بھی فائل
