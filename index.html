@@ -17,8 +17,20 @@
 <!-- ---------- Google Fonts (7 پیارے انگلش فونٹس — صرف ہلکے وزن، ایپ کو بھاری نہیں کرتے) ---------- -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&family=Roboto:wght@300;400;700&family=Lato:wght@300;400;700&family=Roboto+Condensed:wght@400;700&family=Carlito:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&family=Roboto:wght@300;400;700&family=Lato:wght@300;400;700&family=Roboto+Condensed:wght@400;700&family=Carlito:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  /* ---------- 🖋️ نوری نستعلیق — مقامی فونٹ فائلیں (fonts/ فولڈر)، الگ فائل کی صورت میں لوڈ ہوتی ہیں،
+       base64 میں شامل نہیں کی گئیں تاکہ index.html کا سائز نہ بڑھے۔ sw.js میں بھی کیش کی گئی ہیں تاکہ آف لائن کام کریں ---------- */
+  @font-face{
+    font-family:'JameelNooriNastaleeqRegular';
+    src:url('./fonts/JameelNooriNastaleeqRegular.ttf') format('truetype');
+    font-display:swap;
+  }
+  @font-face{
+    font-family:'JameelNooriNastaleeqKasheeda';
+    src:url('./fonts/JameelNooriNastaleeqKasheeda.ttf') format('truetype');
+    font-display:swap;
+  }
   /* ===================== THEME VARIABLES (بعد میں Theme Selector یہاں تبدیل کرے گا) ===================== */
   :root{
     --primary:#0f766e;
@@ -1788,7 +1800,7 @@
   body.nastaleeq-active input,
   body.nastaleeq-active select,
   body.nastaleeq-active button,
-  body.nastaleeq-active textarea{ font-family:'Noto Nastaliq Urdu','Segoe UI',serif; line-height:2; }
+  body.nastaleeq-active textarea{ font-family:var(--font),'Segoe UI',serif; line-height:2; }
   body.nastaleeq-active .navItem,
   body.nastaleeq-active .pageTitle,
   body.nastaleeq-active h3,
@@ -2043,7 +2055,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بہت چھوٹا بلڈ نمبر — Online بیج کے بالکل نیچے، صاف سفید رنگ میں تاکہ آسانی سے پڑھا جا سکے ---------- -->
-      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0400PM</span>
+      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0428PM</span>
     </div>
   </div>
 
@@ -19289,8 +19301,8 @@ const FONT_PRESETS = [
   {id:'latolight',    label:'Lato Light',      family:"'Lato', sans-serif",                    weight:300},
   {id:'arialnarrow',  label:'Arial Narrow',    family:"'Roboto Condensed', 'Arial Narrow', sans-serif", weight:400},
   {id:'calibri',      label:'Calibri',         family:"'Carlito', Calibri, sans-serif",         weight:400},
-  {id:'nastaleeqregular', label:'نوری نستعلیق - ریگولر', family:"'Noto Nastaliq Urdu', serif", weight:400, isNastaleeq:true},
-  {id:'nastaleeqkashida', label:'نوری نستعلیق - کشیدہ', family:"'Noto Nastaliq Urdu', serif", weight:700, isNastaleeq:true, kashida:true},
+  {id:'nastaleeqregular', label:'نوری نستعلیق - ریگولر', family:"'JameelNooriNastaleeqRegular', serif", weight:400, isNastaleeq:true},
+  {id:'nastaleeqkashida', label:'نوری نستعلیق - کشیدہ', family:"'JameelNooriNastaleeqKasheeda', serif", weight:400, isNastaleeq:true, kashida:true},
 ];
 
 // ---------- پوری ایپ کا سائز (Zoom) — بڑی اسکرین/فونٹ چاہنے والوں کے لیے۔ html root پر zoom لگانے سے
@@ -19547,10 +19559,17 @@ function closeHomeSettingsPanel(){
 }
 document.addEventListener('click', (e) => {
   const sp = document.getElementById('homeSettingsPanel');
-  const sb1 = document.getElementById('hbcSettingsBtn');
+  const sb1 = document.getElementById('topbarSettingsBtn');
   const sb2 = document.getElementById('hbcSettingsBtnBilling');
-  const clickedTrigger = (sb1 && sb1.contains(e.target)) || (sb2 && sb2.contains(e.target));
-  if(homeSettingsPanelOpen && sp && !sp.contains(e.target) && !clickedTrigger) closeHomeSettingsPanel();
+  // ---------- composedPath() استعمال کیا گیا ہے، sp.contains(e.target) کی بجائے —
+  // کیونکہ فونٹ/تھیم منتخب کرنے پر renderHomeSettingsPanel() پینل کا innerHTML فوراً بدل دیتا ہے،
+  // جس سے کلک شدہ پرانا بٹن DOM سے الگ ہو جاتا ہے اور sp.contains(e.target) غلطی سے false دے کر
+  // پینل کو فوراً بند کر دیتا تھا۔ composedPath() ایونٹ کے اصل (کلک کے وقت کے) راستے پر مبنی ہے،
+  // اس لیے یہ مسئلہ حل ہو جاتا ہے ---------- -->
+  const path = e.composedPath ? e.composedPath() : [];
+  const clickedInsidePanel = sp && path.includes(sp);
+  const clickedTrigger = (sb1 && path.includes(sb1)) || (sb2 && path.includes(sb2));
+  if(homeSettingsPanelOpen && !clickedInsidePanel && !clickedTrigger) closeHomeSettingsPanel();
 });
 window.addEventListener('resize', () => {
   if(homeSettingsPanelOpen) positionHomeQuickPanel(homeSettingsTriggerBtnId, 'homeSettingsPanel');
