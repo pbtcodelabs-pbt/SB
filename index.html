@@ -2057,10 +2057,10 @@
       <button class="topbarIconBtn" onclick="openDevChat('support')" title="ڈویلپر سے بات کریں">💬</button>
     </div>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
-      <!-- ---------- بہت چھوٹا بلڈ نمبر — Online بیج کے بالکل نیچے، صاف سفید رنگ میں تاکہ آسانی سے پڑھا جا سکے ---------- -->
-      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0428PM</span>
+      <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB11SEPFR0820PM</span>
     </div>
   </div>
 
@@ -6004,7 +6004,8 @@ const HOME_TILE_GROUPS_ADMIN = [
     {icon:'📦', label:'پرچیز آرڈرز', screen:'purchaseorders', hidden:true},
   ]},
   { section: '💳 ادائیگیاں', tiles: [
-    {icon:'💳', label:'ادائیگیوں کا ریکارڈ', screen:'payments'},
+    // ---------- مین ہوم پیج سے ہٹا دیا گیا — پیمنٹس اب سپلائر/مکتبے کے اندر مینج ہوتی ہیں (سائیڈ مینو سے اب بھی کھل سکتا ہے) ----------
+    {icon:'💳', label:'ادائیگیوں کا ریکارڈ', screen:'payments', hidden:true},
   ]},
   { section: '📊 ڈیش بورڈ', tiles: [
     {icon:'📊', label:'ڈیش بورڈ', screen:'dashboard', hidden:true},
@@ -6016,7 +6017,8 @@ const HOME_TILE_GROUPS_ADMIN = [
   { section: '⚙️ سیٹنگز', tiles: [
     {icon:'🏦', label:'My Account', screen:'myaccount', hidden:true},
     {icon:'🔑', label:'Users', screen:'users', hidden:true},
-    {icon:'⚙️', label:'سیٹنگز', screen:'settings'},
+    // ---------- ⚙️ سیٹنگز کا بڑا آئیکن مین ہوم پیج سے ہٹا دیا گیا — اب صرف سائیڈ مینو سے کھلتا ہے (navItem موجود ہے) ----------
+    {icon:'⚙️', label:'سیٹنگز', screen:'settings', hidden:true},
   ]},
   { section: '🛠️ Tools', tiles: [
     {icon:'🧾', label:'Bill & Print Settings', screen:'billsettings', hidden:true},
