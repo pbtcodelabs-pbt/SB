@@ -1,6 +1,6 @@
 {
-  "name": "Supplier Book",
-  "short_name": "Supplier Book",
+  "name": "سپلائر بک",
+  "short_name": "سپلائر بک",
   "description": "سپلائر بک - آرڈر مینجمنٹ ایپ",
   "start_url": "./index.html",
   "display": "standalone",

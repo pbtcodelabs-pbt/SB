@@ -4,7 +4,7 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Supplier Book</title>
+<title>سپلائر بک</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -13,7 +13,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Supplier Book">
+  <meta name="apple-mobile-web-app-title" content="سپلائر بک">
 <!-- ---------- Google Fonts (7 پیارے انگلش فونٹس — صرف ہلکے وزن، ایپ کو بھاری نہیں کرتے) ---------- -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2010,19 +2010,19 @@
   <!-- ---------- MOBILE TOPBAR (صرف چھوٹی اسکرین پر نظر آتی ہے) ---------- -->
   <div id="mobileTopbar">
     <button id="hamburgerBtn" onclick="toggleSidebar()">☰</button>
-    <span id="mobileBrandText" class="mobileBrand" style="display:none;">🧾 Supplier Book</span>
+    <span id="mobileBrandText" class="mobileBrand" style="display:none;">🧾 سپلائر بک</span>
     <!-- ---------- 🧪 صرف ٹیسٹ فائل میں: یہ لیبل "Supplier Book" کی بالکل اسی جگہ، اسی بڑے سائز میں کھڑا ہو کر اسے ڈھانپ لیتا ہے —
          آئیکن کے بغیر، مسلسل چمکتا ہوا۔ دائیں طرف والا اصل ماسٹر ورژن اس سے بالکل بے اثر رہتا ہے۔
          نیچے ایک چھوٹا ٹائم اسٹیمپ بیج بھی ہے — یہ فائل نام کا حصہ نہیں، صرف اس ڈیلیوری کی تازہ ترین بلڈ ڈیٹ/ٹائم بتاتا ہے
          (فارمیٹ: Weekday + HHMM + am/pm + Day + Month + Year) تاکہ نمبر یاد نہ رہے تو بھی تازگی کی تصدیق ہو سکے ---------- -->
     <div style="display:flex; flex-direction:column; align-items:flex-start; gap:1px;">
-      <span id="testBuildLabel" class="mobileBrand testBuildGlow" style="display:inline;">Supplier Book</span>
+      <span id="testBuildLabel" class="mobileBrand testBuildGlow" style="display:inline;">سپلائر بک</span>
       <span class="nastaleeqSparkle">جاگدے رہـنا۔۔۔۔ساڈے تے نہ رہـنا</span>
     </div>
     <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بہت چھوٹا بلڈ نمبر — Online بیج کے بالکل نیچے، صاف سفید رنگ میں تاکہ آسانی سے پڑھا جا سکے ---------- -->
-      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0217PM</span>
+      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0300PM</span>
     </div>
   </div>
 
@@ -2053,23 +2053,25 @@
 
   <!-- ---------- SIDEBAR NAV ---------- -->
   <div id="sidebar">
-    <div class="brand">🧾 Supplier Book</div>
+    <div class="brand">🧾 سپلائر بک</div>
 
-    <div class="navItem" data-screen="home" onclick="goTo('home')">🏠 Home</div>
+    <div class="navItem" data-screen="home" onclick="goTo('home')">🏠 ہوم</div>
+    <!-- ---------- 🙈 چھپائی گئی اندراجات — کچھ ڈیلیٹ نہیں کیا، بس comment میں محفوظ ہے، ضرورت پر یہاں سے واپس لے آئیں ----------
     <div class="navItem" data-screen="billing" onclick="goTo('billing')">🛒 Billing</div>
     <div class="navItem" data-screen="billhistory" onclick="goTo('billhistory')">🧾 Bill History</div>
     <div class="navItem admin-only" data-screen="mydiary" onclick="goTo('mydiary')">📔 My Diary</div>
     <div class="navItem admin-only" data-screen="expenditure" onclick="goTo('expenditure')">💸 Expenditure</div>
-
-    <div class="navItem admin-only" data-screen="dashboard" onclick="goTo('dashboard')">📊 Dashboard</div>
     <div class="navItem admin-only" data-screen="products" onclick="goTo('products')">📦 Products</div>
     <div class="navItem admin-only" data-screen="stockadjustment" onclick="goTo('stockadjustment')">🧮 Stock Adjustment</div>
     <div class="navItem admin-only" data-screen="customers" onclick="goTo('customers')">🧑‍🤝‍🧑 Customers</div>
-    <div class="navItem admin-only" data-screen="suppliers" onclick="goTo('suppliers')">🚚 Suppliers</div>
-    <div class="navItem admin-only" data-screen="purchaseorders" onclick="goTo('purchaseorders')">📦 Purchase Orders</div>
     <div class="navItem admin-only" data-screen="users" onclick="goTo('users')">🔑 Users</div>
     <div class="navItem admin-only" data-screen="myaccount" onclick="goTo('myaccount')">🏦 My Account</div>
-    <div class="navItem admin-only" data-screen="settings" onclick="goTo('settings')">⚙️ Settings</div>
+    ---------- چھپائی گئی اندراجات ختم ---------- -->
+    <div class="navItem admin-only" data-screen="suppliers" onclick="goTo('suppliers')">🚚 مکتبے (سپلائرز)</div>
+    <div class="navItem admin-only" data-screen="purchaseorders" onclick="goTo('purchaseorders')">📦 پرچیز آرڈرز</div>
+    <div class="navItem admin-only" data-screen="payments" onclick="goTo('payments')">💳 ادائیگیاں</div>
+    <div class="navItem admin-only" data-screen="dashboard" onclick="goTo('dashboard')">📊 ڈیش بورڈ</div>
+    <div class="navItem admin-only" data-screen="settings" onclick="goTo('settings')">⚙️ سیٹنگز</div>
 
     <div class="userTag" id="userTag">—</div>
     <button class="logoutBtn" onclick="logout()">Logout</button>
@@ -2099,7 +2101,7 @@
             <span id="hbcLogoPlaceholder">🏪</span>
           </div>
           <div class="hbcInfo" onclick="triggerBusinessLogoUpload()">
-            <div class="hbcBusinessName" id="hbcBusinessName">Supplier Book</div>
+            <div class="hbcBusinessName" id="hbcBusinessName">سپلائر بک</div>
             <div class="hbcOwnerName" id="hbcOwnerName"></div>
             <div class="hbcPhone" id="hbcPhone"></div>
           </div>
@@ -5933,44 +5935,49 @@ function dismissTrialUrgentModal(){
 
 // ---------- 🏪 ہوم پیج کا بزنس کارڈ — لوگو، دکان کا نام، مالک کا نام، فون نمبر ----------
 // ---------- 🧭 Home Screen کے بڑے نیویگیشن آئیکن — role کے مطابق مختلف فہرست ----------
+// ---------- 🙈 اصول: کچھ بھی ڈیلیٹ نہیں کیا گیا، صرف hidden:true لگا کر چھپایا گیا ہے۔
+// جو تلاش ہمیں دوبارہ چاہیے، بس اس ٹائل سے hidden:true ہٹا دیں ----------
 const HOME_TILE_GROUPS_ADMIN = [
   { section: '💰 Sales', tiles: [
-    {icon:'🛒', label:'Billing', screen:'billing'},
-    {icon:'🧾', label:'Bill History', screen:'billhistory'},
-    {icon:'📝', label:'Advance Orders', screen:'advanceorders'},
+    {icon:'🛒', label:'Billing', screen:'billing', hidden:true},
+    {icon:'🧾', label:'Bill History', screen:'billhistory', hidden:true},
+    {icon:'📝', label:'Advance Orders', screen:'advanceorders', hidden:true},
   ]},
-  { section: '📦 Inventory', tiles: [
-    {icon:'📦', label:'Products', screen:'products'},
-    {icon:'🏷️', label:'Categories', screen:'categories'},
-    {icon:'🧮', label:'Stock Adjustment', screen:'stockadjustment'},
+  { section: '📦 انوینٹری', tiles: [
+    {icon:'📦', label:'Products', screen:'products', hidden:true},
+    {icon:'🏷️', label:'Categories', screen:'categories', hidden:true},
+    {icon:'🧮', label:'Stock Adjustment', screen:'stockadjustment', hidden:true},
   ]},
-  { section: '🧑‍🤝‍🧑 Parties', tiles: [
-    {icon:'👥', label:'Customers', screen:'customers'},
-    {icon:'🚚', label:'Suppliers', screen:'suppliers'},
+  { section: '🧑‍🤝‍🧑 پارٹیز', tiles: [
+    {icon:'👥', label:'Customers', screen:'customers', hidden:true},
+    {icon:'🚚', label:'مکتبے (سپلائرز)', screen:'suppliers'},
   ]},
-  { section: '💳 Payments', tiles: [
-    {icon:'💳', label:'Payments Record', screen:'payments'},
+  { section: '📦 پرچیز آرڈرز', tiles: [
+    {icon:'📦', label:'پرچیز آرڈرز', screen:'purchaseorders'},
   ]},
-  { section: '📊 Insights', tiles: [
-    {icon:'📊', label:'Dashboard', screen:'dashboard'},
-    {icon:'📈', label:'Trend Analysis', screen:'trends'},
+  { section: '💳 ادائیگیاں', tiles: [
+    {icon:'💳', label:'ادائیگیوں کا ریکارڈ', screen:'payments'},
+  ]},
+  { section: '📊 ڈیش بورڈ', tiles: [
+    {icon:'📊', label:'ڈیش بورڈ', screen:'dashboard'},
+    {icon:'📈', label:'Trend Analysis', screen:'trends', hidden:true},
   ]},
   { section: '🖨️ Reports', tiles: [
-    {icon:'🖨️', label:'Reports', action:'openReportCenterModal'},
+    {icon:'🖨️', label:'Reports', action:'openReportCenterModal', hidden:true},
   ]},
-  { section: '⚙️ Management', tiles: [
-    {icon:'🏦', label:'My Account', screen:'myaccount'},
-    {icon:'🔑', label:'Users', screen:'users'},
-    {icon:'⚙️', label:'Settings', screen:'settings'},
+  { section: '⚙️ سیٹنگز', tiles: [
+    {icon:'🏦', label:'My Account', screen:'myaccount', hidden:true},
+    {icon:'🔑', label:'Users', screen:'users', hidden:true},
+    {icon:'⚙️', label:'سیٹنگز', screen:'settings'},
   ]},
   { section: '🛠️ Tools', tiles: [
-    {icon:'🧾', label:'Bill & Print Settings', screen:'billsettings'},
-    {icon:'📋', label:'Reply Templates', action:'openReplyTemplatesModal'},
-    {icon:'🗂️', label:'Package Plans', action:'openPackagePlansModal'},
+    {icon:'🧾', label:'Bill & Print Settings', screen:'billsettings', hidden:true},
+    {icon:'📋', label:'Reply Templates', action:'openReplyTemplatesModal', hidden:true},
+    {icon:'🗂️', label:'Package Plans', action:'openPackagePlansModal', hidden:true},
   ]},
   { section: '🔴 Liabilities', tiles: [
-    {icon:'📔', label:'My Diary', screen:'mydiary'},
-    {icon:'💸', label:'Expenditure', screen:'expenditure'},
+    {icon:'📔', label:'My Diary', screen:'mydiary', hidden:true},
+    {icon:'💸', label:'Expenditure', screen:'expenditure', hidden:true},
   ]},
 ];
 // ---------- پرانی سیدھی فہرست اب بھی موجود ہے — Quick Access Dock وغیرہ کہیں اور اسے استعمال کرتے ہیں ----------
@@ -6014,10 +6021,14 @@ function renderHomeIconGrid(){
     </button>`;
 
   if(AppState.currentRole === 'admin'){
-    grid.innerHTML = HOME_TILE_GROUPS_ADMIN.map(g => `
-      <div class="homeSectionLabel">${g.section}</div>
-      <div class="homeSectionGrid">${g.tiles.map(tileHtml).join('')}</div>
-    `).join('');
+    // ---------- 🙈 hidden:true والی ٹائلز چھپا دیں، اور جو سیکشن مکمل خالی رہ جائے وہ سیکشن بھی نہ دکھائیں ----------
+    grid.innerHTML = HOME_TILE_GROUPS_ADMIN
+      .map(g => ({ section: g.section, tiles: g.tiles.filter(t => !t.hidden) }))
+      .filter(g => g.tiles.length > 0)
+      .map(g => `
+        <div class="homeSectionLabel">${g.section}</div>
+        <div class="homeSectionGrid">${g.tiles.map(tileHtml).join('')}</div>
+      `).join('');
   } else {
     grid.innerHTML = HOME_TILES_SALESMAN.map(tileHtml).join('');
   }
@@ -6881,7 +6892,7 @@ function renderFontsFabPanel(){
 
 let quickDockOpen = false;
 let quickDockEditMode = false;
-let quickDockItems = loadFromStorage('quickDockItems', ['billing', 'dashboard', 'settings', 'customers', 'suppliers']); // ڈیفالٹ شارٹ کٹس — اگر پہلے سے محفوظ ترتیب موجود ہو تو وہی لوڈ ہوگی
+let quickDockItems = loadFromStorage('quickDockItems', ['suppliers', 'purchaseorders', 'payments', 'dashboard']); // ڈیفالٹ شارٹ کٹس — اگر پہلے سے محفوظ ترتیب موجود ہو تو وہی لوڈ ہوگی
 
 function toggleQuickDock(){
   quickDockOpen = !quickDockOpen;
