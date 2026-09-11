@@ -1788,7 +1788,7 @@
   body.nastaleeq-active input,
   body.nastaleeq-active select,
   body.nastaleeq-active button,
-  body.nastaleeq-active textarea{ font-family:'JameelNooriNastaleeq','Segoe UI',serif; line-height:2; }
+  body.nastaleeq-active textarea{ font-family:'Noto Nastaliq Urdu','Segoe UI',serif; line-height:2; }
   body.nastaleeq-active .navItem,
   body.nastaleeq-active .pageTitle,
   body.nastaleeq-active h3,
@@ -1805,6 +1805,13 @@
   body.nastaleeq-active .kpiLabel,
   body.nastaleeq-active .statLabel,
   body.nastaleeq-active .hLabel{ font-size:12.5px; line-height:1.9; }
+
+  /* ---------- کشیدہ موڈ — نستعلیق کی اپنی OpenType کشیدگی صرف پورے سیدھ (justify) والے متن پر خودکار نظر آتی ہے ---------- */
+  body.kashida-active p,
+  body.kashida-active .navItem,
+  body.kashida-active .pageTitle,
+  body.kashida-active .pName,
+  body.kashida-active .aName{ text-align:justify; }
 </style>
   <!-- ---------- یہ الگ style ٹیگ خاص طور پر پرنٹ کے وقت اصل کاغذ کی چوڑائی (58mm/80mm) بتانے کے لیے ہے —
        بغیر اس کے، پرنٹ سسٹم صفحے کا سائز A4/Letter سمجھ کر رسید کو چھوٹا کر کے سکیڑ دیتا تھا،
@@ -2036,7 +2043,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بہت چھوٹا بلڈ نمبر — Online بیج کے بالکل نیچے، صاف سفید رنگ میں تاکہ آسانی سے پڑھا جا سکے ---------- -->
-      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0326PM</span>
+      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0400PM</span>
     </div>
   </div>
 
@@ -2080,11 +2087,11 @@
     <div class="navItem admin-only" data-screen="customers" onclick="goTo('customers')">🧑‍🤝‍🧑 Customers</div>
     <div class="navItem admin-only" data-screen="users" onclick="goTo('users')">🔑 Users</div>
     <div class="navItem admin-only" data-screen="myaccount" onclick="goTo('myaccount')">🏦 My Account</div>
+    <div class="navItem admin-only" data-screen="purchaseorders" onclick="goTo('purchaseorders')">📦 پرچیز آرڈرز</div>
+    <div class="navItem admin-only" data-screen="dashboard" onclick="goTo('dashboard')">📊 ڈیش بورڈ</div>
     ---------- چھپائی گئی اندراجات ختم ---------- -->
     <div class="navItem admin-only" data-screen="suppliers" onclick="goTo('suppliers')">🚚 مکتبے (سپلائرز)</div>
-    <div class="navItem admin-only" data-screen="purchaseorders" onclick="goTo('purchaseorders')">📦 پرچیز آرڈرز</div>
     <div class="navItem admin-only" data-screen="payments" onclick="goTo('payments')">💳 ادائیگیاں</div>
-    <div class="navItem admin-only" data-screen="dashboard" onclick="goTo('dashboard')">📊 ڈیش بورڈ</div>
     <div class="navItem admin-only" data-screen="settings" onclick="goTo('settings')">⚙️ سیٹنگز</div>
 
     <div class="userTag" id="userTag">—</div>
@@ -5977,7 +5984,7 @@ const HOME_TILE_GROUPS_ADMIN = [
     {icon:'🚚', label:'مکتبے (سپلائرز)', screen:'suppliers'},
   ]},
   { section: '📦 پرچیز آرڈرز', tiles: [
-    {icon:'📦', label:'پرچیز آرڈرز', screen:'purchaseorders'},
+    {icon:'📦', label:'پرچیز آرڈرز', screen:'purchaseorders', hidden:true},
   ]},
   { section: '💳 ادائیگیاں', tiles: [
     {icon:'💳', label:'ادائیگیوں کا ریکارڈ', screen:'payments'},
@@ -6916,7 +6923,7 @@ function renderFontsFabPanel(){
 
 let quickDockOpen = false;
 let quickDockEditMode = false;
-let quickDockItems = loadFromStorage('quickDockItems', ['suppliers', 'purchaseorders', 'payments', 'dashboard']); // ڈیفالٹ شارٹ کٹس — اگر پہلے سے محفوظ ترتیب موجود ہو تو وہی لوڈ ہوگی
+let quickDockItems = loadFromStorage('quickDockItems', ['suppliers', 'payments', 'settings']); // ڈیفالٹ شارٹ کٹس — اگر پہلے سے محفوظ ترتیب موجود ہو تو وہی لوڈ ہوگی
 
 function toggleQuickDock(){
   quickDockOpen = !quickDockOpen;
@@ -19282,6 +19289,8 @@ const FONT_PRESETS = [
   {id:'latolight',    label:'Lato Light',      family:"'Lato', sans-serif",                    weight:300},
   {id:'arialnarrow',  label:'Arial Narrow',    family:"'Roboto Condensed', 'Arial Narrow', sans-serif", weight:400},
   {id:'calibri',      label:'Calibri',         family:"'Carlito', Calibri, sans-serif",         weight:400},
+  {id:'nastaleeqregular', label:'نوری نستعلیق - ریگولر', family:"'Noto Nastaliq Urdu', serif", weight:400, isNastaleeq:true},
+  {id:'nastaleeqkashida', label:'نوری نستعلیق - کشیدہ', family:"'Noto Nastaliq Urdu', serif", weight:700, isNastaleeq:true, kashida:true},
 ];
 
 // ---------- پوری ایپ کا سائز (Zoom) — بڑی اسکرین/فونٹ چاہنے والوں کے لیے۔ html root پر zoom لگانے سے
@@ -19410,6 +19419,8 @@ function applyFont(fontId){
 
   // نستعلیق فعال ہونے پر لائن ہائٹ/اسپیسنگ خودکار بڑھ جاتی ہے تاکہ حروف آپس میں نہ چڑھیں
   document.body.classList.toggle('nastaleeq-active', !!f.isNastaleeq);
+  // کشیدہ موڈ — متن کو سیدھ (justify) میں لاتا ہے تاکہ نستعلیق کی خودکار کشیدگی نظر آئے
+  document.body.classList.toggle('kashida-active', !!f.kashida);
 
   // ---------- تمام جگہ سنک رہے: Settings، بلنگ کا فلوٹنگ Fonts بٹن، اور ہوم پیج کا نیا کوئیک پینل ----------
   document.querySelectorAll('.fontOptionRow').forEach(el => {
@@ -19488,7 +19499,6 @@ function renderHomeSettingsPanel(){
     <div class="hsTabBar">
       <button class="hsTabBtn ${homeSettingsActiveTab === 'theme' ? 'active' : ''}" onclick="switchHomeSettingsTab('theme')">🎨<br>تھیم</button>
       <button class="hsTabBtn ${homeSettingsActiveTab === 'font' ? 'active' : ''}" onclick="switchHomeSettingsTab('font')">🔤<br>فونٹ</button>
-      <button class="hsTabBtn ${homeSettingsActiveTab === 'card' ? 'active' : ''}" onclick="switchHomeSettingsTab('card')">🏷️<br>کارڈ</button>
     </div>`;
 
   let tabContentHtml = '';
@@ -19517,47 +19527,6 @@ function renderHomeSettingsPanel(){
       ${FONT_PRESETS.map(f => `
         <button class="hsChip ${AppState.settings.fontId === f.id ? 'active' : ''}" style="font-family:${f.family};" onclick="applyFont('${f.id}'); renderHomeSettingsPanel();">${f.label}</button>
       `).join('')}
-    </div>`;
-  }
-
-  else if(homeSettingsActiveTab === 'card'){
-    const pcnSize = AppState.settings.productCardNameSize || 13;
-    const pcnWeight = AppState.settings.productCardNameWeight || 800;
-    const pcnBg = AppState.settings.productCardNameBg || '#eef2ff';
-    const pcnBgIntensity = AppState.settings.productCardNameBgIntensity || 0;
-    const pcnColor = AppState.settings.productCardNameColor || '#166534';
-    const pcnFontId = AppState.settings.productCardNameFont || '';
-    tabContentHtml = `
-    <div style="padding:2px 12px 2px; font-size:11px; color:var(--muted);">Text size — ${pcnSize}px</div>
-    <div style="padding:0 12px 6px;">
-      <input type="range" min="8" max="22" step="1" value="${pcnSize}" oninput="adjustProductCardNameSize(this.value); this.previousElementSibling.textContent='Text size — '+this.value+'px';" style="width:100%;">
-    </div>
-    <div style="padding:2px 12px 2px; font-size:11px; color:var(--muted);">Boldness — ${pcnWeight}</div>
-    <div style="padding:0 12px 6px;">
-      <input type="range" min="400" max="900" step="100" value="${pcnWeight}" oninput="adjustProductCardNameWeight(this.value); this.previousElementSibling.textContent='Boldness — '+this.value;" style="width:100%;">
-    </div>
-    <div class="homeQuickPanelLabel" style="padding-bottom:2px;">Writing Style</div>
-    <div class="hsChipRow" style="padding-top:0;">
-      <button class="hsChip ${!pcnFontId ? 'active' : ''}" onclick="adjustProductCardNameFont(''); renderHomeSettingsPanel();">Default</button>
-      ${FONT_PRESETS.map(f => `
-        <button class="hsChip ${pcnFontId === f.id ? 'active' : ''}" style="font-family:${f.family};" onclick="adjustProductCardNameFont('${f.id}'); renderHomeSettingsPanel();">${f.label}</button>
-      `).join('')}
-    </div>
-    <div style="padding:4px 12px 2px; font-size:11px; color:var(--muted);">Background colour</div>
-    <div style="display:flex; align-items:center; gap:8px; padding:0 12px 6px;">
-      <input id="productCardNameBgPicker" type="color" value="${pcnBg}" oninput="adjustProductCardNameBg(this.value)" style="width:36px; height:32px; border:none; border-radius:7px; padding:0; cursor:pointer;">
-      <button class="hsBackupBtn" style="flex:1; flex-direction:row; gap:6px; padding:8px;" onclick="resetProductCardNameBg(); renderHomeSettingsPanel();">↺ Reset</button>
-    </div>
-    <div style="padding:2px 12px 2px; font-size:11px; color:var(--muted);">Background Shade — Light ↔ Dark</div>
-    <div class="homeIntensityRow">
-      <span style="font-size:15px;">🔅</span>
-      <input type="range" min="-40" max="40" step="2" value="${pcnBgIntensity}" oninput="adjustProductCardNameBgIntensity(this.value)" style="flex:1;">
-      <span style="font-size:15px;">🔆</span>
-    </div>
-    <div style="padding:4px 12px 2px; font-size:11px; color:var(--muted);">Text (Writing) Colour</div>
-    <div style="display:flex; align-items:center; gap:8px; padding:0 12px 8px;">
-      <input type="color" value="${pcnColor}" oninput="adjustProductCardNameColor(this.value)" style="width:36px; height:32px; border:none; border-radius:7px; padding:0; cursor:pointer;">
-      <button class="hsBackupBtn" style="flex:1; flex-direction:row; gap:6px; padding:8px;" onclick="resetProductCardNameColor(); renderHomeSettingsPanel();">↺ Auto</button>
     </div>`;
   }
 
