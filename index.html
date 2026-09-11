@@ -1826,13 +1826,13 @@
 <!-- ===================== LOGIN SCREEN ===================== -->
 <div id="loginScreen">
   <div class="loginBox">
-    <h2 id="loginHeading">🔐 Login</h2>
+    <h2 id="loginHeading">🔐 لاگ ان</h2>
 
     <!-- ---------- 🎉 خوش آمدید بینر — بیٹا ٹیسٹنگ کی صاف وضاحت، پہلی نظر میں ---------- -->
     <div class="welcomeTrialBanner">
-      <div class="wtbHeadline">🎉 Best Billing App — Try it FREE for 30 Days!</div>
-      <div class="wtbSubline">Your 30-Day Free Trial starts now.</div>
-      <div class="wtbUrduNote">This app is currently in Beta (testing) version. Please don't forget to take daily backups, and keep running your old method alongside it too. If you notice any issue — big or small — please report it to the developer right away, so this app can become the best it can be for you.</div>
+      <div class="wtbHeadline">🎉 بہترین آرڈر ایپ — 30 دن مفت آزمائیں!</div>
+      <div class="wtbSubline">آپ کا 30 دن کا مفت ٹرائل ابھی شروع ہو گیا ہے۔</div>
+      <div class="wtbUrduNote">یہ ایپ فی الحال بیٹا (ٹیسٹنگ) ورژن میں ہے۔ روزانہ بیک اپ لینا مت بھولیں، اور اپنا پرانا طریقہ بھی ساتھ ساتھ جاری رکھیں۔ اگر کوئی مسئلہ نظر آئے — چھوٹا ہو یا بڑا — فوراً ڈویلپر کو بتائیں، تاکہ یہ ایپ آپ کے لیے بہترین بن سکے۔</div>
     </div>
 
     <!-- ---------- ہمیشہ نظر آنے والی سبسکرپشن/ٹرائل کی حیثیت — لاگ ان سے پہلے ہی صاف پتا چل جائے ---------- -->
@@ -1840,45 +1840,45 @@
 
     <!-- ---------- ڈیفالٹ PIN (1234) پر موجود نئے/ٹرائل صارف کے لیے — کوئی PIN ٹائپ نہیں کرنی، سیدھا اندر ---------- -->
     <div id="loginQuickEnterWrap" style="display:none;">
-      <button onclick="quickEnterApp()" style="background:var(--primary); font-size:16px; padding:14px;">🎁 Enter App — Free Trial</button>
+      <button onclick="quickEnterApp()" style="background:var(--primary); font-size:16px; padding:14px;">🎁 ایپ میں داخل ہوں — مفت ٹرائل</button>
     </div>
 
     <!-- ---------- عام PIN entry — صرف اسی وقت نظر آئے گی جب Admin نے اپنا PIN بدل لیا ہو (یعنی حقیقی/سنجیدہ استعمال شروع ہو چکا) ---------- -->
     <div id="loginPinWrap" style="display:none;">
-      <input type="password" id="pinInput" placeholder="Enter your PIN" maxlength="6" inputmode="numeric" onkeydown="if(event.key==='Enter') login()">
+      <input type="password" id="pinInput" placeholder="اپنا پن درج کریں" maxlength="6" inputmode="numeric" onkeydown="if(event.key==='Enter') login()">
       <label style="display:flex; align-items:center; gap:8px; margin:10px 2px; font-size:13px; color:var(--muted); justify-content:center; cursor:pointer;">
         <input type="checkbox" id="rememberPinChk" checked style="width:16px; height:16px; margin:0; cursor:pointer;">
-        🔒 Remember me on this device
+        🔒 اس ڈیوائس پر یاد رکھیں
       </label>
-      <button onclick="login()">Enter</button>
+      <button onclick="login()">داخل ہوں</button>
     </div>
 
-    <button onclick="shareAppLink()" style="background:#dcfce7; color:var(--success); margin-top:10px; display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex:0 0 auto; vertical-align:-3px; margin-right:5px;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>Share This App</button>
+    <button onclick="shareAppLink()" style="background:#dcfce7; color:var(--success); margin-top:10px; display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex:0 0 auto; vertical-align:-3px; margin-right:5px;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>یہ ایپ شیئر کریں</button>
 
     <!-- ---------- سیدھا Login سکرین سے ہی Activation Code لگانے کا آپشن — PIN سے پہلے، تاکہ کنفیوژن نہ ہو ---------- -->
     <div class="loginHint" style="margin-top:10px;">
-      <a href="javascript:void(0)" onclick="toggleLoginActivationBox()" style="color:var(--primary); font-weight:700; text-decoration:none;">🔑 Have an activation code? Tap here.</a>
+      <a href="javascript:void(0)" onclick="toggleLoginActivationBox()" style="color:var(--primary); font-weight:700; text-decoration:none;">🔑 ایکٹیویشن کوڈ ہے؟ یہاں ٹیپ کریں۔</a>
     </div>
     <div id="loginActivationBox" style="display:none; margin-top:10px; text-align:left;">
-      <label style="display:block; font-size:12px; color:var(--muted); margin-bottom:4px;">Activation code (from your developer)</label>
-      <input type="text" id="loginActivationCodeInput" placeholder="6-digit code">
-      <button onclick="activateFromLoginScreen()" style="margin-top:8px;">✅ Activate</button>
+      <label style="display:block; font-size:12px; color:var(--muted); margin-bottom:4px;">ایکٹیویشن کوڈ (آپ کے ڈویلپر کی طرف سے)</label>
+      <input type="text" id="loginActivationCodeInput" placeholder="6 ہندسوں کا کوڈ">
+      <button onclick="activateFromLoginScreen()" style="margin-top:8px;">✅ ایکٹیویٹ کریں</button>
       <div id="loginActivationMsg" style="margin-top:8px; font-size:13px; font-weight:700;"></div>
     </div>
 
-    <div class="loginHint"><a href="javascript:void(0)" onclick="openPinRecoveryModal()" style="color:var(--primary); font-weight:700; text-decoration:none;">Forgot your PIN? Recover it here.</a></div>
+    <div class="loginHint"><a href="javascript:void(0)" onclick="openPinRecoveryModal()" style="color:var(--primary); font-weight:700; text-decoration:none;">پن بھول گئے؟ یہاں سے بحال کریں۔</a></div>
   </div>
-  <button class="devChatBubble" onclick="openDevChat('subscription')" title="Chat with Developer">💬</button>
+  <button class="devChatBubble" onclick="openDevChat('subscription')" title="ڈویلپر سے بات کریں">💬</button>
 </div>
 
 <!-- 💬 Chat with Developer — مشترکہ پینل، دونوں جگہ (Login اور Home) سے کھلتا ہے -->
 <div class="devChatPanel" id="devChatPanel">
-  <h4 id="devChatTitle">💬 Chat with Developer</h4>
+  <h4 id="devChatTitle">💬 ڈویلپر سے بات کریں</h4>
   <div class="devChatUid" id="devChatUidLine"></div>
   <button class="devChatOption" onclick="sendDevChat('whatsapp')"><span class="devChatIcon">💬</span> WhatsApp</button>
-  <button class="devChatOption" onclick="sendDevChat('sms')"><span class="devChatIcon">✉️</span> SMS</button>
+  <button class="devChatOption" onclick="sendDevChat('sms')"><span class="devChatIcon">✉️</span> ایس ایم ایس</button>
   <button class="devChatOption" onclick="sendDevChat('email')"><span class="devChatIcon">📧</span> Gmail</button>
-  <button class="devChatOption" onclick="resetDeviceUIDForTesting()" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px;"><span class="devChatIcon">🔄</span> Reset Device ID (Testing Only)</button>
+  <button class="devChatOption" onclick="resetDeviceUIDForTesting()" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px;"><span class="devChatIcon">🔄</span> ڈیوائس آئی ڈی ری سیٹ کریں (صرف ٹیسٹنگ)</button>
 </div>
 
 <!-- 🔐 SUBSCRIPTION GATE — سبسکرپشن ختم/غیر فعال ہونے پر یہ صفحہ لاگ ان کے بعد نظر آئے گا -->
@@ -1886,25 +1886,25 @@
 <!-- ---------- 🔒 PIN Lock بند کرنے سے پہلے واضح انتباہ + دو طرفہ تصدیق ---------- -->
 <div class="modalOverlay" id="pinLockWarningModal" style="z-index:3700;" onclick="if(event.target===this) this.classList.remove('show')">
   <div class="modalBox" style="max-width:380px;">
-    <h3>⚠️ Turn Off PIN Lock?</h3>
+    <h3>⚠️ پن لاک بند کریں؟</h3>
     <div style="background:#fef2f2; color:#b91c1c; border-radius:10px; padding:12px; font-size:13px; line-height:1.6; margin:10px 0;">
-      If you turn this off, <b>anyone who picks up this phone</b> — a customer, a family member, anyone — will be able to open this app straight to your business data: bills, sales history, customer I Gave/I Got records, everything. No PIN will be asked.
+      اگر آپ اسے بند کریں گے تو <b>یہ فون جو بھی اٹھائے گا</b> — گاہک ہو، گھر والا ہو، کوئی بھی — سیدھا آپ کا کاروباری ڈیٹا کھول سکے گا: بل، سیل کی تاریخ، لین دین کا مکمل ریکارڈ، سب کچھ۔ کوئی پن نہیں مانگا جائے گا۔
       <br><br>
-      This is temporary — you can turn it back on any time from Home, using your date of birth. Only turn it off if you are the sole user of this phone.
+      یہ عارضی ہے — آپ اسے کسی بھی وقت ہوم سے، اپنی تاریخ پیدائش کے ذریعے دوبارہ آن کر سکتے ہیں۔ صرف اسی صورت بند کریں اگر یہ فون صرف آپ استعمال کرتے ہیں۔
     </div>
     <label style="display:flex; align-items:flex-start; gap:8px; font-size:12.5px; font-weight:700; color:var(--text); margin:12px 0; cursor:pointer;">
       <input type="checkbox" id="pinLockWarningAck" style="width:17px; height:17px; margin-top:1px;" onchange="document.getElementById('pinLockConfirmBtn').disabled = !this.checked;">
-      I understand this risk and the privacy compromise of my app, and I take full responsibility.
+      میں یہ خطرہ اور اپنی ایپ کی پرائیویسی کمپرومائز سمجھتا/سمجھتی ہوں، اور اس کی مکمل ذمہ داری خود لیتا/لیتی ہوں۔
     </label>
-    <button id="pinLockConfirmBtn" class="checkoutBtn" style="background:var(--danger);" disabled onclick="confirmDisablePinLock()">Yes, Turn Off PIN Lock</button>
-    <button class="cancelBtn" style="width:100%; margin-top:8px;" onclick="document.getElementById('pinLockWarningModal').classList.remove('show')">Cancel — Keep PIN Lock On</button>
+    <button id="pinLockConfirmBtn" class="checkoutBtn" style="background:var(--danger);" disabled onclick="confirmDisablePinLock()">جی ہاں، پن لاک بند کریں</button>
+    <button class="cancelBtn" style="width:100%; margin-top:8px;" onclick="document.getElementById('pinLockWarningModal').classList.remove('show')">منسوخ کریں — پن لاک آن رکھیں</button>
   </div>
 </div>
 
 <!-- ---------- 🔓 PIN Lock دوبارہ فعال کریں — پہلے تاریخ پیدائش سے تصدیق، پھر پرانا PIN رکھیں یا نیا بنائیں ---------- -->
 <div class="modalOverlay" id="activatePinLockModal" style="z-index:3700;" onclick="if(event.target===this) this.classList.remove('show')">
   <div class="modalBox" style="max-width:380px;">
-    <h3>🔓 Activate PIN Lock</h3>
+    <h3>🔓 پن لاک فعال کریں</h3>
 
     <div id="apinStepDob">
       <div class="dobPicker">
@@ -1912,60 +1912,60 @@
         <select id="apinDobInput_month" onchange="dpOnMonthChange('apinDobInput')"></select>
         <span class="dpYearWrap" id="apinDobInput_yearWrap">
           <select id="apinDobInput_year" onchange="dpOnChange('apinDobInput')"></select>
-          <input type="text" id="apinDobInput_yearManual" class="dpYearManual" inputmode="numeric" maxlength="4" placeholder="Year" style="display:none;" onchange="dpOnChange('apinDobInput')">
-          <button type="button" id="apinDobInput_yearToggleBtn" class="dpYearToggleBtn" onclick="dpToggleYearMode('apinDobInput')">✍️ Type</button>
+          <input type="text" id="apinDobInput_yearManual" class="dpYearManual" inputmode="numeric" maxlength="4" placeholder="سال" style="display:none;" onchange="dpOnChange('apinDobInput')">
+          <button type="button" id="apinDobInput_yearToggleBtn" class="dpYearToggleBtn" onclick="dpToggleYearMode('apinDobInput')">✍️ ٹائپ کریں</button>
         </span>
       </div>
       <input type="hidden" id="apinDobInput" value="">
-      <button class="checkoutBtn" onclick="verifyDobForPinActivation()">Continue</button>
+      <button class="checkoutBtn" onclick="verifyDobForPinActivation()">جاری رکھیں</button>
       <div id="apinDobError" style="color:var(--danger); font-size:12.5px; margin-top:8px; text-align:center;"></div>
     </div>
 
     <div id="apinStepChoice" style="display:none;">
-      <button class="checkoutBtn" style="margin-top:8px;" onclick="keepExistingPinAndActivate()">✅ Yes — Keep Using It</button>
-      <button class="testPrintBtn" style="width:100%; margin-top:8px; background:#eef2ff; color:var(--primary-dark);" onclick="showSetNewPinStep()">🔄 No — Set a New PIN</button>
+      <button class="checkoutBtn" style="margin-top:8px;" onclick="keepExistingPinAndActivate()">✅ جی ہاں — یہی استعمال کریں</button>
+      <button class="testPrintBtn" style="width:100%; margin-top:8px; background:#eef2ff; color:var(--primary-dark);" onclick="showSetNewPinStep()">🔄 نہیں — نیا پن بنائیں</button>
     </div>
 
     <div id="apinStepNewPin" style="display:none;">
-      <div class="settingsHint" style="margin-top:0;">Set a new 4-digit PIN. Enter it twice so we're sure there's no typo.</div>
-      <label style="display:block; font-size:12px; color:var(--muted); margin:8px 0 4px;">New PIN</label>
+      <div class="settingsHint" style="margin-top:0;">نیا 4 ہندسوں کا پن بنائیں۔ اسے دو بار درج کریں تاکہ غلطی کا امکان نہ رہے۔</div>
+      <label style="display:block; font-size:12px; color:var(--muted); margin:8px 0 4px;">نیا پن</label>
       <input type="password" id="apinNewPin1" maxlength="8" inputmode="numeric" style="width:100%; padding:10px; border:1px solid #dbe1ea; border-radius:8px; font-size:14px; text-align:center; letter-spacing:4px;">
-      <label style="display:block; font-size:12px; color:var(--muted); margin:10px 0 4px;">Re-enter New PIN</label>
+      <label style="display:block; font-size:12px; color:var(--muted); margin:10px 0 4px;">نیا پن دوبارہ درج کریں</label>
       <input type="password" id="apinNewPin2" maxlength="8" inputmode="numeric" style="width:100%; padding:10px; border:1px solid #dbe1ea; border-radius:8px; font-size:14px; text-align:center; letter-spacing:4px;">
       <label style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--muted); margin:10px 0 4px; cursor:pointer;">
-        <input type="checkbox" id="apinShowPinChk" onchange="toggleApinPinVisibility(this.checked)"> 👁️ Show PIN while typing
+        <input type="checkbox" id="apinShowPinChk" onchange="toggleApinPinVisibility(this.checked)"> 👁️ ٹائپ کرتے وقت پن دکھائیں
       </label>
-      <button class="checkoutBtn" style="margin-top:8px;" onclick="saveNewPinAndActivate()">Save & Activate PIN Lock</button>
+      <button class="checkoutBtn" style="margin-top:8px;" onclick="saveNewPinAndActivate()">محفوظ کریں اور پن لاک فعال کریں</button>
       <div id="apinNewPinError" style="color:var(--danger); font-size:12.5px; margin-top:8px; text-align:center;"></div>
     </div>
 
-    <button class="cancelBtn" style="width:100%; margin-top:10px;" onclick="document.getElementById('activatePinLockModal').classList.remove('show')">Cancel</button>
+    <button class="cancelBtn" style="width:100%; margin-top:10px;" onclick="document.getElementById('activatePinLockModal').classList.remove('show')">منسوخ کریں</button>
   </div>
 </div>
 
 <div class="modalOverlay" id="pinRecoveryModal" style="z-index:3700;" onclick="if(event.target===this) this.classList.remove('show')">
   <div class="modalBox" style="max-width:380px;">
-    <h3>🆘 Recover Admin PIN</h3>
+    <h3>🆘 ایڈمن پن بحال کریں</h3>
     <div id="recoveryStep1">
-      <label style="display:block; font-size:12px; color:var(--muted); margin:10px 0 4px;">Your Date of Birth</label>
+      <label style="display:block; font-size:12px; color:var(--muted); margin:10px 0 4px;">آپ کی تاریخ پیدائش</label>
       <div class="dobPicker">
         <select id="recoveryDobInput_day" onchange="dpOnChange('recoveryDobInput')"></select>
         <select id="recoveryDobInput_month" onchange="dpOnMonthChange('recoveryDobInput')"></select>
         <span class="dpYearWrap" id="recoveryDobInput_yearWrap">
           <select id="recoveryDobInput_year" onchange="dpOnChange('recoveryDobInput')"></select>
-          <input type="text" id="recoveryDobInput_yearManual" class="dpYearManual" inputmode="numeric" maxlength="4" placeholder="Year" style="display:none;" onchange="dpOnChange('recoveryDobInput')">
-          <button type="button" id="recoveryDobInput_yearToggleBtn" class="dpYearToggleBtn" onclick="dpToggleYearMode('recoveryDobInput')">✍️ Type</button>
+          <input type="text" id="recoveryDobInput_yearManual" class="dpYearManual" inputmode="numeric" maxlength="4" placeholder="سال" style="display:none;" onchange="dpOnChange('recoveryDobInput')">
+          <button type="button" id="recoveryDobInput_yearToggleBtn" class="dpYearToggleBtn" onclick="dpToggleYearMode('recoveryDobInput')">✍️ ٹائپ کریں</button>
         </span>
       </div>
       <input type="hidden" id="recoveryDobInput" value="">
-      <button class="checkoutBtn" style="margin-top:14px;" onclick="verifyPinRecovery()">Verify</button>
+      <button class="checkoutBtn" style="margin-top:14px;" onclick="verifyPinRecovery()">تصدیق کریں</button>
       <div id="recoveryError" style="color:var(--danger); font-size:12.5px; margin-top:8px; text-align:center;"></div>
     </div>
     <div id="recoveryStep2" style="display:none;">
-      <div style="background:#dcfce7; color:var(--success); border-radius:8px; padding:10px; font-size:13px; font-weight:700; text-align:center; margin-top:10px;">✅ Verified! Set your new PIN below.</div>
-      <label style="display:block; font-size:12px; color:var(--muted); margin:10px 0 4px;">New Admin PIN (4-8 digits)</label>
-      <input type="password" id="recoveryNewPinInput" placeholder="New PIN" maxlength="8" inputmode="numeric" style="width:100%; padding:10px; border:1px solid #dbe1ea; border-radius:8px; font-size:14px; text-align:center; letter-spacing:4px;">
-      <button class="checkoutBtn" style="margin-top:14px;" onclick="finishPinRecovery()">Set New PIN</button>
+      <div style="background:#dcfce7; color:var(--success); border-radius:8px; padding:10px; font-size:13px; font-weight:700; text-align:center; margin-top:10px;">✅ تصدیق ہو گئی! نیچے اپنا نیا پن بنائیں۔</div>
+      <label style="display:block; font-size:12px; color:var(--muted); margin:10px 0 4px;">نیا ایڈمن پن (4 سے 8 ہندسے)</label>
+      <input type="password" id="recoveryNewPinInput" placeholder="نیا پن" maxlength="8" inputmode="numeric" style="width:100%; padding:10px; border:1px solid #dbe1ea; border-radius:8px; font-size:14px; text-align:center; letter-spacing:4px;">
+      <button class="checkoutBtn" style="margin-top:14px;" onclick="finishPinRecovery()">نیا پن محفوظ کریں</button>
     </div>
     <button class="cancelBtn" style="width:100%; margin-top:10px;" onclick="document.getElementById('pinRecoveryModal').classList.remove('show')">Cancel</button>
   </div>
@@ -1973,19 +1973,19 @@
 
 <div id="subscriptionGateScreen" style="display:none; position:fixed; inset:0; z-index:3000; background:var(--bg); align-items:center; justify-content:center; flex-direction:column; padding:20px;">
   <div class="loginBox" style="max-width:340px;">
-    <h2>🔒 Subscription Required</h2>
+    <h2>🔒 سبسکرپشن درکار ہے</h2>
     <p id="subGateStatus" style="font-size:13px; color:var(--muted); margin-bottom:14px;"></p>
     <div style="background:#f1f5f9; border-radius:10px; padding:10px 12px; margin-bottom:16px;">
-      <div style="font-size:11px; color:var(--muted); margin-bottom:2px;">Your Device ID (share this with your developer)</div>
+      <div style="font-size:11px; color:var(--muted); margin-bottom:2px;">آپ کی ڈیوائس آئی ڈی (یہ اپنے ڈویلپر کو بھیجیں)</div>
       <div id="subGateUid" style="font-weight:800; font-size:14px; color:var(--primary-dark); word-break:break-all;"></div>
     </div>
-    <label style="display:block; font-size:12px; color:var(--muted); text-align:left; margin-bottom:4px;">Activation code (from your developer)</label>
-    <input type="text" id="subGateCodeInput" placeholder="6-digit code">
-    <button onclick="submitActivationCode()" style="margin-top:14px;">✅ Activate</button>
+    <label style="display:block; font-size:12px; color:var(--muted); text-align:left; margin-bottom:4px;">ایکٹیویشن کوڈ (آپ کے ڈویلپر کی طرف سے)</label>
+    <input type="text" id="subGateCodeInput" placeholder="6 ہندسوں کا کوڈ">
+    <button onclick="submitActivationCode()" style="margin-top:14px;">✅ ایکٹیویٹ کریں</button>
     <div id="subGateMsg" style="margin-top:10px; font-size:13px; font-weight:700;"></div>
-    <div class="loginHint">No code yet? Tap the 💬 chat bubble below to ask your developer.</div>
+    <div class="loginHint">ابھی کوڈ نہیں ہے؟ نیچے 💬 چیٹ بٹن دبا کر اپنے ڈویلپر سے پوچھیں۔</div>
   </div>
-  <button class="devChatBubble" onclick="openDevChat('subscription')" title="Chat with Developer">💬</button>
+  <button class="devChatBubble" onclick="openDevChat('subscription')" title="ڈویلپر سے بات کریں">💬</button>
 </div>
 
 <!-- ===================== APP SHELL ===================== -->
@@ -1996,15 +1996,15 @@
     <div class="quickDockHandle" onclick="toggleQuickDock()">⋮⋮</div>
     <div class="quickDockPanel">
       <div id="quickDockItems"></div>
-      <button class="quickDockEditBtn" onclick="toggleQuickDockEdit()">✏️ Edit</button>
+      <button class="quickDockEditBtn" onclick="toggleQuickDockEdit()">✏️ ترمیم</button>
     </div>
   </div>
 
   <!-- ---------- ◀ Back / 🏠 Home / ▶ Forward — ہر صفحے پر (Home کے علاوہ)، نیچے وسط میں کمپیکٹ بار ---------- -->
   <div class="navArrowBar" id="navArrowBar">
-    <button id="navBackBtn" onclick="goBack()" title="Back">◀</button>
-    <button id="navHomeBtn" onclick="goTo('home')" title="Go to Home">🏠</button>
-    <button id="navForwardBtn" onclick="goForward()" title="Forward">▶</button>
+    <button id="navBackBtn" onclick="goBack()" title="پیچھے">◀</button>
+    <button id="navHomeBtn" onclick="goTo('home')" title="ہوم پر جائیں">🏠</button>
+    <button id="navForwardBtn" onclick="goForward()" title="آگے">▶</button>
   </div>
 
   <!-- ---------- MOBILE TOPBAR (صرف چھوٹی اسکرین پر نظر آتی ہے) ---------- -->
@@ -2022,7 +2022,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بہت چھوٹا بلڈ نمبر — Online بیج کے بالکل نیچے، صاف سفید رنگ میں تاکہ آسانی سے پڑھا جا سکے ---------- -->
-      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0300PM</span>
+      <span style="font-size:9px; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.3px;">SB11SEPFR0312PM</span>
     </div>
   </div>
 
@@ -2035,7 +2035,7 @@
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
     </span>
-    <input type="text" id="appSearchInput" placeholder="App Search — find any screen or setting..." oninput="renderAppSearchResults(this.value)" autocomplete="off">
+    <input type="text" id="appSearchInput" placeholder="ایپ سرچ — کوئی بھی اسکرین یا سیٹنگ تلاش کریں..." oninput="renderAppSearchResults(this.value)" autocomplete="off">
     <div id="appSearchResults"></div>
   </div>
 
@@ -2074,7 +2074,7 @@
     <div class="navItem admin-only" data-screen="settings" onclick="goTo('settings')">⚙️ سیٹنگز</div>
 
     <div class="userTag" id="userTag">—</div>
-    <button class="logoutBtn" onclick="logout()">Logout</button>
+    <button class="logoutBtn" onclick="logout()">لاگ آؤٹ</button>
   </div>
 
   <!-- ---------- MAIN CONTENT AREA ---------- -->
@@ -2088,15 +2088,15 @@
 
       <!-- ---------- 🔓 PIN Lock بند ہو تو یاد دہانی — دوبارہ آن کرنا ایک ٹیپ کی دوری پر ---------- -->
       <div id="homePinLockOffBanner" class="admin-only" style="display:none; background:#fef3c7; color:#92400e; border-radius:12px; padding:10px 14px; margin-bottom:10px; align-items:center; justify-content:space-between; gap:8px;">
-        <span style="font-size:12.5px; font-weight:700;">🔓 PIN Lock is OFF — anyone can open this app</span>
-        <button onclick="openActivatePinLockModal()" style="background:#92400e; color:#fff; border:none; border-radius:8px; padding:7px 12px; font-size:12px; font-weight:800; cursor:pointer; white-space:nowrap;">Activate</button>
+        <span style="font-size:12.5px; font-weight:700;">🔓 پن لاک بند ہے — کوئی بھی یہ ایپ کھول سکتا ہے</span>
+        <button onclick="openActivatePinLockModal()" style="background:#92400e; color:#fff; border:none; border-radius:8px; padding:7px 12px; font-size:12px; font-weight:800; cursor:pointer; white-space:nowrap;">فعال کریں</button>
       </div>
 
       <!-- ---------- 🏪 HOME BUSINESS CARD ---------- -->
       <div class="homeBusinessCard">
-        <button class="hbcEditBtn admin-only" onclick="goTo('myaccount')" title="Edit Business Card / Logo">✏️</button>
+        <button class="hbcEditBtn admin-only" onclick="goTo('myaccount')" title="بزنس کارڈ / لوگو میں ترمیم کریں">✏️</button>
         <div class="hbcTopRow">
-          <div class="hbcLogoWrap" onclick="triggerBusinessLogoUpload()" title="Change Logo">
+          <div class="hbcLogoWrap" onclick="triggerBusinessLogoUpload()" title="لوگو تبدیل کریں">
             <img id="hbcLogoImg" style="display:none;">
             <span id="hbcLogoPlaceholder">🏪</span>
           </div>
@@ -2107,9 +2107,9 @@
           </div>
         </div>
         <div class="hbcIconsRow">
-          <button class="hbcChatBtn" id="hbcSettingsBtn" onclick="toggleHomeSettingsPanel(event)" title="Settings">⚙️</button>
-          <button class="hbcChatBtn" onclick="shareAppLink()" title="Share This App" style="background:rgba(255,255,255,.9); color:var(--primary-dark);"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></button>
-          <button class="hbcChatBtn" onclick="openDevChat('support')" title="Chat with Developer">💬</button>
+          <button class="hbcChatBtn" id="hbcSettingsBtn" onclick="toggleHomeSettingsPanel(event)" title="سیٹنگز">⚙️</button>
+          <button class="hbcChatBtn" onclick="shareAppLink()" title="یہ ایپ شیئر کریں" style="background:rgba(255,255,255,.9); color:var(--primary-dark);"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></button>
+          <button class="hbcChatBtn" onclick="openDevChat('support')" title="ڈویلپر سے بات کریں">💬</button>
         </div>
         <div class="hbcLastBackupLine admin-only" id="hbcLastBackupLine"></div>
       </div>
@@ -2117,9 +2117,9 @@
 
       <!-- ---------- 📅 SUBSCRIPTION BOXES — تین الگ خوبصورت ڈبے، ایک ہی لائن میں ---------- -->
       <div class="subBoxRow" id="subBoxRow" style="display:none;">
-        <div class="subBox" id="subBoxStart"><div class="subBoxLabel" id="subBoxStartLabel">Subscribed</div><div class="subBoxVal" id="subBoxStartVal">—</div></div>
-        <div class="subBox" id="subBoxEnd"><div class="subBoxLabel">Expires</div><div class="subBoxVal" id="subBoxEndVal">—</div></div>
-        <div class="subBox" id="subBoxDays"><div class="subBoxLabel">Remaining</div><div class="subBoxVal" id="subBoxDaysVal">—</div></div>
+        <div class="subBox" id="subBoxStart"><div class="subBoxLabel" id="subBoxStartLabel">سبسکرائب شدہ</div><div class="subBoxVal" id="subBoxStartVal">—</div></div>
+        <div class="subBox" id="subBoxEnd"><div class="subBoxLabel">ختم ہونے کی تاریخ</div><div class="subBoxVal" id="subBoxEndVal">—</div></div>
+        <div class="subBox" id="subBoxDays"><div class="subBoxLabel">باقی دن</div><div class="subBoxVal" id="subBoxDaysVal">—</div></div>
       </div>
 
       <!-- ---------- 🎁 روزانہ ایک بار، ہلکا سا چمکتا/حرکت کرتا یاد دہانی Toast — کوئی بٹن نہیں، خود بخود 4.5 سیکنڈ میں غائب ---------- -->
@@ -5790,11 +5790,16 @@ async function resyncLicenseOnline(){
 }
 
 function isSubscriptionActive(){
+  // ---------- 🔓 یہ ذاتی/سنگل یوزر ایپ ہے، کسی کو بیچنی نہیں — اس لیے سبسکرپشن گیٹ ہمیشہ کے لیے بائی پاس کر دیا گیا ہے۔
+  // اصل لاجک نیچے محفوظ ہے (comment میں)، اگر کبھی مستقبل میں دوبارہ سبسکرپشن سسٹم چاہیے ہو تو صرف ایک لائن کی تبدیلی سے واپس آ سکتا ہے ----------
+  return true;
+  /* اصل لاجک:
   const exp = AppState.settings.subscriptionExpiry;
   if(!exp) return false;
   const today = new Date(); today.setHours(0,0,0,0);
   const expDate = new Date(exp); expDate.setHours(0,0,0,0);
   return expDate >= today;
+  */
 }
 
 function daysLeftInSubscription(){
@@ -5881,7 +5886,10 @@ async function activateSubscription(code){
 function renderSubscriptionBanner(){
   const row = document.getElementById('subBoxRow');
   if(!row) return;
+  // ---------- 🔓 سبسکرپشن گیٹ بائی پاس ہونے کی وجہ سے یہ بینر اب کبھی نظر نہیں آئے گا ----------
+  row.style.display = 'none'; return;
 
+  /* اصل لاجک (اگر مستقبل میں سبسکرپشن دوبارہ فعال کرنی ہو):
   // ---------- صرف Home صفحے پر نظر آئے — باقی تمام صفحات (بشمول Billing) پر چھپی رہے ----------
   const activeScreen = document.querySelector('.screen.active');
   const isHomePage = activeScreen && activeScreen.id === 'screen-home';
@@ -5904,6 +5912,7 @@ function renderSubscriptionBanner(){
 
   // ---------- روزانہ صرف ایک بار: ہلکا Toast یا (آخری 2 دن میں) زیادہ نمایاں پاپ اپ — صرف Free Trial کے دوران ----------
   if(AppState.settings.isOnFreeTrial) maybeShowTrialReminder(daysLeft);
+  */
 }
 
 // ---------- 🎁 روزانہ ایک بار Trial یاد دہانی — 2 دن یا کم بچے ہوں تو زیادہ نمایاں (بٹن والا) پاپ اپ،
@@ -19456,15 +19465,15 @@ function renderHomeSettingsPanel(){
 
   const backupRowHtml = isAdmin ? `
     <div class="hsBackupRow">
-      <div class="hsBackupBtn" onclick="backupToGoogleDrive(); closeHomeSettingsPanel();">${DRIVE_MINI_ICON}<span>Backup</span></div>
-      <div class="hsBackupBtn" onclick="restoreFromGoogleDrive(); closeHomeSettingsPanel();">${DRIVE_MINI_ICON}<span>Restore</span></div>
+      <div class="hsBackupBtn" onclick="backupToGoogleDrive(); closeHomeSettingsPanel();">${DRIVE_MINI_ICON}<span>بیک اپ</span></div>
+      <div class="hsBackupBtn" onclick="restoreFromGoogleDrive(); closeHomeSettingsPanel();">${DRIVE_MINI_ICON}<span>بحال کریں</span></div>
     </div>` : '';
 
   const tabBarHtml = `
     <div class="hsTabBar">
-      <button class="hsTabBtn ${homeSettingsActiveTab === 'theme' ? 'active' : ''}" onclick="switchHomeSettingsTab('theme')">🎨<br>Theme</button>
-      <button class="hsTabBtn ${homeSettingsActiveTab === 'font' ? 'active' : ''}" onclick="switchHomeSettingsTab('font')">🔤<br>App Font</button>
-      <button class="hsTabBtn ${homeSettingsActiveTab === 'card' ? 'active' : ''}" onclick="switchHomeSettingsTab('card')">🏷️<br>Card</button>
+      <button class="hsTabBtn ${homeSettingsActiveTab === 'theme' ? 'active' : ''}" onclick="switchHomeSettingsTab('theme')">🎨<br>تھیم</button>
+      <button class="hsTabBtn ${homeSettingsActiveTab === 'font' ? 'active' : ''}" onclick="switchHomeSettingsTab('font')">🔤<br>فونٹ</button>
+      <button class="hsTabBtn ${homeSettingsActiveTab === 'card' ? 'active' : ''}" onclick="switchHomeSettingsTab('card')">🏷️<br>کارڈ</button>
     </div>`;
 
   let tabContentHtml = '';
