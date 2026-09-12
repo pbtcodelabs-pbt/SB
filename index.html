@@ -632,6 +632,11 @@
   }
   .mocEditBtn{background:#eef2ff;}
   .mocDeleteBtn{background:#fee2e2;}
+  /* ---------- سیریل نمبر بیج — جدول کے تنگ کالم میں بھی 2 ہندسے پورے نظر آئیں، کبھی نہ کٹے ---------- */
+  .mocSerialCell{
+    display:inline-flex; align-items:center; justify-content:center; min-width:26px; height:26px; padding:0 4px;
+    border-radius:50%; background:var(--primary); color:#fff; font-size:11.5px; font-weight:800; box-sizing:border-box;
+  }
 
   /* --- بلنگ ہوم پیج: کمپیکٹ کیٹیگری بٹن (لیفٹ ٹاپ پہ، پروڈکٹ گرڈ کے عین اوپر) —
        دبانے پر نیچے فلوٹنگ پاپ اپ میں کیٹیگری فہرست کھلتی ہے، منتخب کرتے ہی بند ہو جاتی ہے۔
@@ -2129,7 +2134,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1238PM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA0135PM</span>
     </div>
   </div>
 
@@ -3216,24 +3221,27 @@
          (کیٹگری وائز، ہر مکتبے کے لیے مشترکہ آئٹم فہرست، کوئی قیمت/سٹاک نہیں دکھتا) ---------- -->
     <div class="modalOverlay" id="millOrderModal" onclick="if(event.target===this) closeMillOrderModal()">
       <div class="modalBoxWide" dir="rtl" style="width:460px; max-height:92vh; overflow-y:auto;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-          <h3 id="millOrderModalTitle" style="margin:0;">🧾 آرڈر لیں</h3>
-          <div style="display:flex; gap:6px;">
-            <button type="button" onclick="openMillDraftOrders(millOrderActiveSupplierId)" style="padding:7px 10px; background:#fff7ed; color:#9a3412; border:1px solid #fdba74; border-radius:8px; font-size:11.5px; font-weight:800; cursor:pointer;">📝 میرے ڈرافٹ آرڈرز</button>
-            <button type="button" onclick="openMillSentOrders(millOrderActiveSupplierId)" style="padding:7px 10px; background:#eef2ff; color:var(--primary-dark); border:1px solid var(--primary); border-radius:8px; font-size:11.5px; font-weight:800; cursor:pointer;">📋 میرے بھیجے گئے آرڈرز</button>
+        <div style="margin-bottom:10px;">
+          <h3 id="millOrderModalTitle" style="margin:0 0 8px;">🧾 آرڈر لیں</h3>
+          <div style="display:flex; gap:8px;">
+            <button type="button" onclick="openMillDraftOrders(millOrderActiveSupplierId)" style="flex:1; padding:9px 6px; background:#fff7ed; color:#9a3412; border:1px solid #fdba74; border-radius:8px; font-size:12px; font-weight:800; cursor:pointer;">📝 میرے ڈرافٹ آرڈرز</button>
+            <button type="button" onclick="openMillSentOrders(millOrderActiveSupplierId)" style="flex:1; padding:9px 6px; background:#eef2ff; color:var(--primary-dark); border:1px solid var(--primary); border-radius:8px; font-size:12px; font-weight:800; cursor:pointer;">📋 میرے بھیجے گئے آرڈرز</button>
           </div>
         </div>
 
         <div class="mocCategoryCard">
           <div class="billingCategoryRail" id="millOrderCategoryRail" style="margin-bottom:10px;"></div>
-          <button type="button" onclick="openAddMillItemPrompt()" class="mocAddItemBtn">➕ نئی چیز شامل کریں</button>
+          <button type="button" onclick="addMillItemInlineRow()" class="mocAddItemBtn">➕ نئی چیز شامل کریں</button>
         </div>
 
-        <!-- ---------- 🔤 پتلا↔موٹا سلائیڈر — نام کے فونٹ کی موٹائی، بالکل فروٹ منڈی کے آرڈر ٹیکنگ جیسا ---------- -->
-        <div style="display:flex; align-items:center; gap:10px; background:#eef2ff; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
+        <!-- ---------- 🔤 پتلا↔موٹا سلائیڈر + فونٹ سلیکشن — بالکل فروٹ منڈی کے آرڈر ٹیکنگ جیسا ---------- -->
+        <div style="display:flex; align-items:center; gap:10px; background:#eef2ff; border-radius:10px; padding:8px 12px; margin-bottom:6px;">
           <span style="font-size:12px; font-weight:700; color:var(--primary-dark);">پتلا</span>
           <input type="range" min="400" max="900" step="100" value="700" oninput="setMocFontWeight(this.value)" style="flex:1;">
           <span style="font-size:12px; font-weight:700; color:var(--primary-dark);">موٹا</span>
+        </div>
+        <div style="margin-bottom:10px;">
+          <select id="mocFontFamilySelect" onchange="setMocFontFamily(this.value)" style="width:100%; padding:8px; border:1px solid #dbe1ea; border-radius:8px; font-size:13px;"></select>
         </div>
 
         <div id="millOrderItemsList"></div>
@@ -4169,16 +4177,16 @@
     <div class="modalOverlay" id="poPreviewModal" onclick="if(event.target===this) closePoPreview()">
       <div class="invoicePreviewBox">
         <div class="previewHeader">
-          <strong>📦 Purchase Order</strong>
+          <strong>📦 پرچیز آرڈر</strong>
           <span style="cursor:pointer;" onclick="closePoPreview()">✖</span>
         </div>
 
         <div class="previewStyleControls compactPsc">
           <div class="pscCompactRow pscEssentialRow">
             <select id="popscAlignSelect" onchange="setPoAlign(this.value)" class="pscDropdown">
-              <option value="left">⬅ Left</option>
-              <option value="center">↔ Center</option>
-              <option value="right">➡ Right</option>
+              <option value="left">⬅ بائیں</option>
+              <option value="center">↔ درمیان</option>
+              <option value="right">➡ دائیں</option>
             </select>
             <div class="pscStepperGroup">
               <span class="pscLabel">.00</span>
@@ -4186,7 +4194,7 @@
               <span class="pscValue" id="popscDecimalsVal">0</span>
               <button onclick="adjustPoStyle('poPriceDecimals', 1, 0, 4)">+</button>
             </div>
-            <button type="button" class="pscMoreToggleBtn" id="popscMoreToggleBtn" onclick="togglePscMoreOptions('popscMoreWrap','popscMoreToggleBtn')">⚙️ More ▾</button>
+            <button type="button" class="pscMoreToggleBtn" id="popscMoreToggleBtn" onclick="togglePscMoreOptions('popscMoreWrap','popscMoreToggleBtn')">⚙️ مزید ▾</button>
           </div>
           <div class="pscMoreWrap" id="popscMoreWrap">
             <div class="pscCompactRow">
@@ -4204,11 +4212,11 @@
               </div>
             </div>
             <div class="pscCompactRow">
-              <button id="popscBoldBtn" class="pscToggleBtn" onclick="togglePoBold()">𝐁 Bold</button>
-              <select id="popscVAlignSelect" onchange="setPoVAlign(this.value)" class="pscDropdown" title="Vertical align within row">
-                <option value="top">⬆ Top</option>
-                <option value="middle">↕ Middle</option>
-                <option value="bottom">⬇ Bottom</option>
+              <button id="popscBoldBtn" class="pscToggleBtn" onclick="togglePoBold()">𝐁 بولڈ</button>
+              <select id="popscVAlignSelect" onchange="setPoVAlign(this.value)" class="pscDropdown" title="قطار میں عمودی الائنمنٹ">
+                <option value="top">⬆ اوپر</option>
+                <option value="middle">↕ درمیان</option>
+                <option value="bottom">⬇ نیچے</option>
               </select>
             </div>
             <div class="pscCompactRow">
@@ -4217,11 +4225,11 @@
             </div>
             <div class="pscCompactRow">
               <label class="pscCheckLabel">
-                <input type="checkbox" id="popscA4Chk" onchange="togglePoPaperStyle(this.checked)"> 🖨️ Print A4
+                <input type="checkbox" id="popscA4Chk" onchange="togglePoPaperStyle(this.checked)"> 🖨️ A4 پرنٹ
               </label>
               <div id="popscOrientRow" style="display:none; gap:4px; align-items:center;">
-              <button type="button" id="popscOrientPortraitBtn" onclick="setPoOrientation('portrait')" class="pscToggleBtn">📄 Portrait</button>
-              <button type="button" id="popscOrientLandscapeBtn" onclick="setPoOrientation('landscape')" class="pscToggleBtn">📃 Landscape</button>
+              <button type="button" id="popscOrientPortraitBtn" onclick="setPoOrientation('portrait')" class="pscToggleBtn">📄 کھڑا</button>
+              <button type="button" id="popscOrientLandscapeBtn" onclick="setPoOrientation('landscape')" class="pscToggleBtn">📃 لیٹا</button>
             </div>
           </div>
         </div>
@@ -4231,18 +4239,18 @@
           <canvas id="poCanvas"></canvas>
         </div>
         <div class="previewActions">
-          <button class="btnPrint" onclick="printPoPreview()">🖨️ Print</button>
-          <button class="btnWhatsapp" onclick="sharePoWhatsapp()">📱 WhatsApp</button>
-          <button class="btnHistory" onclick="sharePoUniversal()" style="display:flex; align-items:center; justify-content:center; gap:6px;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex:0 0 auto;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>Share More</button>
+          <button class="btnPrint" onclick="printPoPreview()">🖨️ پرنٹ کریں</button>
+          <button class="btnWhatsapp" onclick="sharePoWhatsapp()">📱 واٹس ایپ</button>
+          <button class="btnHistory" onclick="sharePoUniversal()" style="display:flex; align-items:center; justify-content:center; gap:6px;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex:0 0 auto;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>مزید شیئر کریں</button>
         </div>
         <div class="previewActions" id="poBtPrintRow" style="padding-top:0;">
-          <button style="background:#e0f2fe; color:#075985; flex:1;" onclick="printViaWebBluetooth('poCanvas')">🔵 Try Direct Bluetooth Print (no app needed)</button>
+          <button style="background:#e0f2fe; color:#075985; flex:1;" onclick="printViaWebBluetooth('poCanvas')">🔵 براہِ راست بلوٹوتھ پرنٹ کریں (کسی ایپ کی ضرورت نہیں)</button>
         </div>
         <div class="previewActions" style="padding-top:0;">
-          <button style="background:#fef9c3; color:#854d0e; flex:1;" onclick="printPoFastText()">⚡ Fast Print (Simple Text — No Fonts/Images)</button>
+          <button style="background:#fef9c3; color:#854d0e; flex:1;" onclick="printPoFastText()">⚡ فاسٹ پرنٹ (سادہ ٹیکسٹ — بغیر فونٹ/تصویر)</button>
         </div>
         <div class="previewActions" id="poA4ShareRow" style="padding-top:0; display:none;">
-          <button style="background:#f0fdf4; color:#166534; flex:1; display:flex; align-items:center; justify-content:center;" onclick="sharePoPdf()"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex:0 0 auto; vertical-align:-3px; margin-right:5px;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>Print/Share A4 PDF</button>
+          <button style="background:#f0fdf4; color:#166534; flex:1; display:flex; align-items:center; justify-content:center;" onclick="sharePoPdf()"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex:0 0 auto; vertical-align:-3px; margin-right:5px;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>A4 PDF پرنٹ/شیئر کریں</button>
         </div>
       </div>
     </div>
@@ -13193,6 +13201,14 @@ function openMillOrderModal(supplierId){
   renderMillOrderItemsList();
   const slider = document.querySelector('#millOrderModal input[type="range"]');
   if(slider) slider.value = mocFontWeight;
+  const fontSel = document.getElementById('mocFontFamilySelect');
+  if(fontSel){
+    if(!fontSel.dataset.filled){
+      fontSel.innerHTML = FONT_PRESETS.map(f => `<option value="${f.family.replace(/"/g,'&quot;')}">${f.label}</option>`).join('');
+      fontSel.dataset.filled = '1';
+    }
+    fontSel.value = mocFontFamily;
+  }
   document.getElementById('millOrderModal').classList.add('show');
 }
 function closeMillOrderModal(){
@@ -13244,9 +13260,46 @@ function setMocFontWeight(val){
   saveToStorage('mocFontWeight', mocFontWeight);
   renderMillOrderItemsList();
 }
+let mocFontFamily = loadFromStorage('mocFontFamily', "'JameelNooriNastaleeqKasheeda',serif");
+function setMocFontFamily(val){
+  mocFontFamily = val;
+  saveToStorage('mocFontFamily', mocFontFamily);
+  renderMillOrderItemsList();
+}
+
+// ---------- ➕ نئی خالی رو — سیدھا جدول کے اندر ہی، ٹائپ کرتے ہی خودکار محفوظ؛ نام خالی چھوڑ کر باہر نکلیں تو رو خودکار حذف ---------- //
+function addMillItemInlineRow(){
+  let categoryId = millOrderCategoryFilter !== 'all' ? millOrderCategoryFilter : (millCategories[0] ? millCategories[0].category_id : null);
+  const newItem = {item_id: nextMillItemId++, name:'', packing:'', refNo:'', category_id: categoryId, serial_no: nextMillItemSerial++, supplier_id: millOrderActiveSupplierId};
+  millItems.unshift(newItem);
+  saveMillData();
+  renderMillOrderItemsList();
+  setTimeout(() => {
+    const input = document.getElementById('mocNameInput_' + newItem.item_id);
+    if(input) input.focus();
+  }, 30);
+}
+function updateMillItemFieldLive(itemId, field, value){
+  const item = millItems.find(i => i.item_id === itemId);
+  if(!item) return;
+  item[field] = value;
+  saveMillData();
+}
+// ---------- نام کا خانہ خالی چھوڑ کر باہر نکلیں تو وہ پوری رو خودکار حذف ہو جائے ---------- //
+function checkMillItemRowEmpty(itemId){
+  setTimeout(() => {
+    const item = millItems.find(i => i.item_id === itemId);
+    if(item && !item.name.trim()){
+      millItems = millItems.filter(i => i.item_id !== itemId);
+      delete millOrderQtyMap[itemId];
+      saveMillData();
+      renderMillOrderItemsList();
+    }
+  }, 180);
+}
 
 // ---------- 🧾 آرڈر آئٹمز کی جدول نما فہرست — بالکل فروٹ منڈی کے آرڈر ٹیکنگ جیسی: سیریل، نام، پیکنگ، حوالہ نمبر (سٹاک کی جگہ)، مقدار۔
-// سٹکی ہیڈر، پہلے دو کالم منجمد، زیبرا رنگ، RTL ---------- //
+// سٹکی ہیڈر، پہلے دو کالم منجمد، زیبرا رنگ، RTL، نام/پیکنگ/حوالہ نمبر سیدھا خانوں میں لکھ کر محفوظ ---------- //
 function renderMillOrderItemsList(){
   const wrap = document.getElementById('millOrderItemsList');
   if(!wrap) return;
@@ -13260,16 +13313,16 @@ function renderMillOrderItemsList(){
 
   const thBase = "position:-webkit-sticky;position:sticky;top:0;z-index:14;background:rgba(19,78,44,.93);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);color:#fff;font-weight:800;font-size:11px;padding:6px 3px;white-space:nowrap;text-align:center;border-left:1px solid rgba(255,255,255,.15);box-sizing:border-box;";
   const tdBase = "padding:5px 3px;border-bottom:1.5px solid #dbe1ea;border-left:1px solid #eef1f5;text-align:center;vertical-align:middle;box-sizing:border-box;font-weight:700;";
-  const urduFont = "font-family:'JameelNooriNastaleeqKasheeda','JameelNooriNastaleeqRegular',serif;";
-  const measUrduFontMoc = `700 13.5px 'JameelNooriNastaleeqKasheeda',serif`;
-  const measPackFontMoc = `700 11.5px 'JameelNooriNastaleeqKasheeda',serif`;
+  const urduFont = `font-family:${mocFontFamily};`;
+  const measUrduFontMoc = `700 13.5px ${mocFontFamily}`;
+  const measPackFontMoc = `700 11.5px ${mocFontFamily}`;
   const measNumFontMoc = "900 12.5px Arial,Helvetica,sans-serif";
 
-  const serialW = autoColWidthMoc('#', items.map(i => i.serial_no ?? '?'), measNumFontMoc, {min:32, max:48, pad:14});
-  const nameW = autoColWidthMoc('نام', items.map(i => i.name), measUrduFontMoc, {min:70, max:190, pad:24});
-  const packW = autoColWidthMoc('پیکنگ', items.map(i => i.packing || ''), measPackFontMoc, {min:40, max:90, pad:14});
-  const refW = autoColWidthMoc('حوالہ نمبر', items.map(i => i.refNo || ''), measPackFontMoc, {min:50, max:100, pad:14});
-  let qtyW = Math.max(96, autoColWidthMoc('مقدار', items.map(i => millOrderQtyMap[i.item_id] || ''), measNumFontMoc, {min:30, max:60, pad:10}) + 66);
+  const serialW = autoColWidthMoc('#', items.map(i => i.serial_no ?? '?'), measNumFontMoc, {min:34, max:50, pad:14});
+  const nameW = Math.max(110, autoColWidthMoc('نام', items.map(i => i.name), measUrduFontMoc, {min:70, max:190, pad:24}));
+  const packW = Math.max(64, autoColWidthMoc('پیکنگ', items.map(i => i.packing || ''), measPackFontMoc, {min:40, max:90, pad:14}));
+  const refW = Math.max(64, autoColWidthMoc('حوالہ نمبر', items.map(i => i.refNo || ''), measPackFontMoc, {min:50, max:100, pad:14}));
+  let qtyW = 118; // ---------- 2 ڈیجٹ مقدار پوری نظر آئے، اس لیے مقررہ چوڑی جگہ ----------
 
   const colWidths = [serialW, nameW, packW, refW, qtyW];
   const rightOffsets = [0, colWidths[0]];
@@ -13282,19 +13335,31 @@ function renderMillOrderItemsList(){
     return `
       <tr>
         <td style="${tdBase}${frozenTd(0)}"><span class="mocSerialCell">${i.serial_no}</span></td>
-        <td style="${tdBase}${frozenTd(1)}text-align:right;padding-inline-end:8px;${urduFont}font-size:13.5px;font-weight:${mocFontWeight};">${i.name}</td>
-        <td style="${tdBase}background:${rowBg};${urduFont}font-size:11.5px;">${i.packing || ''}</td>
-        <td style="${tdBase}background:${rowBg};font-weight:800; color:#134e2c;">${i.refNo || '—'}</td>
-        <td style="${tdBase}background:${rowBg};padding:4px 3px;">
-          <div style="display:flex; align-items:center; justify-content:center; gap:9px; padding-inline-end:6px;">
-            <input type="text" inputmode="decimal" value="${qty || ''}" placeholder="0" onfocus="this.select()" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:42px;box-sizing:border-box;padding:5px 2px;border:1.5px solid ${checked?'var(--primary)':'#dbe1ea'};border-radius:7px;font-size:12.5px;text-align:center;font-weight:900;background:#fff;font-family:Arial,Helvetica,sans-serif;">
-            <button type="button" onclick="stepMillItemQty(${i.item_id},1)" style="width:27px;height:27px;border:none;border-radius:7px;background:#dcfce7;color:#15803d;font-size:15px;font-weight:900;cursor:pointer;padding:0;flex:0 0 auto;line-height:1;">+</button>
-            <button type="button" onclick="stepMillItemQty(${i.item_id},-1)" style="width:27px;height:27px;border:none;border-radius:7px;background:#fee2e2;color:#b91c1c;font-size:15px;font-weight:900;cursor:pointer;padding:0;flex:0 0 auto;line-height:1;">−</button>
-          </div>
+        <td style="${tdBase}${frozenTd(1)}padding:3px;">
+          <input type="text" id="mocNameInput_${i.item_id}" value="${(i.name||'').replace(/"/g,'&quot;')}" placeholder="نام لکھیں" dir="rtl"
+                 oninput="updateMillItemFieldLive(${i.item_id},'name',this.value)" onblur="checkMillItemRowEmpty(${i.item_id})"
+                 style="width:100%; box-sizing:border-box; border:1.5px solid transparent; border-radius:6px; background:transparent; padding:5px 6px; text-align:right; ${urduFont} font-size:13.5px; font-weight:${mocFontWeight};"
+                 onfocus="this.style.borderColor='var(--primary)'; this.style.background='#fff';">
         </td>
-        <td style="display:none;">
-          <button onclick="editMillItemPrompt(${i.item_id})">✏️</button>
-          <button onclick="deleteMillItemConfirm(${i.item_id})">🗑️</button>
+        <td style="${tdBase}background:${rowBg};padding:3px;">
+          <input type="text" value="${(i.packing||'').replace(/"/g,'&quot;')}" placeholder="پیکنگ" dir="rtl"
+                 oninput="updateMillItemFieldLive(${i.item_id},'packing',this.value)"
+                 style="width:100%; box-sizing:border-box; border:1.5px solid transparent; border-radius:6px; background:transparent; padding:5px 4px; text-align:center; ${urduFont} font-size:11.5px;"
+                 onfocus="this.style.borderColor='var(--primary)'; this.style.background='#fff';">
+        </td>
+        <td style="${tdBase}background:${rowBg};padding:3px;">
+          <input type="text" value="${(i.refNo||'').replace(/"/g,'&quot;')}" placeholder="—"
+                 oninput="updateMillItemFieldLive(${i.item_id},'refNo',this.value)"
+                 style="width:100%; box-sizing:border-box; border:1.5px solid transparent; border-radius:6px; background:transparent; padding:5px 4px; text-align:center; font-weight:800; color:#134e2c; font-size:12px;"
+                 onfocus="this.style.borderColor='var(--primary)'; this.style.background='#fff';">
+        </td>
+        <td style="${tdBase}background:${rowBg};padding:4px 3px;">
+          <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+            <input type="text" inputmode="decimal" value="${qty || ''}" placeholder="0" onfocus="this.select()" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:34px;box-sizing:border-box;padding:5px 1px;border:1.5px solid ${checked?'var(--primary)':'#dbe1ea'};border-radius:7px;font-size:12.5px;text-align:center;font-weight:900;background:#fff;font-family:Arial,Helvetica,sans-serif;">
+            <button type="button" onclick="stepMillItemQty(${i.item_id},1)" style="width:25px;height:25px;border:none;border-radius:7px;background:#dcfce7;color:#15803d;font-size:14px;font-weight:900;cursor:pointer;padding:0;flex:0 0 auto;line-height:1;">+</button>
+            <button type="button" onclick="stepMillItemQty(${i.item_id},-1)" style="width:25px;height:25px;border:none;border-radius:7px;background:#fee2e2;color:#b91c1c;font-size:14px;font-weight:900;cursor:pointer;padding:0;flex:0 0 auto;line-height:1;">−</button>
+            <button type="button" onclick="deleteMillItemConfirm(${i.item_id})" title="حذف" style="width:25px;height:25px;border:none;border-radius:7px;background:#fef2f2;color:#b91c1c;font-size:13px;cursor:pointer;padding:0;flex:0 0 auto;">🗑️</button>
+          </div>
         </td>
       </tr>`;
   }).join('');
@@ -13308,23 +13373,12 @@ function renderMillOrderItemsList(){
   const totalTableW = colWidths.reduce((a,b) => a+b, 0);
 
   wrap.innerHTML = `
-    <div style="width:100%; max-height:66vh; overflow:auto; -webkit-overflow-scrolling:touch; border-radius:12px; border:1.5px solid #cbd5e1; box-shadow:0 3px 10px rgba(0,0,0,.1);">
+    <div style="width:100%; max-height:70vh; overflow:auto; -webkit-overflow-scrolling:touch; border-radius:12px; border:1.5px solid #cbd5e1; box-shadow:0 3px 10px rgba(0,0,0,.1);">
       <table dir="rtl" style="border-collapse:separate; border-spacing:0; width:${totalTableW}px; table-layout:fixed; font-size:12.5px;">
         ${colgroupHtml}
         <thead>${theadHtml}</thead>
         <tbody>${rows}</tbody>
       </table>
-    </div>
-    <!-- ---------- ✏️ ترمیم/🗑️ حذف — ایک اضافی سطر میں، تاکہ جدول کے تنگ خانوں میں غلطی سے نہ دبیں ---------- -->
-    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">
-      ${items.map(i => `
-        <div style="display:flex; align-items:center; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px; padding:5px 9px;">
-          <span style="font-size:11.5px; font-weight:800; color:var(--muted);">#${i.serial_no}</span>
-          <span style="font-size:12px; font-weight:700;">${i.name}</span>
-          <button onclick="editMillItemPrompt(${i.item_id})" style="background:none; border:none; cursor:pointer; font-size:13px;">✏️</button>
-          <button onclick="deleteMillItemConfirm(${i.item_id})" style="background:none; border:none; cursor:pointer; font-size:13px;">🗑️</button>
-        </div>
-      `).join('')}
     </div>
   `;
 }
@@ -15333,7 +15387,7 @@ async function renderAdvOrderToCanvas(order){
   const tableH = headerH + (order.items.length * rowH);
 
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.advOrderFontId) || FONT_PRESETS[0];
-  const canvasFontFamily = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const canvasFontFamily = selectedFontPreset.family;
   const F = (spec) => spec.replace(/(\d+)px/, (m, n) => Math.round(n * scale) + 'px') + ` ${bold ? 'bold' : ''} ${canvasFontFamily}`.replace(/bold\s+bold/, 'bold');
   const fmt = (n) => (Number(n)||0).toFixed(decimals);
   const m = useA4 ? 1.6 : 1; // ---------- A4 پر اضافی مارجن/سپیسنگ ----------
@@ -15633,7 +15687,7 @@ async function renderPoToCanvas(){
   const tableH = headerH + (po.items.length * rowH);
 
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.poFontId) || FONT_PRESETS[0];
-  const canvasFontFamily = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const canvasFontFamily = selectedFontPreset.family;
   const F = (spec) => spec.replace(/(\d+)px/, (m, n) => Math.round(n * scale) + 'px') + ` ${bold ? 'bold' : ''} ${canvasFontFamily}`.replace(/bold\s+bold/, 'bold');
   const fmt = (n) => (Number(n)||0).toFixed(decimals);
 
@@ -15711,22 +15765,22 @@ async function renderPoToCanvas(){
   ctx.strokeRect(tableLeft + 1, bannerTop + 1, tableRight - tableLeft - 2, bannerH - 2);
   ctx.fillStyle = rc.border;
   ctx.font = F('bold 18px');
-  ctx.fillText(received ? '✅ GOODS RECEIVED' : '📦 PURCHASE ORDER', pxWidth/2, bannerTop + 22 * scale);
+  ctx.fillText(received ? '✅ مال موصول ہو گیا' : '📦 پرچیز آرڈر', pxWidth/2, bannerTop + 22 * scale);
   ctx.font = F('bold 13px');
-  ctx.fillText(received ? 'Stock updated' : 'Pending — not yet received', pxWidth/2, bannerTop + 40 * scale);
+  ctx.fillText(received ? 'سٹاک اپڈیٹ ہو گیا' : 'زیر التوا — ابھی موصول نہیں ہوا', pxWidth/2, bannerTop + 40 * scale);
   y = bannerTop + bannerH + 16 * scale;
   ctx.fillStyle = '#000';
 
   ctx.font = F('bold 15px');
-  ctx.fillText('Supplier: ' + s.name, pxWidth/2, y); y += 20 * scale;
+  ctx.fillText('مکتبہ: ' + s.name, pxWidth/2, y); y += 20 * scale;
   if(s.phone){
     ctx.font = F('13px');
     ctx.fillText(s.phone, pxWidth/2, y); y += 20 * scale;
   }
   ctx.font = F('13px');
-  ctx.fillText('Order Date: ' + po.date, pxWidth/2, y); y += 18 * scale;
+  ctx.fillText('آرڈر کی تاریخ: ' + po.date, pxWidth/2, y); y += 18 * scale;
   if(received && po.receivedDate){
-    ctx.fillText('Received: ' + po.receivedDate, pxWidth/2, y); y += 18 * scale;
+    ctx.fillText('وصولی کی تاریخ: ' + po.receivedDate, pxWidth/2, y); y += 18 * scale;
   }
 
   drawSolidLine(ctx, y, pxWidth); y += 16 * scale;
@@ -15758,15 +15812,15 @@ async function renderPoToCanvas(){
   ctx.textAlign = 'center'; ctx.fillText('#', (colX[0]+colX[1])/2, headerBaseline);
   // ---------- Item کا نام ہمیشہ بائیں طرف — باقی تین کالمز (Qty/Cost/Total) الائنمنٹ سیٹنگ کے مطابق حرکت کریں،
   // مگر آئٹم کا نام کبھی سینٹر/رائٹ نہیں ہونا چاہیے (پڑھنے میں مشکل اور بے ڈھنگا لگتا ہے) ----------
-  ctx.textAlign = 'left'; ctx.fillText('Item', colX[1] + padX/2, headerBaseline);
-  ctx.textAlign = 'center'; ctx.fillText('Variant', (colX[2]+colX[3])/2, headerBaseline);
+  ctx.textAlign = 'left'; ctx.fillText('چیز', colX[1] + padX/2, headerBaseline);
+  ctx.textAlign = 'center'; ctx.fillText('پیکنگ', (colX[2]+colX[3])/2, headerBaseline);
   ctx.textAlign = align;
-  ctx.fillText('Qty', colCenterX(colX[3], colX[4]), headerBaseline);
+  ctx.fillText('تعداد', colCenterX(colX[3], colX[4]), headerBaseline);
   if(po.simple){
     ctx.fillText('حوالہ نمبر', colCenterX(colX[4], colX[5]), headerBaseline);
   } else {
-    ctx.fillText('Cost', colCenterX(colX[4], colX[5]), headerBaseline);
-    ctx.fillText('Total', colCenterX(colX[5], colX[6]), headerBaseline);
+    ctx.fillText('لاگت', colCenterX(colX[4], colX[5]), headerBaseline);
+    ctx.fillText('ٹوٹل', colCenterX(colX[5], colX[6]), headerBaseline);
   }
   ctx.fillStyle = '#1a1a1a'; // ---------- باقی قطاریں سفید پس منظر پر ہیں، ان کے لیے واپس گہرا رنگ ----------
   hLineY += headerH;
@@ -15819,7 +15873,7 @@ async function renderPoToCanvas(){
   ctx.textAlign = 'center';
   ctx.font = F('12px');
   ctx.fillStyle = '#64748b';
-  ctx.fillText(`${po.items.length} varieties · ${totalQtyOrdered} total items ordered`, pxWidth/2, y);
+  ctx.fillText(`${po.items.length} اقسام · کل ${totalQtyOrdered} عدد آرڈر کیے گئے`, pxWidth/2, y);
   ctx.fillStyle = '#000';
   y += 22 * scale;
 
@@ -15835,7 +15889,7 @@ async function renderPoToCanvas(){
   ctx.fillStyle = '#000';
   ctx.textAlign = 'center';
   ctx.font = F('13px');
-  ctx.fillText(received ? 'Thank you — stock has been updated.' : 'This order is pending receipt.', pxWidth/2, y); y += 20 * scale;
+  ctx.fillText(received ? 'شکریہ — سٹاک اپڈیٹ ہو گیا ہے۔' : 'یہ آرڈر ابھی وصولی کے منتظر ہے۔', pxWidth/2, y); y += 20 * scale;
 
   if(Math.abs(y - canvas.height) > 4){
     const finalH = Math.round(y + 10);
@@ -18617,7 +18671,7 @@ async function renderInvoiceToCanvas(invoice, paperWidthMM = 80, highlightMatchK
   // صرف نستعلیق کا استثناء ہے: اس کا پیچیدہ عمودی اسٹرکچر چھوٹے تھرمل ڈاٹس پر دھندلا سکتا ہے، اس لیے
   // نستعلیق منتخب ہونے پر پرنٹ خودکار طور پر صاف Arial پر چلا جاتا ہے (باقی سب فونٹ جوں کے توں پرنٹ ہوں گے)۔
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.printFontId) || FONT_PRESETS[0];
-  const canvasFontFamily = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const canvasFontFamily = selectedFontPreset.family;
   const F = (spec) => spec.replace(/(\d+)px/, (m, n) => Math.round(n * fscale) + 'px') + ` ${canvasFontFamily}`;
 
   // ---------- ڈرائنگ سے پہلے یقینی بنائیں کہ منتخب فونٹ مکمل لوڈ ہو چکا ہے (خصوصاً پہلی بار Google Font کے لیے) ----------
@@ -19048,7 +19102,7 @@ async function renderInvoiceToA4Canvas(invoice, highlightMatchKey = null){
   ctx.fillRect(0, 0, pxWidth, estimatedHeight);
 
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.printFontId) || FONT_PRESETS[0];
-  const fontFam = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const fontFam = selectedFontPreset.family;
   const F = (spec) => spec.replace(/(\d+)px/, (m, n) => Math.round(n * fscale) + 'px') + ` ${fontFam}`; // ---------- اب ہر فونٹ سائز بھی Text سلائیڈر کے ساتھ بدلتا ہے ----------
   try{
     await document.fonts.load(`bold 30px ${fontFam}`);
@@ -22739,7 +22793,7 @@ async function renderReportToCanvas(){
   const decimals = AppState.settings.reportPriceDecimals ?? 0; // ---------- بل کی طرح — رپورٹ کی قیمتوں کے ڈیسیمل پوائنٹس کنٹرول ----------
 
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.reportFontId) || FONT_PRESETS[0];
-  const fontFam = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const fontFam = selectedFontPreset.family;
   try{
     await document.fonts.load(`bold 20px ${fontFam}`);
     await document.fonts.load(`13px ${fontFam}`);
@@ -23111,7 +23165,7 @@ async function renderTodaySaleReportToCanvas(){
   const align = AppState.settings.reportAlign || 'left';
   const decimals = AppState.settings.reportPriceDecimals ?? 0;
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.reportFontId) || FONT_PRESETS[0];
-  const fontFam = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const fontFam = selectedFontPreset.family;
   try{
     await document.fonts.load(`bold 20px ${fontFam}`);
     await document.fonts.load(`13px ${fontFam}`);
@@ -23647,7 +23701,7 @@ async function renderDiarySummaryReportToCanvas(){
   const decimals = AppState.settings.reportPriceDecimals ?? 0;
   const fmt = (n) => Number(n||0).toFixed(decimals);
   const selectedFontPreset = FONT_PRESETS.find(f => f.id === AppState.settings.reportFontId) || FONT_PRESETS[0];
-  const fontFam = selectedFontPreset.isNastaleeq ? 'Arial, sans-serif' : selectedFontPreset.family;
+  const fontFam = selectedFontPreset.family;
   try{
     await document.fonts.load(`bold 20px ${fontFam}`);
     await document.fonts.load(`13px ${fontFam}`);
