@@ -2071,7 +2071,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1018AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1023AM</span>
     </div>
   </div>
 
@@ -6465,6 +6465,7 @@ function backupNowFromReminder(){
 
 // ---------- سادہ Toast — لاگ ان کے بعد چند سیکنڈ کے لیے نظر آئے، خود بخود غائب ہو جائے ----------
 function showRoleToast(role, name){
+  return; // ---------- صارف کی ہدایت پر مکمل بند — یہ "Admin/Salesman" ٹوسٹ ہر لاگ ان/ری فریش پر بار بار نظر آتا تھا، اب کبھی نہیں دکھے گا (فنکشن خود موجود رہے گا) ----------
   const roleLabel = role === 'admin' ? '🔑 Admin' : '🧑‍💼 Salesman';
   const toast = document.createElement('div');
   toast.className = 'roleToast';
