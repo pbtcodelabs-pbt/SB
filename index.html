@@ -1500,8 +1500,8 @@
     padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px) + 24px);
   }
 
-  /* --- اصل باڈی: بائیں طرف چھوٹے 3D آئیکن بٹنوں کا گہرے رنگ کا لمبا کالم + دائیں طرف اسکرول ہونے والا مرکزی حصہ --- */
-  .profileBodyFlex{display:flex; align-items:stretch; flex:1 1 auto; min-height:0;}
+  /* --- اصل باڈی: دائیں طرف چھوٹے 3D آئیکن بٹنوں کا گہرے رنگ کا لمبا کالم + بائیں طرف اسکرول ہونے والا مرکزی حصہ --- */
+  .profileBodyFlex{display:flex; flex-direction:row-reverse; align-items:stretch; flex:1 1 auto; min-height:0;}
   .profileSidebar{
     flex:0 0 64px; display:flex; flex-direction:column; align-items:center; gap:8px;
     padding:14px 6px; background:rgba(0,0,0,.08); overflow-y:auto;
@@ -2066,7 +2066,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA0727AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA0934AM</span>
     </div>
   </div>
 
@@ -2882,7 +2882,7 @@
             <div class="pNicknameTag" id="profileNicknameTag" onclick="editProfileNickname()"></div>
             <div class="profileHeadContacts" id="profileHeadContacts"></div>
           </div>
-          <span class="closeBtn" onclick="openEditPartyModal()" title="Edit" style="margin-inline-end:6px;">✏️</span>
+          <span class="closeBtn" onclick="openEditPartyModal()" title="ترمیم" style="margin-inline-end:6px;">✏️</span>
           <span class="closeBtn" onclick="closeProfileModal()">✖</span>
         </div>
         <div class="profileBodyFlex">
@@ -2901,7 +2901,7 @@
       <div class="profileBox" style="width:440px;">
         <div class="profileHead">
           <div class="pAvatarLg">🏦</div>
-          <div class="pInfo"><div class="pName" id="sbaModalTitle">➕ Add Bank/Wallet Account</div></div>
+          <div class="pInfo"><div class="pName" id="sbaModalTitle">➕ بینک/والٹ اکاؤنٹ شامل کریں</div></div>
           <span class="closeBtn" onclick="closeSupplierBankAccountModal()">✖</span>
         </div>
         <div class="profileBody">
@@ -3356,7 +3356,7 @@
       </div>
       <div class="pfCustomRange" id="trendCustomRangeRow" style="display:none;">
         <input type="date" id="trendCustomFrom" onchange="renderTrendsScreen()">
-        <span style="font-size:11px; color:var(--muted);">to</span>
+        <span style="font-size:11px; color:var(--muted);">تا</span>
         <input type="date" id="trendCustomTo" onchange="renderTrendsScreen()">
       </div>
       <div id="trendRangeLabel" style="text-align:center; font-size:11.5px; color:var(--muted); font-weight:600; margin:4px 0 10px;"></div>
@@ -12621,9 +12621,9 @@ function renderAvatarInto(elId, photo, emoji){
 function buildContactButtons(phone, email){
   const waDigits = phone ? formatPhoneForWhatsApp(phone) : '';
   const phoneHtml = phone ? `
-    <a class="cCall" href="tel:+${waDigits}" title="Call">📞</a>
-    <a class="cWhatsapp" href="https://wa.me/${waDigits}" target="_blank" rel="noopener" title="WhatsApp">💬</a>
-    <a class="cSms" href="sms:+${waDigits}" title="SMS">✉️</a>
+    <a class="cCall" href="tel:+${waDigits}" title="کال">📞</a>
+    <a class="cWhatsapp" href="https://wa.me/${waDigits}" target="_blank" rel="noopener" title="واٹس ایپ">💬</a>
+    <a class="cSms" href="sms:+${waDigits}" title="ایس ایم ایس">✉️</a>
   ` : `
     <span class="cCall cDisabled">📞</span>
     <span class="cWhatsapp cDisabled">💬</span>
@@ -12631,7 +12631,7 @@ function buildContactButtons(phone, email){
   `;
   // ---------- جی میل کا آئیکن — کمپوز باکس براہ راست اسی ای میل ایڈریس کے ساتھ کھلے گا ----------
   const gmailHtml = email
-    ? `<a class="cGmail" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}" target="_blank" rel="noopener" title="Gmail">📧</a>`
+    ? `<a class="cGmail" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}" target="_blank" rel="noopener" title="جی میل">📧</a>`
     : `<span class="cGmail cDisabled">📧</span>`;
 
   return phoneHtml + gmailHtml;
@@ -12689,8 +12689,8 @@ let profilePoFilter = { status:'all', dateKey:'all', customFrom:'', customTo:'' 
 // ---------- فلٹر بار کا مشترکہ HTML (Bills اور Purchase Orders دونوں کے لیے استعمال ہوتا ہے) ----------
 function buildFilterBarHtml(prefix, statusOptions, filterState, onChangeFn){
   const dateOptions = [
-    ['all','All Time'], ['today','Today'], ['week','This Week'], ['lastweek','Last Week'],
-    ['month','This Month'], ['lastmonth','Last Month'], ['year','This Year'], ['custom','Custom Range…']
+    ['all','تمام وقت'], ['today','آج'], ['week','اس ہفتے'], ['lastweek','پچھلا ہفتہ'],
+    ['month','اس مہینے'], ['lastmonth','پچھلا مہینہ'], ['year','اس سال'], ['custom','اپنی مرضی کی تاریخ…']
   ];
   const tabsHtml = statusOptions.map(([key,label]) =>
     `<button class="${filterState.status===key?'active':''}" onclick="${onChangeFn}('status','${key}')">${label}</button>`
@@ -12703,7 +12703,7 @@ function buildFilterBarHtml(prefix, statusOptions, filterState, onChangeFn){
       <input type="date" id="${prefix}CustomFrom" value="${filterState.customFrom||''}">
       <span style="font-size:11px; color:var(--muted);">to</span>
       <input type="date" id="${prefix}CustomTo" value="${filterState.customTo||''}">
-      <button onclick="${onChangeFn}('customApply', null)">Apply</button>
+      <button onclick="${onChangeFn}('customApply', null)">لاگو کریں</button>
     </div>` : '';
   return `<div class="pfFilterBar"><div class="pfStatusTabs">${tabsHtml}</div>${dateSelectHtml}${customRangeHtml}</div>`;
 }
@@ -12740,7 +12740,7 @@ function openCustomerProfile(customerId){
   renderAvatarInto('profileAvatar', c.photo, '👤');
   document.getElementById('profileName').textContent = c.name;
   document.getElementById('profileMeta').innerHTML = c.phone
-    ? `<a href="tel:+${formatPhoneForWhatsApp(c.phone)}">📱 ${c.phone}</a>` : 'No phone number saved';
+    ? `<a href="tel:+${formatPhoneForWhatsApp(c.phone)}">📱 ${c.phone}</a>` : 'کوئی فون نمبر محفوظ نہیں';
   document.getElementById('profileHeadContacts').innerHTML = buildContactButtons(c.phone);
   document.getElementById('profileEmailRow').style.display = 'none'; // یہ خانہ فی الحال صرف سپلائر پروفائل کے لیے ہے
   renderProfileNicknameTag(c.keywords);
@@ -12762,7 +12762,7 @@ function openCustomerProfile(customerId){
     <button style="background:linear-gradient(155deg,#f59e0b,#c2410c);" onclick="closeProfileModal(); openOpeningBalanceModal(${c.customer_id});"><span class="sideIcon">⚖️</span><span class="sideLabel">Opening Bal.</span></button>
     ${c.total_receivable > 0 ? `<button style="background:linear-gradient(155deg,#fb923c,#c2410c);" onclick="openCustomerReminderModal(${c.customer_id})"><span class="sideIcon">📢</span><span class="sideLabel">Remind</span></button>` : ''}
     <button style="background:linear-gradient(155deg,#8b5cf6,#5b21b6);" onclick="shareCustomerProfile(${c.customer_id})"><span class="sideIcon">🪪</span><span class="sideLabel">Profile</span></button>
-    <button id="profileModeBtn" style="background:linear-gradient(155deg,#475569,#1e293b);" onclick="toggleProfileMainMode()"><span class="sideIcon">📜</span><span class="sideLabel">Transactions</span></button>
+    <button id="profileModeBtn" style="background:linear-gradient(155deg,#475569,#1e293b);" onclick="toggleProfileMainMode()"><span class="sideIcon">📜</span><span class="sideLabel">لین دین</span></button>
   `;
 
   renderCustomerMainContent(c.customer_id);
@@ -12985,7 +12985,7 @@ function renderPurchaseOrdersScreen(){
         <div class="billActions">
           <button class="btnPrint" onclick="openPoPreview(${po.supplier_id}, ${po.po_idx})">🖨️ Print</button>
           ${isPending
-            ? `<button class="btnReceiveShipment" onclick="openReceiveShipmentModal(${po.supplier_id}, ${po.po_idx})">🚚 Receive Shipment</button>
+            ? `<button class="btnReceiveShipment" onclick="openReceiveShipmentModal(${po.supplier_id}, ${po.po_idx})">🚚 مال وصول کریں</button>
                <button class="btnPrint" onclick="openPoReminderModal(${po.supplier_id}, ${po.po_idx})">📢 Remind</button>
                <button class="btnPrint" style="background:#fee2e2; color:#b91c1c;" onclick="deletePendingPurchaseOrder(${po.supplier_id}, ${po.po_idx}); renderPurchaseOrdersScreen();">🗑️ Delete</button>`
             : `<button class="btnPrint" onclick="openSupplierReturnModal(${po.supplier_id}, ${po.po_idx})">↩️ Return Items</button>`}
@@ -13236,7 +13236,7 @@ function openSupplierProfile(supplierId){
   renderAvatarInto('profileAvatar', s.photo, '🏭');
   document.getElementById('profileName').textContent = s.name;
   document.getElementById('profileMeta').innerHTML = s.phone
-    ? `<a href="tel:+${formatPhoneForWhatsApp(s.phone)}">📱 ${s.phone}</a>` : 'No phone number saved';
+    ? `<a href="tel:+${formatPhoneForWhatsApp(s.phone)}">📱 ${s.phone}</a>` : 'کوئی فون نمبر محفوظ نہیں';
   document.getElementById('profileHeadContacts').innerHTML = buildContactButtons(s.phone, s.email);
   renderProfileNicknameTag(s.keywords);
 
@@ -13244,7 +13244,7 @@ function openSupplierProfile(supplierId){
   emailRow.style.display = 'flex';
   emailRow.innerHTML = `
     <span style="font-size:12px; color:var(--muted);">📧</span>
-    <input type="email" placeholder="Gmail address (optional)" value="${s.email || ''}"
+    <input type="email" placeholder="جی میل ایڈریس (اختیاری)" value="${s.email || ''}"
            onchange="updateSupplierEmail(${s.supplier_id}, this.value)"
            style="flex:1; padding:7px 10px; border:1px solid #dbe1ea; border-radius:8px; font-size:12px;">
   `;
@@ -13252,14 +13252,14 @@ function openSupplierProfile(supplierId){
   const figuresEl = document.getElementById('profileFigures');
   figuresEl.className = 'profileFigures single';
   figuresEl.innerHTML = `
-    <div class="pfBox"><div class="pfLabel">📤 Payable (we owe)</div><div class="pfValue payable">Rs. ${s.total_payable.toLocaleString()}</div></div>
+    <div class="pfBox"><div class="pfLabel">📤 قابلِ ادائیگی (ہم نے دینا ہے)</div><div class="pfValue payable">Rs. ${s.total_payable.toLocaleString()}</div></div>
   `;
 
   // --- بائیں طرف چھوٹے 3D آئیکن بٹنوں کا کالم؛ Transactions سب سے نیچے ---
   document.getElementById('profileQuickActions').innerHTML = `
-    <button style="background:linear-gradient(155deg,#3b82f6,#1e3a8a);" onclick="closeProfileModal(); openMillOrderModal(${s.supplier_id});"><span class="sideIcon">📦</span><span class="sideLabel">New PO</span></button>
-    <button style="background:linear-gradient(155deg,#ef4444,#b91c1c);" onclick="openPaySupplierModal(${s.supplier_id});"><span class="sideIcon">💵</span><span class="sideLabel">Pay Supplier</span></button>
-    <button style="background:linear-gradient(155deg,#8b5cf6,#5b21b6);" onclick="shareSupplierProfile(${s.supplier_id})"><span class="sideIcon">🪪</span><span class="sideLabel">Profile</span></button>
+    <button style="background:linear-gradient(155deg,#3b82f6,#1e3a8a);" onclick="closeProfileModal(); openMillOrderModal(${s.supplier_id});"><span class="sideIcon">📦</span><span class="sideLabel">نیا آرڈر</span></button>
+    <button style="background:linear-gradient(155deg,#ef4444,#b91c1c);" onclick="openPaySupplierModal(${s.supplier_id});"><span class="sideIcon">💵</span><span class="sideLabel">ادائیگی کریں</span></button>
+    <button style="background:linear-gradient(155deg,#8b5cf6,#5b21b6);" onclick="shareSupplierProfile(${s.supplier_id})"><span class="sideIcon">🪪</span><span class="sideLabel">پروفائل</span></button>
     <button id="profileModeBtn" style="background:linear-gradient(155deg,#475569,#1e293b);" onclick="toggleProfileMainMode()"><span class="sideIcon">📜</span><span class="sideLabel">Transactions</span></button>
   `;
 
@@ -13288,25 +13288,25 @@ function renderSupplierPoSection(supplierId){
   orders = orders.filter(po => isDateInRange(po.date, range));
 
   const ordersHtml = orders.length === 0
-    ? `<div class="profileEmpty">No purchase orders match this filter</div>`
+    ? `<div class="profileEmpty">اس فلٹر میں کوئی پرچیز آرڈر نہیں ملا</div>`
     : orders.map(po => {
         const idx = po.po_idx;
         const isPending = po.status !== 'received';
         const daysPending = daysSince(po.date);
-        const itemsDesc = po.items.slice(0,2).map(i => i.name).join(', ') + (po.items.length > 2 ? ` +${po.items.length-2} more` : '');
-        const statusTxt = isPending ? `⏳ Pending • ${daysPending}d` : `✅ Received`;
+        const itemsDesc = po.items.slice(0,2).map(i => i.name).join(', ') + (po.items.length > 2 ? ` +${po.items.length-2} مزید` : '');
+        const statusTxt = isPending ? `⏳ زیر التوا • ${daysPending} دن` : `✅ موصول ہو گیا`;
         const actionBtn = isPending
           ? `<button class="btnReceiveShipment" onclick="event.stopPropagation(); closeProfileModal(); openReceiveShipmentModal(${s.supplier_id}, ${idx});">🚚 Receive Shipment</button>
-             <button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openPoPreview(${s.supplier_id}, ${idx});">👁️ View</button>
-             <button class="btnPrint" onclick="event.stopPropagation(); openPoReminderModal(${s.supplier_id}, ${idx});">📢 Remind</button>
-             <button class="btnPrint" style="background:#fee2e2; color:#b91c1c;" onclick="event.stopPropagation(); deletePendingPurchaseOrder(${s.supplier_id}, ${idx});">🗑️ Delete</button>`
-          : `<button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openPoPreview(${s.supplier_id}, ${idx});">👁️ View</button>
-             <button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openSupplierReturnModal(${s.supplier_id}, ${idx});">↩️ Return</button>`;
+             <button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openPoPreview(${s.supplier_id}, ${idx});">👁️ دیکھیں</button>
+             <button class="btnPrint" onclick="event.stopPropagation(); openPoReminderModal(${s.supplier_id}, ${idx});">📢 یاد دہانی</button>
+             <button class="btnPrint" style="background:#fee2e2; color:#b91c1c;" onclick="event.stopPropagation(); deletePendingPurchaseOrder(${s.supplier_id}, ${idx});">🗑️ حذف کریں</button>`
+          : `<button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openPoPreview(${s.supplier_id}, ${idx});">👁️ دیکھیں</button>
+             <button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openSupplierReturnModal(${s.supplier_id}, ${idx});">↩️ واپسی</button>`;
         return `
         <div class="billRow ${isPending?'pending':''}" style="flex-direction:column; align-items:stretch; gap:6px; cursor:default;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div class="brInfo">
-              <div class="brDate">📅 ${po.date} · ${po.items.length} items · ${statusTxt}</div>
+              <div class="brDate">📅 ${po.date} · ${po.items.length} اشیاء · ${statusTxt}</div>
               <div class="brDesc">${itemsDesc}</div>
             </div>
             <div class="brAmount">Rs. ${po.total.toLocaleString()}</div>
@@ -13316,11 +13316,11 @@ function renderSupplierPoSection(supplierId){
       }).join('');
 
   const filterBarHtml = buildFilterBarHtml('profilePo',
-    [['all','All'],['pending','Pending'],['received','Received']], profilePoFilter, 'applySupplierPoFilter');
+    [['all','تمام'],['pending','زیر التوا'],['received','موصول شدہ']], profilePoFilter, 'applySupplierPoFilter');
 
   document.getElementById('profileSections').innerHTML = `
     ${buildSupplierBankAccountsHtml(s)}
-    <div class="profileSectionTitle"><span>📦 All Purchase Orders</span><span class="cnt">${orders.length} orders</span></div>
+    <div class="profileSectionTitle"><span>📦 تمام پرچیز آرڈرز</span><span class="cnt">${orders.length} آرڈرز</span></div>
     ${filterBarHtml}
     <div id="profilePoListWrap">${ordersHtml}</div>
   `;
@@ -13390,7 +13390,7 @@ function updateSupplierKeywords(supplierId, keywords){
 function renderProfileNicknameTag(keywords){
   const el = document.getElementById('profileNicknameTag');
   if(!el) return;
-  el.innerHTML = keywords ? `🔑 ${keywords}` : `🔑 Add nickname`;
+  el.innerHTML = keywords ? `🔑 ${keywords}` : `🔑 عرفیت شامل کریں`;
 }
 function editProfileNickname(){
   const isCustomer = currentProfileType === 'customers';
@@ -13398,7 +13398,7 @@ function editProfileNickname(){
     ? customersData.find(x => x.customer_id === currentProfileId)
     : suppliersData.find(x => x.supplier_id === currentProfileId);
   if(!rec) return;
-  const val = prompt('Nickname / Keyword for search (e.g. Jago, Peshawar wala):', rec.keywords || '');
+  const val = prompt('عرفیت / تلاش کے لیے مختصر نام (مثلاً: جاگو، پشاور والا):', rec.keywords || '');
   if(val === null) return; // کینسل
   if(isCustomer) updateCustomerKeywords(rec.customer_id, val);
   else updateSupplierKeywords(rec.supplier_id, val);
@@ -13437,30 +13437,30 @@ const BANK_LOGIN_URLS = {
 function buildSupplierBankAccountsHtml(s){
   const accounts = getSupplierBankAccounts(s);
   const listHtml = accounts.length === 0
-    ? `<div class="profileEmpty">No bank/wallet accounts added yet</div>`
+    ? `<div class="profileEmpty">ابھی کوئی بینک/والٹ اکاؤنٹ شامل نہیں</div>`
     : accounts.map((acc, idx) => `
       <div class="bankAccCard">
         <div class="bankAccCardTop">
           <div style="min-width:0;">
-            <div class="bankAccType">${acc.type || 'Bank/Wallet'}</div>
+            <div class="bankAccType">${acc.type || 'بینک/والٹ'}</div>
             ${acc.title ? `<div class="bankAccTitle">${acc.title}</div>` : ''}
           </div>
           <div class="bankAccBtns">
-            <button onclick="openBankLoginPageForAccount(${s.supplier_id}, ${idx})" title="Open bank/wallet login page">↗️</button>
-            <button onclick="openEditSupplierBankAccount(${s.supplier_id}, ${idx})" title="Edit">✏️</button>
-            <button onclick="deleteSupplierBankAccount(${s.supplier_id}, ${idx})" title="Delete">🗑️</button>
+            <button onclick="openBankLoginPageForAccount(${s.supplier_id}, ${idx})" title="بینک/والٹ لاگ ان پیج کھولیں">↗️</button>
+            <button onclick="openEditSupplierBankAccount(${s.supplier_id}, ${idx})" title="ترمیم">✏️</button>
+            <button onclick="deleteSupplierBankAccount(${s.supplier_id}, ${idx})" title="حذف کریں">🗑️</button>
           </div>
         </div>
         <div class="bankAccNumber">${acc.number || '—'}</div>
-        ${acc.uan ? `<div class="bankAccMeta">UAN: ${acc.uan}</div>` : ''}
+        ${acc.uan ? `<div class="bankAccMeta">یو اے این: ${acc.uan}</div>` : ''}
         ${acc.notes ? `<div class="bankAccMeta">${acc.notes}</div>` : ''}
         ${acc.image ? `<img src="${acc.image}" class="bankAccImg">` : ''}
       </div>
     `).join('');
   return `
-    <div class="profileSectionTitle"><span>🏦 Bank / Wallet Accounts</span><span class="cnt">${accounts.length}</span></div>
+    <div class="profileSectionTitle"><span>🏦 بینک / والٹ اکاؤنٹس</span><span class="cnt">${accounts.length}</span></div>
     <div>${listHtml}</div>
-    <button type="button" class="addBankAccBtn" onclick="openAddSupplierBankAccount(${s.supplier_id})">➕ Add Bank/Wallet Account</button>
+    <button type="button" class="addBankAccBtn" onclick="openAddSupplierBankAccount(${s.supplier_id})">➕ بینک/والٹ اکاؤنٹ شامل کریں</button>
   `;
 }
 
@@ -13482,7 +13482,7 @@ function fillSupplierBankAccountModal(acc){
 }
 function openAddSupplierBankAccount(supplierId){
   editingSupplierBankAccount = { supplierId, idx: null };
-  document.getElementById('sbaModalTitle').textContent = '➕ Add Bank/Wallet Account';
+  document.getElementById('sbaModalTitle').textContent = '➕ بینک/والٹ اکاؤنٹ شامل کریں';
   fillSupplierBankAccountModal({});
   document.getElementById('supplierBankAccountModal').classList.add('show');
 }
