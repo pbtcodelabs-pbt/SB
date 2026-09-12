@@ -208,7 +208,7 @@
   .homeSectionLabel::after{content:''; flex:1; height:2px; border-radius:2px;
     background:linear-gradient(90deg, rgba(15,118,110,.25), rgba(15,118,110,0));}
   .homeSectionLabel:first-child{margin-top:1px;}
-  .homeSectionGrid{display:grid; grid-template-columns:repeat(auto-fit, minmax(84px, 1fr)); gap:10px;}
+  .homeSectionGrid{display:grid; grid-template-columns:repeat(auto-fill, 84px); justify-content:start; gap:10px;}
   .homeIconTile{
     position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px;
     padding:14px 6px 11px;
@@ -236,6 +236,12 @@
       0 -3px 6px rgba(0,0,0,.18) inset;
   }
   .homeIconTile .hitIcon{font-size:27px; line-height:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));}
+  /* ---------- 🏪 مکتبے کے سائن بورڈ نما آئیکن کے اندر کا سفید نستعلیق متن ---------- */
+  .homeIconTile .hitBoardText{
+    font-family:'JameelNooriNastaleeqKasheeda','JameelNooriNastaleeqRegular',serif;
+    color:#fff; font-weight:800; font-size:15px; line-height:1.05; text-align:center;
+    text-shadow:0 1px 2px rgba(0,0,0,.4);
+  }
   .homeIconTile .hitLabel{
     font-size:11.5px; font-weight:800; color:var(--text); text-align:center; line-height:1.2;
     text-shadow:0 1px 0 rgba(255,255,255,.7);
@@ -2060,7 +2066,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB11SEPFR0820PM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA0727AM</span>
     </div>
   </div>
 
@@ -3123,6 +3129,39 @@
         <div class="modalBtns">
           <button class="cancelBtn" onclick="closePoModal()">Cancel</button>
           <button class="saveBtn" onclick="savePurchaseOrder()">Save (will be added to stock)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 🧾 مکتبہ آرڈر ٹیکنگ — سادہ سیریل+نام+پیکنگ+مقدار والا آسان پرچیز آرڈر نظام
+         (کیٹگری وائز، ہر مکتبے کے لیے مشترکہ آئٹم فہرست، کوئی قیمت/سٹاک نہیں دکھتا) ---------- -->
+    <div class="modalOverlay" id="millOrderModal" onclick="if(event.target===this) closeMillOrderModal()">
+      <div class="modalBoxWide" style="width:460px; max-height:92vh; overflow-y:auto;">
+        <h3 id="millOrderModalTitle">🧾 آرڈر لیں</h3>
+
+        <div class="billingCategoryRail" id="millOrderCategoryRail" style="margin-bottom:10px;"></div>
+
+        <button type="button" onclick="openAddMillItemPrompt()" style="width:100%; padding:10px; margin-bottom:10px; background:#eef2ff; color:#3730a3; border:1.5px dashed #a5b4fc; border-radius:10px; font-weight:700; cursor:pointer;">➕ نئی چیز شامل کریں</button>
+
+        <div id="millOrderItemsList"></div>
+
+        <div class="modalBtns" style="margin-top:10px;">
+          <button class="cancelBtn" onclick="closeMillOrderModal()">منسوخ</button>
+          <button class="saveBtn" onclick="completeMillOrder()">✅ آرڈر مکمل</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- آرڈر مکمل ہونے کے بعد: واٹس ایپ بھیجیں یا ڈرافٹ کے طور پر محفوظ کریں ---------- -->
+    <div class="modalOverlay" id="millOrderFinishModal" onclick="if(event.target===this) this.classList.remove('show')">
+      <div class="modalBox">
+        <h3>📤 آرڈر مکمل</h3>
+        <div style="font-size:12.5px; color:var(--muted); margin-bottom:10px;">نیچے آرڈر کی تفصیل — بھیجیں یا بعد کے لیے ڈرافٹ محفوظ کر لیں۔</div>
+        <textarea id="millOrderFinishText" readonly style="width:100%; min-height:150px; padding:8px; border:1px solid #dbe1ea; border-radius:8px; font-family:inherit; font-size:13px;"></textarea>
+        <div class="modalBtns">
+          <button class="cancelBtn" onclick="document.getElementById('millOrderFinishModal').classList.remove('show')">بند کریں</button>
+          <button style="background:#25D366; color:#fff; border:none; border-radius:8px; padding:11px; font-weight:700; cursor:pointer;" onclick="sendMillOrderWhatsapp()">💬 واٹس ایپ بھیجیں</button>
+          <button class="saveBtn" onclick="saveMillOrderDraft()">💾 ڈرافٹ سیو کریں</button>
         </div>
       </div>
     </div>
@@ -5998,7 +6037,12 @@ const HOME_TILE_GROUPS_ADMIN = [
   ]},
   { section: '🧑‍🤝‍🧑 پارٹیز', tiles: [
     {icon:'👥', label:'Customers', screen:'customers', hidden:true},
-    {icon:'🚚', label:'مکتبے (سپلائرز)', screen:'suppliers'},
+    // ---------- 🙈 اصل "سپلائرز" فہرست والا ٹائل مین ہوم پیج سے چھپا دیا گیا — اب ہر مکتبے کا اپنا آئیکن براہِ راست نیچے ----------
+    {icon:'🚚', label:'مکتبے (سپلائرز)', screen:'suppliers', hidden:true},
+    // ---------- 🏪 ہر مکتبے کا اپنا سائن بورڈ نما آئیکن — ٹیپ کرتے ہی سیدھا اسی مکتبے کی پروفائل کھلے ----------
+    {millName:'مکتبہ سید احمد شہید', label:'مکتبہ سید احمد شہید', boardColor:'#0b5c46', iconHtml:'<span class="hitBoardText">سید</span>'},
+    {millName:'النقیب سنز', label:'النقیب سنز', boardColor:'#1e3a5f', iconHtml:'<span class="hitBoardText">النقیب</span>'},
+    {millName:'عمر بک ڈپو', label:'عمر بک ڈپو', boardColor:'#7c2d12', iconHtml:'<span class="hitBoardText">عمر بک</span>'},
   ]},
   { section: '📦 پرچیز آرڈرز', tiles: [
     {icon:'📦', label:'پرچیز آرڈرز', screen:'purchaseorders', hidden:true},
@@ -6065,8 +6109,8 @@ function renderHomeIconGrid(){
   const grid = document.getElementById('homeIconGrid');
   if(!grid) return;
   const tileHtml = (t) => `
-    <button class="homeIconTile" onclick="${t.action ? t.action + '()' : `goTo('${t.screen}')`}">
-      <span class="hitIconWrap"><span class="hitIcon">${t.icon}</span></span>
+    <button class="homeIconTile" onclick="${t.millName ? `openMillProfile('${t.millName}')` : (t.action ? t.action + '()' : `goTo('${t.screen}')`)}">
+      <span class="hitIconWrap" ${t.boardColor ? `style="background:${t.boardColor};"` : ''}>${t.iconHtml ? t.iconHtml : `<span class="hitIcon">${t.icon}</span>`}</span>
       <span class="hitLabel">${t.label}</span>
     </button>`;
 
@@ -12990,6 +13034,193 @@ function sendCustomerReminderWhatsapp(){
   document.getElementById('customerReminderModal').classList.remove('show');
 }
 
+// ---------- 🧾 مکتبہ آرڈر ٹیکنگ کا ڈیٹا — سیریل نمبر، نام، پیکنگ (عدد/درجن/گرس/ڈبہ/گز وغیرہ)، کیٹگری —
+// تمام مکتبوں میں ایک ہی مشترکہ آئٹم فہرست؛ نہ قیمت نہ سٹاک، صرف مقدار لکھی جاتی ہے ----------
+let millCategories = loadFromStorage('millCategories', [
+  {category_id:1, name:'کتابیں'},
+  {category_id:2, name:'قرآن پاک'},
+  {category_id:3, name:'سٹیشنری'},
+  {category_id:4, name:'سفید کپڑا'},
+]);
+let nextMillCategoryId = loadFromStorage('nextMillCategoryId', 5);
+let millItems = loadFromStorage('millItems', []); // {item_id, name, packing, category_id, serial_no}
+let nextMillItemId = loadFromStorage('nextMillItemId', 1);
+let nextMillItemSerial = loadFromStorage('nextMillItemSerial', 1);
+let millOrderDrafts = loadFromStorage('millOrderDrafts', []);
+
+let millOrderQtyMap = {};
+let millOrderCategoryFilter = 'all';
+let millOrderActiveSupplierId = null;
+const MILL_PACKING_PRESETS = ['عدد','درجن','گرس','ڈبہ','گز','بنڈل','ریم','پیکٹ','کلو','لٹر'];
+
+function saveMillData(){
+  saveToStorage('millCategories', millCategories);
+  saveToStorage('nextMillCategoryId', nextMillCategoryId);
+  saveToStorage('millItems', millItems);
+  saveToStorage('nextMillItemId', nextMillItemId);
+  saveToStorage('nextMillItemSerial', nextMillItemSerial);
+}
+
+function openMillOrderModal(supplierId){
+  millOrderActiveSupplierId = supplierId;
+  millOrderQtyMap = {};
+  millOrderCategoryFilter = 'all';
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  document.getElementById('millOrderModalTitle').textContent = `🧾 آرڈر لیں — ${s ? s.name : ''}`;
+  renderMillOrderCategoryRail();
+  renderMillOrderItemsList();
+  document.getElementById('millOrderModal').classList.add('show');
+}
+function closeMillOrderModal(){
+  document.getElementById('millOrderModal').classList.remove('show');
+}
+
+function renderMillOrderCategoryRail(){
+  const rail = document.getElementById('millOrderCategoryRail');
+  if(!rail) return;
+  let html = `<div class="categoryPill ${millOrderCategoryFilter==='all'?'active':''}" onclick="setMillOrderCategoryFilter('all')">ہمہ</div>`;
+  html += millCategories.map(c => `<div class="categoryPill ${millOrderCategoryFilter===c.category_id?'active':''}" onclick="setMillOrderCategoryFilter(${c.category_id})">${c.name}</div>`).join('');
+  html += `<div class="categoryPill" style="background:#f1f5f9; color:var(--primary-dark); font-weight:800;" onclick="addMillCategoryPrompt()">➕ کیٹگری</div>`;
+  rail.innerHTML = html;
+}
+function setMillOrderCategoryFilter(id){
+  millOrderCategoryFilter = id;
+  renderMillOrderCategoryRail();
+  renderMillOrderItemsList();
+}
+function addMillCategoryPrompt(){
+  const name = (prompt('نئی کیٹگری کا نام لکھیں:') || '').trim();
+  if(!name) return;
+  if(millCategories.some(c => c.name === name)){ alert('یہ کیٹگری پہلے سے موجود ہے۔'); return; }
+  millCategories.push({category_id: nextMillCategoryId++, name});
+  saveMillData();
+  renderMillOrderCategoryRail();
+}
+
+function renderMillOrderItemsList(){
+  const wrap = document.getElementById('millOrderItemsList');
+  if(!wrap) return;
+  let items = millItems.slice();
+  if(millOrderCategoryFilter !== 'all') items = items.filter(i => i.category_id === millOrderCategoryFilter);
+  items.sort((a,b) => a.serial_no - b.serial_no);
+  if(items.length === 0){
+    wrap.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px 0; font-size:13px;">اس کیٹگری میں ابھی کوئی چیز شامل نہیں — اوپر "➕ نئی چیز شامل کریں" سے شامل کریں</div>';
+    return;
+  }
+  wrap.innerHTML = items.map(i => {
+    const qty = millOrderQtyMap[i.item_id] || 0;
+    return `
+    <div style="display:flex; align-items:center; gap:6px; padding:9px 4px; border-bottom:1px solid #eef1f5;">
+      <span style="width:24px; text-align:center; font-size:11px; font-weight:800; color:var(--muted);">${i.serial_no}</span>
+      <span style="flex:1; font-size:13.5px; font-weight:700; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${i.name}</span>
+      <span style="font-size:10.5px; color:var(--muted); background:#f1f5f9; padding:3px 6px; border-radius:6px; flex:0 0 auto;">${i.packing || '—'}</span>
+      <button onclick="stepMillItemQty(${i.item_id},-1)" style="width:25px; height:25px; border:none; border-radius:7px; background:#fee2e2; color:#b91c1c; font-weight:900; cursor:pointer; flex:0 0 auto;">−</button>
+      <input type="number" value="${qty}" min="0" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:40px; text-align:center; padding:4px 2px; border:1px solid #dbe1ea; border-radius:6px; font-size:12px; flex:0 0 auto;">
+      <button onclick="stepMillItemQty(${i.item_id},1)" style="width:25px; height:25px; border:none; border-radius:7px; background:#dcfce7; color:#15803d; font-weight:900; cursor:pointer; flex:0 0 auto;">+</button>
+      <button onclick="editMillItemPrompt(${i.item_id})" title="ترمیم" style="background:none; border:none; cursor:pointer; font-size:14px; flex:0 0 auto;">✏️</button>
+      <button onclick="deleteMillItemConfirm(${i.item_id})" title="حذف" style="background:none; border:none; cursor:pointer; font-size:14px; flex:0 0 auto;">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+function stepMillItemQty(itemId, delta){
+  const current = Number(millOrderQtyMap[itemId]) || 0;
+  const next = Math.max(0, current + delta);
+  millOrderQtyMap[itemId] = next;
+  renderMillOrderItemsList();
+}
+function setMillItemQty(itemId, val){
+  const qty = Math.max(0, Number(val) || 0);
+  millOrderQtyMap[itemId] = qty;
+  renderMillOrderItemsList();
+}
+
+function openAddMillItemPrompt(){
+  const name = (prompt('چیز کا نام لکھیں:') || '').trim();
+  if(!name) return;
+  const packing = (prompt(`پیکنگ لکھیں (مثلاً: ${MILL_PACKING_PRESETS.join('، ')}):`, '') || '').trim();
+  let categoryId = millOrderCategoryFilter !== 'all' ? millOrderCategoryFilter : (millCategories[0] ? millCategories[0].category_id : null);
+  if(millCategories.length > 1){
+    const catNames = millCategories.map((c,idx) => `${idx+1}) ${c.name}`).join('\n');
+    const pick = prompt(`کیٹگری منتخب کریں (نمبر لکھیں):\n${catNames}`, '1');
+    const idx = Number(pick) - 1;
+    if(millCategories[idx]) categoryId = millCategories[idx].category_id;
+  }
+  millItems.push({item_id: nextMillItemId++, name, packing, category_id: categoryId, serial_no: nextMillItemSerial++});
+  saveMillData();
+  renderMillOrderItemsList();
+}
+
+function editMillItemPrompt(itemId){
+  const item = millItems.find(i => i.item_id === itemId);
+  if(!item) return;
+  const newName = prompt('چیز کا نام:', item.name);
+  if(newName === null) return;
+  const newPacking = prompt('پیکنگ:', item.packing || '');
+  if(newPacking === null) return;
+  item.name = newName.trim() || item.name;
+  item.packing = newPacking.trim();
+  saveMillData();
+  renderMillOrderItemsList();
+}
+
+function deleteMillItemConfirm(itemId){
+  if(!confirm('یہ چیز فہرست سے حذف کر دیں؟')) return;
+  millItems = millItems.filter(i => i.item_id !== itemId);
+  delete millOrderQtyMap[itemId];
+  saveMillData();
+  renderMillOrderItemsList();
+}
+
+function completeMillOrder(){
+  const lines = millItems.filter(i => (millOrderQtyMap[i.item_id] || 0) > 0)
+    .map(i => ({name:i.name, packing:i.packing, qty:millOrderQtyMap[i.item_id]}));
+  if(lines.length === 0){ alert('کم از کم ایک چیز کی مقدار درج کریں۔'); return; }
+  const s = suppliersData.find(x => x.supplier_id === millOrderActiveSupplierId);
+  let text = `📦 پرچیز آرڈر — ${s ? s.name : ''}\n\n`;
+  lines.forEach((l, idx) => { text += `${idx+1}. ${l.name} — ${l.packing ? l.packing + ' ' : ''}${l.qty}\n`; });
+  document.getElementById('millOrderFinishText').value = text;
+  document.getElementById('millOrderFinishModal').classList.add('show');
+}
+
+function sendMillOrderWhatsapp(){
+  const s = suppliersData.find(x => x.supplier_id === millOrderActiveSupplierId);
+  const text = document.getElementById('millOrderFinishText').value;
+  if(s && s.phone){
+    window.open(`https://wa.me/${formatPhoneForWhatsApp(s.phone)}?text=${encodeURIComponent(text)}`, '_blank');
+  } else {
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  }
+}
+
+function saveMillOrderDraft(){
+  const s = suppliersData.find(x => x.supplier_id === millOrderActiveSupplierId);
+  const lines = millItems.filter(i => (millOrderQtyMap[i.item_id] || 0) > 0)
+    .map(i => ({name:i.name, packing:i.packing, qty:millOrderQtyMap[i.item_id]}));
+  millOrderDrafts.push({
+    draft_id: Date.now(),
+    supplier_id: millOrderActiveSupplierId,
+    supplierName: s ? s.name : '',
+    lines,
+    savedAt: new Date().toISOString(),
+  });
+  saveToStorage('millOrderDrafts', millOrderDrafts);
+  alert('ڈرافٹ محفوظ ہو گیا۔');
+  document.getElementById('millOrderFinishModal').classList.remove('show');
+  closeMillOrderModal();
+}
+
+// ---------- 🏪 ہوم پیج کے مکتبے آئیکن سے براہِ راست پروفائل کھولیں — نام سے ڈھونڈیں، نہ ملے تو نیا بنا دیں ----------
+function openMillProfile(millName){
+  let s = suppliersData.find(x => x.name === millName);
+  if(!s){
+    s = {supplier_id: nextSupplierId++, name: millName, phone:'', address:'', keywords:'مکتبہ', photo:null, total_payable:0};
+    suppliersData.push(s);
+    saveToStorage('nextSupplierId', nextSupplierId);
+    saveToStorage('suppliers', suppliersData);
+  }
+  openSupplierProfile(s.supplier_id);
+}
 function openSupplierProfile(supplierId){
   const s = suppliersData.find(x => x.supplier_id === supplierId);
   if(!s) return;
@@ -13026,7 +13257,7 @@ function openSupplierProfile(supplierId){
 
   // --- بائیں طرف چھوٹے 3D آئیکن بٹنوں کا کالم؛ Transactions سب سے نیچے ---
   document.getElementById('profileQuickActions').innerHTML = `
-    <button style="background:linear-gradient(155deg,#3b82f6,#1e3a8a);" onclick="closeProfileModal(); openPoModal(${s.supplier_id});"><span class="sideIcon">📦</span><span class="sideLabel">New PO</span></button>
+    <button style="background:linear-gradient(155deg,#3b82f6,#1e3a8a);" onclick="closeProfileModal(); openMillOrderModal(${s.supplier_id});"><span class="sideIcon">📦</span><span class="sideLabel">New PO</span></button>
     <button style="background:linear-gradient(155deg,#ef4444,#b91c1c);" onclick="openPaySupplierModal(${s.supplier_id});"><span class="sideIcon">💵</span><span class="sideLabel">Pay Supplier</span></button>
     <button style="background:linear-gradient(155deg,#8b5cf6,#5b21b6);" onclick="shareSupplierProfile(${s.supplier_id})"><span class="sideIcon">🪪</span><span class="sideLabel">Profile</span></button>
     <button id="profileModeBtn" style="background:linear-gradient(155deg,#475569,#1e293b);" onclick="toggleProfileMainMode()"><span class="sideIcon">📜</span><span class="sideLabel">Transactions</span></button>
