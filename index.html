@@ -1527,6 +1527,11 @@
   .pfBox .pfValue.wallet{color:var(--success);}
   .pfBox .pfValue.receivable{color:var(--danger);}
   .pfBox .pfValue.payable{color:var(--warning);}
+  /* ---------- سپلائر پروفائل کا قابلِ ادائیگی باکس — بڑا، موٹا، اپنے صاف بیک گراؤنڈ میں، ہمیشہ سب سے اوپر نمایاں ---------- */
+  .pfBox.pfBoxPayableBig{padding:14px 12px; background:linear-gradient(135deg,#fff7ed,#ffedd5); border:1.5px solid #fdba74;}
+  .pfBox.pfBoxPayableBig .pfLabel{font-size:12.5px; font-weight:700; color:#9a3412;}
+  .pfBox.pfBoxPayableBig .pfValue{font-size:28px; font-weight:900; letter-spacing:.3px;}
+  .pfAddAmountBtn{margin-top:8px; padding:7px 14px; border:none; border-radius:9px; background:#c2410c; color:#fff; font-weight:700; font-size:12px; cursor:pointer;}
 
   /* --- سیکشن ٹیبز: تاریخ / bills / پرچیز orders --- */
   .profileSectionTitle{font-size:13px; font-weight:700; color:var(--text); margin:16px 0 8px; display:flex; justify-content:space-between; align-items:center;}
@@ -2066,7 +2071,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1012AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1018AM</span>
     </div>
   </div>
 
@@ -2888,10 +2893,21 @@
         <div class="profileBodyFlex">
           <div class="profileSidebar" id="profileQuickActions"></div>
           <div class="profileMain">
-            <div id="profileSections"></div>
             <div class="profileFigures" id="profileFigures"></div>
             <div id="profileEmailRow" style="display:none; align-items:center; gap:6px; margin-bottom:10px;"></div>
+            <div id="profileSections"></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 🏦 سپلائر اکاؤنٹس موڈل — بینک/والٹ اکاؤنٹس اب پروفائل سے الگ، اپنی صاف جگہ پر ---------- -->
+    <div class="modalOverlay" id="supplierAccountsModal" onclick="if(event.target===this) closeSupplierBankAccountsModal()">
+      <div class="modalBoxWide" style="width:440px; max-height:85vh; overflow-y:auto;">
+        <h3>🏦 بینک / والٹ اکاؤنٹس</h3>
+        <div id="supplierAccountsModalBody"></div>
+        <div class="modalBtns" style="margin-top:10px;">
+          <button class="cancelBtn" onclick="closeSupplierBankAccountsModal()">بند کریں</button>
         </div>
       </div>
     </div>
@@ -13198,6 +13214,21 @@ function completeMillOrder(){
     .map(i => ({name:i.name, packing:i.packing, qty:millOrderQtyMap[i.item_id]}));
   if(lines.length === 0){ alert('کم از کم ایک چیز کی مقدار درج کریں۔'); return; }
   const s = suppliersData.find(x => x.supplier_id === millOrderActiveSupplierId);
+
+  // ---------- یہ آرڈر پرچیز آرڈرز کی فہرست میں بھی پینڈنگ شکل میں محفوظ ہو —
+  // ابھی کوئی قیمت شامل نہیں، مال وصول ہونے پر رقم مینولی درج ہوگی ----------
+  if(s){
+    s.purchaseHistory = s.purchaseHistory || [];
+    s.purchaseHistory.unshift({
+      items: JSON.parse(JSON.stringify(lines)),
+      total: 0,
+      date: new Date().toISOString().split('T')[0],
+      status: 'pending_receipt',
+      simple: true, // ---------- نشان کہ یہ سادہ آرڈر ٹیکنگ سے بنا ہے — قیمت نہیں، وصولی پر مینول رقم درج ہوگی ----------
+    });
+    saveToStorage('suppliers', suppliersData);
+  }
+
   let text = `📦 پرچیز آرڈر — ${s ? s.name : ''}\n\n`;
   lines.forEach((l, idx) => { text += `${idx+1}. ${l.name} — ${l.packing ? l.packing + ' ' : ''}${l.qty}\n`; });
   document.getElementById('millOrderFinishText').value = text;
@@ -13273,15 +13304,20 @@ function openSupplierProfile(supplierId){
   const figuresEl = document.getElementById('profileFigures');
   figuresEl.className = 'profileFigures single';
   figuresEl.innerHTML = `
-    <div class="pfBox"><div class="pfLabel">📤 قابلِ ادائیگی (ہم نے دینا ہے)</div><div class="pfValue payable">Rs. ${s.total_payable.toLocaleString()}</div></div>
+    <div class="pfBox pfBoxPayableBig">
+      <div class="pfLabel">📤 قابلِ ادائیگی (ہم نے دینا ہے)</div>
+      <div class="pfValue payable">Rs. ${s.total_payable.toLocaleString()}</div>
+      <button type="button" class="pfAddAmountBtn" onclick="addManualPayableAmount(${s.supplier_id})">➕ رقم شامل کریں</button>
+    </div>
   `;
 
-  // --- بائیں طرف چھوٹے 3D آئیکن بٹنوں کا کالم؛ Transactions سب سے نیچے ---
+  // --- دائیں طرف چھوٹے 3D آئیکن بٹنوں کا کالم؛ Transactions سب سے نیچے ---
   document.getElementById('profileQuickActions').innerHTML = `
     <button style="background:linear-gradient(155deg,#3b82f6,#1e3a8a);" onclick="closeProfileModal(); openMillOrderModal(${s.supplier_id});"><span class="sideIcon">📦</span><span class="sideLabel">نیا آرڈر</span></button>
     <button style="background:linear-gradient(155deg,#ef4444,#b91c1c);" onclick="openPaySupplierModal(${s.supplier_id});"><span class="sideIcon">💵</span><span class="sideLabel">ادائیگی کریں</span></button>
+    <button style="background:linear-gradient(155deg,#0891b2,#0e7490);" onclick="openSupplierBankAccountsModal(${s.supplier_id});"><span class="sideIcon">🏦</span><span class="sideLabel">اکاؤنٹس</span></button>
     <button style="background:linear-gradient(155deg,#8b5cf6,#5b21b6);" onclick="shareSupplierProfile(${s.supplier_id})"><span class="sideIcon">🪪</span><span class="sideLabel">پروفائل</span></button>
-    <button id="profileModeBtn" style="background:linear-gradient(155deg,#475569,#1e293b);" onclick="toggleProfileMainMode()"><span class="sideIcon">📜</span><span class="sideLabel">Transactions</span></button>
+    <button id="profileModeBtn" style="background:linear-gradient(155deg,#475569,#1e293b);" onclick="toggleProfileMainMode()"><span class="sideIcon">📜</span><span class="sideLabel">لین دین</span></button>
   `;
 
   renderSupplierMainContent(s.supplier_id);
@@ -13317,7 +13353,7 @@ function renderSupplierPoSection(supplierId){
         const itemsDesc = po.items.slice(0,2).map(i => i.name).join(', ') + (po.items.length > 2 ? ` +${po.items.length-2} مزید` : '');
         const statusTxt = isPending ? `⏳ زیر التوا • ${daysPending} دن` : `✅ موصول ہو گیا`;
         const actionBtn = isPending
-          ? `<button class="btnReceiveShipment" onclick="event.stopPropagation(); closeProfileModal(); openReceiveShipmentModal(${s.supplier_id}, ${idx});">🚚 Receive Shipment</button>
+          ? `<button class="btnReceiveShipment" onclick="event.stopPropagation(); ${po.simple ? `receiveSimpleMillOrder(${s.supplier_id}, ${idx})` : `closeProfileModal(); openReceiveShipmentModal(${s.supplier_id}, ${idx});`}">🚚 مال وصول کریں</button>
              <button class="btnPrint" onclick="event.stopPropagation(); closeProfileModal(); openPoPreview(${s.supplier_id}, ${idx});">👁️ دیکھیں</button>
              <button class="btnPrint" onclick="event.stopPropagation(); openPoReminderModal(${s.supplier_id}, ${idx});">📢 یاد دہانی</button>
              <button class="btnPrint" style="background:#fee2e2; color:#b91c1c;" onclick="event.stopPropagation(); deletePendingPurchaseOrder(${s.supplier_id}, ${idx});">🗑️ حذف کریں</button>`
@@ -13343,7 +13379,6 @@ function renderSupplierPoSection(supplierId){
     <div class="profileSectionTitle"><span>📦 تمام پرچیز آرڈرز</span><span class="cnt">${orders.length} آرڈرز</span></div>
     ${filterBarHtml}
     <div id="profilePoListWrap">${ordersHtml}</div>
-    ${buildSupplierBankAccountsHtml(s)}
   `;
 }
 
@@ -13454,7 +13489,67 @@ const BANK_LOGIN_URLS = {
   'Standard Chartered': 'https://www.sc.com/pk/',
 };
 
-// ---------- Bank Accounts سیکشن کی مکمل فہرست — ہر اکاؤنٹ کارڈ، ➕ نیا اکاؤنٹ شامل کرنے کا بٹن ----------
+// ---------- 🏦 سائیڈبار کے "اکاؤنٹس" بٹن سے کھلنے والا الگ مکمل موڈل — پہلے پروفائل کے اندر جگہ لیتا تھا، اب اپنا صاف موڈل ---------- //
+function openSupplierBankAccountsModal(supplierId){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  if(!s) return;
+  document.getElementById('supplierAccountsModalBody').innerHTML = buildSupplierBankAccountsHtml(s);
+  document.getElementById('supplierAccountsModal').classList.add('show');
+  document.getElementById('supplierAccountsModal').dataset.supplierId = supplierId;
+}
+function closeSupplierBankAccountsModal(){
+  document.getElementById('supplierAccountsModal').classList.remove('show');
+}
+// ---------- refresh helper — بینک اکاؤنٹ ایڈ/ترمیم/حذف کے بعد اگر یہ موڈل کھلا ہو تو تازہ کر دیں ----------
+function refreshSupplierBankAccountsModalIfOpen(supplierId){
+  const modal = document.getElementById('supplierAccountsModal');
+  if(modal && modal.classList.contains('show') && Number(modal.dataset.supplierId) === Number(supplierId)){
+    openSupplierBankAccountsModal(supplierId);
+  }
+}
+
+// ---------- 🚚 سادہ آرڈر ٹیکنگ سے بنے پرچیز آرڈر کی وصولی — چونکہ آرڈر میں قیمت نہیں تھی،
+// یہاں شپمنٹ کی کل رقم مینولی پوچھی جاتی ہے اور سیدھا قابلِ ادائیگی میں جمع ہو جاتی ہے ---------- //
+function receiveSimpleMillOrder(supplierId, poIdx){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  const po = (s?.purchaseHistory || [])[poIdx];
+  if(!s || !po) return;
+  const amountStr = prompt('اس شپمنٹ کی کل رقم کتنی ہے؟ (روپے)');
+  if(amountStr === null) return;
+  const amount = Number(amountStr) || 0;
+  if(!confirm('تصدیق کریں کہ یہ مال وصول ہو گیا ہے؟')) return;
+  po.status = 'received';
+  po.total = amount;
+  po.receivedDate = new Date().toISOString().split('T')[0];
+  if(amount > 0){
+    s.total_payable += amount;
+    if(!s.paymentLog) s.paymentLog = [];
+    s.paymentLog.push({type:'payable_add', amount, note:'شپمنٹ وصول — پرچیز آرڈر', date: new Date().toISOString()});
+  }
+  saveToStorage('suppliers', suppliersData);
+  closeProfileModal();
+  openSupplierProfile(supplierId);
+}
+
+// ---------- ➕ قابلِ ادائیگی میں ہر وقت مینول رقم شامل کریں — پرچیز آرڈر میں قیمت نہیں ہوتی،
+// اس لیے شپمنٹ وصول ہونے پر یا کسی بھی وقت ہم خود بتا سکیں کہ کتنی رقم اس مکتبے کو دینی ہے ---------- //
+function addManualPayableAmount(supplierId){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  if(!s) return;
+  const amountStr = prompt('کتنی رقم قابلِ ادائیگی میں شامل کریں؟ (روپے)');
+  if(amountStr === null) return;
+  const amount = Number(amountStr);
+  if(!amount || amount <= 0){ alert('درست رقم درج کریں۔'); return; }
+  const note = (prompt('نوٹ (اختیاری — مثلاً: فلاں شپمنٹ کی رقم):', '') || '').trim();
+  s.total_payable += amount;
+  if(!s.paymentLog) s.paymentLog = [];
+  s.paymentLog.push({type:'payable_add', amount, note, date: new Date().toISOString()});
+  saveToStorage('suppliers', suppliersData);
+  alert('رقم شامل کر دی گئی۔');
+  openSupplierProfile(supplierId);
+}
+
+
 function buildSupplierBankAccountsHtml(s){
   const accounts = getSupplierBankAccounts(s);
   const listHtml = accounts.length === 0

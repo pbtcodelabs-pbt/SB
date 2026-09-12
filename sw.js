@@ -1,4 +1,4 @@
-const CACHE_NAME = 'SB12SEPSA1012AM';
+const CACHE_NAME = 'SB12SEPSA1018AM';
 const CORE_ASSETS = [
   './',
   './index.html',
