@@ -1670,7 +1670,7 @@
          روشن نیلا پس منظر + سفید، صاف نظر آنے والی چمکتی لکھائی (صارف کی پسند کے مطابق،
          پہلے والا گہرا سیاہ+سنہری کمبی نیشن مدھم/بدصورت لگ رہا تھا) --- */
     #globalSearchBar{
-      display:flex; align-items:center; gap:8px; padding:8px 14px;
+      display:none !important; align-items:center; gap:8px; padding:8px 14px;
       background:linear-gradient(135deg,#1d4ed8,#2563eb); grid-column:1; grid-row:2;
       position:sticky; top:56px; z-index:590;
       border-top:1px solid rgba(255,255,255,.3); border-bottom:1px solid rgba(255,255,255,.3);
@@ -1915,7 +1915,7 @@
   <button class="devChatOption" onclick="sendDevChat('whatsapp')"><span class="devChatIcon">💬</span> WhatsApp</button>
   <button class="devChatOption" onclick="sendDevChat('sms')"><span class="devChatIcon">✉️</span> ایس ایم ایس</button>
   <button class="devChatOption" onclick="sendDevChat('email')"><span class="devChatIcon">📧</span> Gmail</button>
-  <button class="devChatOption" onclick="resetDeviceUIDForTesting()" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px;"><span class="devChatIcon">🔄</span> ڈیوائس آئی ڈی ری سیٹ کریں (صرف ٹیسٹنگ)</button>
+  <button class="devChatOption" onclick="resetDeviceUIDForTesting()" style="display:none; margin-top:10px; border-top:1px solid var(--border); padding-top:12px;"><span class="devChatIcon">🔄</span> ڈیوائس آئی ڈی ری سیٹ کریں (صرف ٹیسٹنگ)</button>
 </div>
 
 <!-- 🔐 SUBSCRIPTION GATE — سبسکرپشن ختم/غیر فعال ہونے پر یہ صفحہ لاگ ان کے بعد نظر آئے گا -->
@@ -2059,14 +2059,14 @@
     <!-- ---------- ⚙️🔗💬 کمپیکٹ آئیکنز — پہلے نیچے بڑے "Home Business Card" ڈبے میں تھے، اب سیدھا اوپر ہیڈر میں ---------- -->
     <div class="topbarIconsRow">
       <button class="topbarIconBtn" id="topbarSettingsBtn" onclick="toggleHomeSettingsPanel(event, 'topbarSettingsBtn')" title="سیٹنگز">⚙️</button>
-      <button class="topbarIconBtn" onclick="shareAppLink()" title="یہ ایپ شیئر کریں"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="display:block;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></button>
+      <button class="topbarIconBtn" style="display:none;" onclick="shareAppLink()" title="یہ ایپ شیئر کریں"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="display:block;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></button>
       <button class="topbarIconBtn" onclick="openDevChat('support')" title="ڈویلپر سے بات کریں">💬</button>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA0934AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1012AM</span>
     </div>
   </div>
 
@@ -2879,7 +2879,7 @@
           <div class="pInfo">
             <div class="pName" id="profileName">—</div>
             <div class="pMeta" id="profileMeta">—</div>
-            <div class="pNicknameTag" id="profileNicknameTag" onclick="editProfileNickname()"></div>
+            <div class="pNicknameTag" id="profileNicknameTag" onclick="editProfileNickname()" style="display:none;"></div>
             <div class="profileHeadContacts" id="profileHeadContacts"></div>
           </div>
           <span class="closeBtn" onclick="openEditPartyModal()" title="ترمیم" style="margin-inline-end:6px;">✏️</span>
@@ -2888,9 +2888,9 @@
         <div class="profileBodyFlex">
           <div class="profileSidebar" id="profileQuickActions"></div>
           <div class="profileMain">
-            <div id="profileEmailRow" style="display:none; align-items:center; gap:6px; margin-bottom:10px;"></div>
-            <div class="profileFigures" id="profileFigures"></div>
             <div id="profileSections"></div>
+            <div class="profileFigures" id="profileFigures"></div>
+            <div id="profileEmailRow" style="display:none; align-items:center; gap:6px; margin-bottom:10px;"></div>
           </div>
         </div>
       </div>
@@ -13107,20 +13107,41 @@ function renderMillOrderItemsList(){
     wrap.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px 0; font-size:13px;">اس کیٹگری میں ابھی کوئی چیز شامل نہیں — اوپر "➕ نئی چیز شامل کریں" سے شامل کریں</div>';
     return;
   }
-  wrap.innerHTML = items.map(i => {
+  const rows = items.map(i => {
     const qty = millOrderQtyMap[i.item_id] || 0;
     return `
-    <div style="display:flex; align-items:center; gap:6px; padding:9px 4px; border-bottom:1px solid #eef1f5;">
-      <span style="width:24px; text-align:center; font-size:11px; font-weight:800; color:var(--muted);">${i.serial_no}</span>
-      <span style="flex:1; font-size:13.5px; font-weight:700; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${i.name}</span>
-      <span style="font-size:10.5px; color:var(--muted); background:#f1f5f9; padding:3px 6px; border-radius:6px; flex:0 0 auto;">${i.packing || '—'}</span>
-      <button onclick="stepMillItemQty(${i.item_id},-1)" style="width:25px; height:25px; border:none; border-radius:7px; background:#fee2e2; color:#b91c1c; font-weight:900; cursor:pointer; flex:0 0 auto;">−</button>
-      <input type="number" value="${qty}" min="0" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:40px; text-align:center; padding:4px 2px; border:1px solid #dbe1ea; border-radius:6px; font-size:12px; flex:0 0 auto;">
-      <button onclick="stepMillItemQty(${i.item_id},1)" style="width:25px; height:25px; border:none; border-radius:7px; background:#dcfce7; color:#15803d; font-weight:900; cursor:pointer; flex:0 0 auto;">+</button>
-      <button onclick="editMillItemPrompt(${i.item_id})" title="ترمیم" style="background:none; border:none; cursor:pointer; font-size:14px; flex:0 0 auto;">✏️</button>
-      <button onclick="deleteMillItemConfirm(${i.item_id})" title="حذف" style="background:none; border:none; cursor:pointer; font-size:14px; flex:0 0 auto;">🗑️</button>
-    </div>`;
+    <tr style="border-bottom:1px solid #eef1f5;">
+      <td style="padding:7px 3px; text-align:center; font-size:11px; font-weight:800; color:var(--muted);">${i.serial_no}</td>
+      <td style="padding:7px 3px; font-size:13px; font-weight:700;">${i.name}</td>
+      <td style="padding:7px 3px; text-align:center; font-size:11px; color:var(--muted);">${i.packing || '—'}</td>
+      <td style="padding:7px 3px;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:4px;">
+          <button onclick="stepMillItemQty(${i.item_id},-1)" style="width:24px; height:24px; border:none; border-radius:6px; background:#fee2e2; color:#b91c1c; font-weight:900; cursor:pointer; flex:0 0 auto;">−</button>
+          <input type="number" value="${qty}" min="0" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:38px; text-align:center; padding:3px 2px; border:1px solid #dbe1ea; border-radius:6px; font-size:12px;">
+          <button onclick="stepMillItemQty(${i.item_id},1)" style="width:24px; height:24px; border:none; border-radius:6px; background:#dcfce7; color:#15803d; font-weight:900; cursor:pointer; flex:0 0 auto;">+</button>
+        </div>
+      </td>
+      <td style="padding:7px 3px;">
+        <div style="display:flex; gap:6px; justify-content:center;">
+          <button onclick="editMillItemPrompt(${i.item_id})" title="ترمیم" style="background:none; border:none; cursor:pointer; font-size:14px;">✏️</button>
+          <button onclick="deleteMillItemConfirm(${i.item_id})" title="حذف" style="background:none; border:none; cursor:pointer; font-size:14px;">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
   }).join('');
+  wrap.innerHTML = `
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr style="background:var(--primary); color:#fff;">
+          <th style="padding:7px 3px; font-size:11px; width:22px;">#</th>
+          <th style="padding:7px 3px; font-size:11px; text-align:right;">چیز کا نام</th>
+          <th style="padding:7px 3px; font-size:11px; width:56px;">پیکنگ/قسم</th>
+          <th style="padding:7px 3px; font-size:11px; width:98px;">تعداد</th>
+          <th style="padding:7px 3px; font-size:11px; width:50px;"></th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
 }
 
 function stepMillItemQty(itemId, delta){
@@ -13319,10 +13340,10 @@ function renderSupplierPoSection(supplierId){
     [['all','تمام'],['pending','زیر التوا'],['received','موصول شدہ']], profilePoFilter, 'applySupplierPoFilter');
 
   document.getElementById('profileSections').innerHTML = `
-    ${buildSupplierBankAccountsHtml(s)}
     <div class="profileSectionTitle"><span>📦 تمام پرچیز آرڈرز</span><span class="cnt">${orders.length} آرڈرز</span></div>
     ${filterBarHtml}
     <div id="profilePoListWrap">${ordersHtml}</div>
+    ${buildSupplierBankAccountsHtml(s)}
   `;
 }
 
