@@ -588,8 +588,8 @@
   .billingCategoryRail .categoryPill{flex:0 0 auto; white-space:nowrap; padding:7px 13px;}
 
   /* ---------- 🧾 آرڈر لینے والا صفحہ اب چھوٹا پاپ اپ نہیں — پروفائل کی طرح مکمل فُل پیج (صرف اوپر کی 56px ہیڈر پٹی چھوڑ کر) ---------- */
-  #millOrderModal{ top:56px; align-items:stretch; justify-content:stretch; background:rgba(15,23,42,.35); }
-  #millOrderModal .modalBoxWide{ width:100%; max-width:100%; height:100%; max-height:100%; border-radius:0; }
+  #millOrderModal, #millDraftOrdersModal, #millSentOrdersModal{ top:56px; align-items:stretch; justify-content:stretch; background:rgba(15,23,42,.35); }
+  #millOrderModal .modalBoxWide, #millDraftOrdersModal .modalBoxWide, #millSentOrdersModal .modalBoxWide{ width:100%; max-width:100%; height:100%; max-height:100%; border-radius:0; }
   /* ---------- آئٹم کارڈز — جگہ ہو تو دو کالم، تنگ سکرین پر خودکار ایک کالم میں سمٹ جائیں ---------- */
   .mocItemsGrid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px; align-content:start;}
   .mocCategoryCard{
@@ -2129,7 +2129,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1108AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1238PM</span>
     </div>
   </div>
 
@@ -3216,18 +3216,31 @@
          (کیٹگری وائز، ہر مکتبے کے لیے مشترکہ آئٹم فہرست، کوئی قیمت/سٹاک نہیں دکھتا) ---------- -->
     <div class="modalOverlay" id="millOrderModal" onclick="if(event.target===this) closeMillOrderModal()">
       <div class="modalBoxWide" dir="rtl" style="width:460px; max-height:92vh; overflow-y:auto;">
-        <h3 id="millOrderModalTitle">🧾 آرڈر لیں</h3>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+          <h3 id="millOrderModalTitle" style="margin:0;">🧾 آرڈر لیں</h3>
+          <div style="display:flex; gap:6px;">
+            <button type="button" onclick="openMillDraftOrders(millOrderActiveSupplierId)" style="padding:7px 10px; background:#fff7ed; color:#9a3412; border:1px solid #fdba74; border-radius:8px; font-size:11.5px; font-weight:800; cursor:pointer;">📝 میرے ڈرافٹ آرڈرز</button>
+            <button type="button" onclick="openMillSentOrders(millOrderActiveSupplierId)" style="padding:7px 10px; background:#eef2ff; color:var(--primary-dark); border:1px solid var(--primary); border-radius:8px; font-size:11.5px; font-weight:800; cursor:pointer;">📋 میرے بھیجے گئے آرڈرز</button>
+          </div>
+        </div>
 
         <div class="mocCategoryCard">
           <div class="billingCategoryRail" id="millOrderCategoryRail" style="margin-bottom:10px;"></div>
           <button type="button" onclick="openAddMillItemPrompt()" class="mocAddItemBtn">➕ نئی چیز شامل کریں</button>
         </div>
 
+        <!-- ---------- 🔤 پتلا↔موٹا سلائیڈر — نام کے فونٹ کی موٹائی، بالکل فروٹ منڈی کے آرڈر ٹیکنگ جیسا ---------- -->
+        <div style="display:flex; align-items:center; gap:10px; background:#eef2ff; border-radius:10px; padding:8px 12px; margin-bottom:10px;">
+          <span style="font-size:12px; font-weight:700; color:var(--primary-dark);">پتلا</span>
+          <input type="range" min="400" max="900" step="100" value="700" oninput="setMocFontWeight(this.value)" style="flex:1;">
+          <span style="font-size:12px; font-weight:700; color:var(--primary-dark);">موٹا</span>
+        </div>
+
         <div id="millOrderItemsList"></div>
 
         <div class="modalBtns" style="margin-top:10px;">
           <button class="cancelBtn" onclick="closeMillOrderModal()">منسوخ</button>
-          <button class="saveBtn" onclick="completeMillOrder()">✅ آرڈر مکمل</button>
+          <button class="saveBtn" onclick="saveMillOrderAsDraft()">📝 ڈرافٹ کے طور پر محفوظ کریں</button>
         </div>
       </div>
     </div>
@@ -3242,6 +3255,30 @@
           <button class="cancelBtn" onclick="document.getElementById('millOrderFinishModal').classList.remove('show')">بند کریں</button>
           <button style="background:#25D366; color:#fff; border:none; border-radius:8px; padding:11px; font-weight:700; cursor:pointer;" onclick="sendMillOrderWhatsapp()">💬 واٹس ایپ بھیجیں</button>
           <button class="saveBtn" onclick="saveMillOrderDraft()">💾 ڈرافٹ سیو کریں</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 📝 میرے ڈرافٹ آرڈرز — اسی مکتبے کے وہ آرڈر جو ابھی نہیں بھیجے، دن بدن آئٹمز شامل ہوتے رہتے ہیں ---------- -->
+    <div class="modalOverlay" id="millDraftOrdersModal" onclick="if(event.target===this) closeMillDraftOrders()">
+      <div class="modalBoxWide" dir="rtl">
+        <h3 id="millDraftOrdersTitle">📝 میرے ڈرافٹ آرڈرز</h3>
+        <div id="millDraftOrdersSummary" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></div>
+        <div id="millDraftOrdersListWrap"></div>
+        <div class="modalBtns" style="margin-top:10px;">
+          <button class="cancelBtn" onclick="closeMillDraftOrders()">بند کریں</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 📋 میرے بھیجے گئے آرڈرز — اسی مکتبے کو حتمی طور پر بھیجے جا چکے آرڈرز، مستقل ریکارڈ ---------- -->
+    <div class="modalOverlay" id="millSentOrdersModal" onclick="if(event.target===this) closeMillSentOrders()">
+      <div class="modalBoxWide" dir="rtl">
+        <h3 id="millSentOrdersTitle">📋 میرے بھیجے گئے آرڈرز</h3>
+        <div id="millSentOrdersSummary" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></div>
+        <div id="millSentOrdersListWrap"></div>
+        <div class="modalBtns" style="margin-top:10px;">
+          <button class="cancelBtn" onclick="closeMillSentOrders()">بند کریں</button>
         </div>
       </div>
     </div>
@@ -13007,6 +13044,7 @@ function getAllPurchaseOrders(){
   const all = [];
   suppliersData.forEach(s => {
     (s.purchaseHistory || []).forEach((po, idx) => {
+      if(po.isDraft) return; // ---------- ڈرافٹ آرڈرز مرکزی پرچیز آرڈرز فہرست میں شامل نہیں ----------
       all.push({...po, supplier_id: s.supplier_id, supplier_name: s.name, po_idx: idx});
     });
   });
@@ -13148,10 +13186,13 @@ function openMillOrderModal(supplierId){
   millOrderActiveSupplierId = supplierId;
   millOrderQtyMap = millOrderQtyBySupplier[supplierId] || {};
   millOrderCategoryFilter = 'all';
+  millOrderEditingDraftIdx = null;
   const s = suppliersData.find(x => x.supplier_id === supplierId);
   document.getElementById('millOrderModalTitle').textContent = `🧾 آرڈر لیں — ${s ? s.name : ''}`;
   renderMillOrderCategoryRail();
   renderMillOrderItemsList();
+  const slider = document.querySelector('#millOrderModal input[type="range"]');
+  if(slider) slider.value = mocFontWeight;
   document.getElementById('millOrderModal').classList.add('show');
 }
 function closeMillOrderModal(){
@@ -13180,41 +13221,112 @@ function addMillCategoryPrompt(){
   renderMillOrderCategoryRail();
 }
 
+// ---------- 📏 کالم کی چوڑائی خودکار ناپنے کے لیے — بالکل فروٹ منڈی کے آرڈر ٹیکنگ جیسا ---------- //
+function measureTextPxMoc(text, font){
+  const c = measureTextPxMoc._c || (measureTextPxMoc._c = document.createElement('canvas'));
+  const ctx = c.getContext('2d');
+  ctx.font = font;
+  return ctx.measureText(text == null ? '' : String(text)).width;
+}
+function autoColWidthMoc(headerLabel, values, valueFont, opts){
+  opts = opts || {};
+  const pad = opts.pad != null ? opts.pad : 16;
+  const min = opts.min || 30;
+  const max = opts.max || 220;
+  const headerFont = opts.headerFont || "800 11px -apple-system, Arial, sans-serif";
+  let widest = measureTextPxMoc(headerLabel, headerFont);
+  (values || []).forEach(v => { const w = measureTextPxMoc(v, valueFont); if(w > widest) widest = w; });
+  return Math.max(min, Math.min(max, Math.ceil(widest + pad)));
+}
+let mocFontWeight = loadFromStorage('mocFontWeight', 700); // ---------- پتلا↔موٹا سلائیڈر کی محفوظ شدہ قدر ----------
+function setMocFontWeight(val){
+  mocFontWeight = Number(val);
+  saveToStorage('mocFontWeight', mocFontWeight);
+  renderMillOrderItemsList();
+}
+
+// ---------- 🧾 آرڈر آئٹمز کی جدول نما فہرست — بالکل فروٹ منڈی کے آرڈر ٹیکنگ جیسی: سیریل، نام، پیکنگ، حوالہ نمبر (سٹاک کی جگہ)، مقدار۔
+// سٹکی ہیڈر، پہلے دو کالم منجمد، زیبرا رنگ، RTL ---------- //
 function renderMillOrderItemsList(){
   const wrap = document.getElementById('millOrderItemsList');
   if(!wrap) return;
-  let items = millItems.slice();
+  let items = millItems.filter(i => i.supplier_id === millOrderActiveSupplierId);
   if(millOrderCategoryFilter !== 'all') items = items.filter(i => i.category_id === millOrderCategoryFilter);
   items.sort((a,b) => a.serial_no - b.serial_no);
   if(items.length === 0){
-    wrap.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px 0; font-size:13px;">اس کیٹگری میں ابھی کوئی چیز شامل نہیں — اوپر "➕ نئی چیز شامل کریں" سے شامل کریں</div>';
+    wrap.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px 0; font-size:13px;">اس مکتبے کی اس کیٹگری میں ابھی کوئی چیز شامل نہیں — اوپر "➕ نئی چیز شامل کریں" سے شامل کریں</div>';
     return;
   }
-  // ---------- ہر آئٹم اپنے صاف الگ کارڈ میں — اوپر نام/سیریل/پیکنگ، نیچے مقدار الگ اور ترمیم/حذف الگ خانے میں،
-  // بیچ میں ڈیوائیڈر تاکہ موٹی انگلیوں سے بھی غلط بٹن نہ دبے ---------- //
-  const rows = items.map(i => {
+
+  const thBase = "position:-webkit-sticky;position:sticky;top:0;z-index:14;background:rgba(19,78,44,.93);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);color:#fff;font-weight:800;font-size:11px;padding:6px 3px;white-space:nowrap;text-align:center;border-left:1px solid rgba(255,255,255,.15);box-sizing:border-box;";
+  const tdBase = "padding:5px 3px;border-bottom:1.5px solid #dbe1ea;border-left:1px solid #eef1f5;text-align:center;vertical-align:middle;box-sizing:border-box;font-weight:700;";
+  const urduFont = "font-family:'JameelNooriNastaleeqKasheeda','JameelNooriNastaleeqRegular',serif;";
+  const measUrduFontMoc = `700 13.5px 'JameelNooriNastaleeqKasheeda',serif`;
+  const measPackFontMoc = `700 11.5px 'JameelNooriNastaleeqKasheeda',serif`;
+  const measNumFontMoc = "900 12.5px Arial,Helvetica,sans-serif";
+
+  const serialW = autoColWidthMoc('#', items.map(i => i.serial_no ?? '?'), measNumFontMoc, {min:32, max:48, pad:14});
+  const nameW = autoColWidthMoc('نام', items.map(i => i.name), measUrduFontMoc, {min:70, max:190, pad:24});
+  const packW = autoColWidthMoc('پیکنگ', items.map(i => i.packing || ''), measPackFontMoc, {min:40, max:90, pad:14});
+  const refW = autoColWidthMoc('حوالہ نمبر', items.map(i => i.refNo || ''), measPackFontMoc, {min:50, max:100, pad:14});
+  let qtyW = Math.max(96, autoColWidthMoc('مقدار', items.map(i => millOrderQtyMap[i.item_id] || ''), measNumFontMoc, {min:30, max:60, pad:10}) + 66);
+
+  const colWidths = [serialW, nameW, packW, refW, qtyW];
+  const rightOffsets = [0, colWidths[0]];
+
+  const rows = items.map((i, idx) => {
     const qty = millOrderQtyMap[i.item_id] || 0;
+    const checked = qty > 0;
+    const rowBg = checked ? 'linear-gradient(180deg,#eff6ff,#dbeafe)' : (idx % 2 === 0 ? '#ffffff' : '#f1f5f0');
+    const frozenTd = (n) => `position:-webkit-sticky;position:sticky;right:${rightOffsets[n]}px;background:${rowBg};z-index:3;`;
     return `
-    <div class="millOrderCard" dir="rtl">
-      <div class="mocTop">
-        <span class="mocSerial">${i.serial_no}</span>
-        <span class="mocName">${i.name}</span>
-        <span class="mocPacking">${i.packing || '—'}</span>
-      </div>
-      <div class="mocBottom">
-        <div class="mocQtyGroup">
-          <button class="mocQtyBtn mocMinus" onclick="stepMillItemQty(${i.item_id},-1)">−</button>
-          <input type="number" class="mocQtyInput" value="${qty}" min="0" onchange="setMillItemQty(${i.item_id}, this.value)">
-          <button class="mocQtyBtn mocPlus" onclick="stepMillItemQty(${i.item_id},1)">+</button>
-        </div>
-        <div class="mocEditGroup">
-          <button class="mocIconBtn mocEditBtn" onclick="editMillItemPrompt(${i.item_id})" title="ترمیم">✏️</button>
-          <button class="mocIconBtn mocDeleteBtn" onclick="deleteMillItemConfirm(${i.item_id})" title="حذف">🗑️</button>
-        </div>
-      </div>
-    </div>`;
+      <tr>
+        <td style="${tdBase}${frozenTd(0)}"><span class="mocSerialCell">${i.serial_no}</span></td>
+        <td style="${tdBase}${frozenTd(1)}text-align:right;padding-inline-end:8px;${urduFont}font-size:13.5px;font-weight:${mocFontWeight};">${i.name}</td>
+        <td style="${tdBase}background:${rowBg};${urduFont}font-size:11.5px;">${i.packing || ''}</td>
+        <td style="${tdBase}background:${rowBg};font-weight:800; color:#134e2c;">${i.refNo || '—'}</td>
+        <td style="${tdBase}background:${rowBg};padding:4px 3px;">
+          <div style="display:flex; align-items:center; justify-content:center; gap:9px; padding-inline-end:6px;">
+            <input type="text" inputmode="decimal" value="${qty || ''}" placeholder="0" onfocus="this.select()" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:42px;box-sizing:border-box;padding:5px 2px;border:1.5px solid ${checked?'var(--primary)':'#dbe1ea'};border-radius:7px;font-size:12.5px;text-align:center;font-weight:900;background:#fff;font-family:Arial,Helvetica,sans-serif;">
+            <button type="button" onclick="stepMillItemQty(${i.item_id},1)" style="width:27px;height:27px;border:none;border-radius:7px;background:#dcfce7;color:#15803d;font-size:15px;font-weight:900;cursor:pointer;padding:0;flex:0 0 auto;line-height:1;">+</button>
+            <button type="button" onclick="stepMillItemQty(${i.item_id},-1)" style="width:27px;height:27px;border:none;border-radius:7px;background:#fee2e2;color:#b91c1c;font-size:15px;font-weight:900;cursor:pointer;padding:0;flex:0 0 auto;line-height:1;">−</button>
+          </div>
+        </td>
+        <td style="display:none;">
+          <button onclick="editMillItemPrompt(${i.item_id})">✏️</button>
+          <button onclick="deleteMillItemConfirm(${i.item_id})">🗑️</button>
+        </td>
+      </tr>`;
   }).join('');
-  wrap.innerHTML = `<div class="mocItemsGrid" dir="rtl">${rows}</div>`;
+
+  const headers = ['#','نام','پیکنگ','حوالہ نمبر','مقدار'];
+  const theadHtml = '<tr>' + headers.map((h,n) => {
+    const frozen = n < 2 ? `position:-webkit-sticky;position:sticky;right:${rightOffsets[n]}px;z-index:16;` : '';
+    return `<th style="${thBase}width:${colWidths[n]}px;${frozen}">${h}</th>`;
+  }).join('') + '</tr>';
+  const colgroupHtml = '<colgroup>' + colWidths.map(w => `<col style="width:${w}px;">`).join('') + '</colgroup>';
+  const totalTableW = colWidths.reduce((a,b) => a+b, 0);
+
+  wrap.innerHTML = `
+    <div style="width:100%; max-height:66vh; overflow:auto; -webkit-overflow-scrolling:touch; border-radius:12px; border:1.5px solid #cbd5e1; box-shadow:0 3px 10px rgba(0,0,0,.1);">
+      <table dir="rtl" style="border-collapse:separate; border-spacing:0; width:${totalTableW}px; table-layout:fixed; font-size:12.5px;">
+        ${colgroupHtml}
+        <thead>${theadHtml}</thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <!-- ---------- ✏️ ترمیم/🗑️ حذف — ایک اضافی سطر میں، تاکہ جدول کے تنگ خانوں میں غلطی سے نہ دبیں ---------- -->
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">
+      ${items.map(i => `
+        <div style="display:flex; align-items:center; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px; padding:5px 9px;">
+          <span style="font-size:11.5px; font-weight:800; color:var(--muted);">#${i.serial_no}</span>
+          <span style="font-size:12px; font-weight:700;">${i.name}</span>
+          <button onclick="editMillItemPrompt(${i.item_id})" style="background:none; border:none; cursor:pointer; font-size:13px;">✏️</button>
+          <button onclick="deleteMillItemConfirm(${i.item_id})" style="background:none; border:none; cursor:pointer; font-size:13px;">🗑️</button>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 function stepMillItemQty(itemId, delta){
@@ -13241,6 +13353,7 @@ function openAddMillItemPrompt(){
   const name = (prompt('چیز کا نام لکھیں:') || '').trim();
   if(!name) return;
   const packing = (prompt(`پیکنگ لکھیں (مثلاً: ${MILL_PACKING_PRESETS.join('، ')}):`, '') || '').trim();
+  const refNo = (prompt('حوالہ نمبر (اختیاری — مثلاً کتاب/قرآن کا ایڈیشن نمبر):', '') || '').trim();
   let categoryId = millOrderCategoryFilter !== 'all' ? millOrderCategoryFilter : (millCategories[0] ? millCategories[0].category_id : null);
   if(millCategories.length > 1){
     const catNames = millCategories.map((c,idx) => `${idx+1}) ${c.name}`).join('\n');
@@ -13248,7 +13361,7 @@ function openAddMillItemPrompt(){
     const idx = Number(pick) - 1;
     if(millCategories[idx]) categoryId = millCategories[idx].category_id;
   }
-  millItems.push({item_id: nextMillItemId++, name, packing, category_id: categoryId, serial_no: nextMillItemSerial++});
+  millItems.push({item_id: nextMillItemId++, name, packing, refNo, category_id: categoryId, serial_no: nextMillItemSerial++, supplier_id: millOrderActiveSupplierId});
   saveMillData();
   renderMillOrderItemsList();
 }
@@ -13260,8 +13373,11 @@ function editMillItemPrompt(itemId){
   if(newName === null) return;
   const newPacking = prompt('پیکنگ:', item.packing || '');
   if(newPacking === null) return;
+  const newRefNo = prompt('حوالہ نمبر (اختیاری):', item.refNo || '');
+  if(newRefNo === null) return;
   item.name = newName.trim() || item.name;
   item.packing = newPacking.trim();
+  item.refNo = newRefNo.trim();
   saveMillData();
   renderMillOrderItemsList();
 }
@@ -13274,34 +13390,150 @@ function deleteMillItemConfirm(itemId){
   renderMillOrderItemsList();
 }
 
-function completeMillOrder(){
-  const lines = millItems.filter(i => (millOrderQtyMap[i.item_id] || 0) > 0)
-    .map(i => ({name:i.name, packing:i.packing, qty:millOrderQtyMap[i.item_id]}));
+let millOrderEditingDraftIdx = null; // ---------- اگر موجودہ ڈرافٹ میں ترمیم ہو رہی ہے تو اس کا purchaseHistory انڈیکس ----------
+
+function saveMillOrderAsDraft(){
+  const lines = millItems.filter(i => i.supplier_id === millOrderActiveSupplierId && (millOrderQtyMap[i.item_id] || 0) > 0)
+    .map(i => ({name:i.name, label:i.packing, packing:i.packing, refNo:i.refNo || '', qty:millOrderQtyMap[i.item_id], cost:0}));
   if(lines.length === 0){ alert('کم از کم ایک چیز کی مقدار درج کریں۔'); return; }
   const s = suppliersData.find(x => x.supplier_id === millOrderActiveSupplierId);
+  if(!s) return;
+  s.purchaseHistory = s.purchaseHistory || [];
 
-  // ---------- یہ آرڈر پرچیز آرڈرز کی فہرست میں بھی پینڈنگ شکل میں محفوظ ہو —
-  // ابھی کوئی قیمت شامل نہیں، مال وصول ہونے پر رقم مینولی درج ہوگی ----------
-  if(s){
-    s.purchaseHistory = s.purchaseHistory || [];
+  if(millOrderEditingDraftIdx !== null && s.purchaseHistory[millOrderEditingDraftIdx]){
+    // ---------- موجودہ ڈرافٹ اپڈیٹ — نئی چیزیں شامل، پرانی مقداریں تبدیل ----------
+    s.purchaseHistory[millOrderEditingDraftIdx].items = JSON.parse(JSON.stringify(lines));
+    s.purchaseHistory[millOrderEditingDraftIdx].date = new Date().toISOString().split('T')[0];
+  } else {
     s.purchaseHistory.unshift({
       items: JSON.parse(JSON.stringify(lines)),
       total: 0,
       date: new Date().toISOString().split('T')[0],
       status: 'pending_receipt',
       simple: true, // ---------- نشان کہ یہ سادہ آرڈر ٹیکنگ سے بنا ہے — قیمت نہیں، وصولی پر مینول رقم درج ہوگی ----------
+      isDraft: true, // ---------- ابھی مکتبے کو نہیں بھیجا — "میرے ڈرافٹ آرڈرز" میں پڑا رہے گا جب تک حتمی نہ بھیجا جائے ----------
     });
-    saveToStorage('suppliers', suppliersData);
   }
+  saveToStorage('suppliers', suppliersData);
 
-  let text = `📦 پرچیز آرڈر — ${s ? s.name : ''}\n\n`;
-  lines.forEach((l, idx) => { text += `${idx+1}. ${l.name} — ${l.packing ? l.packing + ' ' : ''}${l.qty}\n`; });
-  document.getElementById('millOrderFinishText').value = text;
-  document.getElementById('millOrderFinishModal').classList.add('show');
-
-  // ---------- آرڈر جمع ہو گیا — اب یہ عارضی ان-پروگریس ڈرافٹ صاف کر دیں ----------
+  // ---------- ڈرافٹ محفوظ ہو گیا — اب یہ عارضی ان-پروگریس مقدار صاف کر دیں ----------
   delete millOrderQtyBySupplier[millOrderActiveSupplierId];
   saveToStorage('millOrderQtyBySupplier', millOrderQtyBySupplier);
+  millOrderEditingDraftIdx = null;
+
+  closeMillOrderModal();
+  alert('📝 آرڈر ڈرافٹ کے طور پر محفوظ ہو گیا۔ چند دن اسی طرح چیزیں شامل کرتے رہیں — "میرے ڈرافٹ آرڈرز" سے کبھی بھی دیکھ/ترمیم/حتمی طور پر بھیج سکتے ہیں۔');
+}
+
+// ---------- 📝 میرے ڈرافٹ آرڈرز — اسی مکتبے کے ابھی تک نہ بھیجے گئے آرڈرز، دیکھ/ترمیم/حذف/حتمی بھیج سکتے ہیں ---------- //
+function openMillDraftOrders(supplierId){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  document.getElementById('millDraftOrdersTitle').textContent = `📝 میرے ڈرافٹ آرڈرز — ${s ? s.name : ''}`;
+  renderMillDraftOrdersList(supplierId);
+  document.getElementById('millDraftOrdersModal').classList.add('show');
+}
+function closeMillDraftOrders(){
+  document.getElementById('millDraftOrdersModal').classList.remove('show');
+}
+function renderMillDraftOrdersList(supplierId){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  const wrap = document.getElementById('millDraftOrdersListWrap');
+  const summary = document.getElementById('millDraftOrdersSummary');
+  const drafts = (s?.purchaseHistory || []).map((po, idx) => ({...po, po_idx: idx})).filter(po => po.isDraft);
+  summary.textContent = `📝 کل ${drafts.length} ڈرافٹ آرڈر — ابھی مکتبے کو نہیں بھیجے گئے`;
+  if(drafts.length === 0){
+    wrap.innerHTML = `<div style="text-align:center; color:var(--muted); padding:30px 10px;">ابھی کوئی ڈرافٹ آرڈر موجود نہیں۔</div>`;
+    return;
+  }
+  wrap.innerHTML = drafts.map(po => {
+    const itemCount = po.items.length;
+    const totalQty = po.items.reduce((a,i) => a + (i.qty||0), 0);
+    return `
+      <div style="background:#fff; border:1.5px solid #fdba74; border-radius:12px; padding:12px; margin-bottom:8px; box-shadow:0 1px 4px rgba(0,0,0,.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <span style="font-weight:800; font-size:14px;">🕐 ${po.date}</span>
+          <span style="font-size:11px; color:#fff; background:#c2410c; border-radius:7px; padding:2px 8px; font-weight:700;">📝 ڈرافٹ</span>
+        </div>
+        <div style="font-size:12.5px; color:var(--text); font-weight:700; margin-bottom:8px;">📦 ${itemCount} اقسام — کل ${totalQty} عدد</div>
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <button onclick="openPoPreview(${supplierId}, ${po.po_idx})" style="flex:1; padding:7px; background:#eef2ff; color:var(--primary-dark); border:1px solid var(--primary); border-radius:8px; font-size:12px; font-weight:800; cursor:pointer;">👁️ پریویو</button>
+          <button onclick="editMillDraftOrder(${supplierId}, ${po.po_idx})" style="flex:1; padding:7px; background:#fff7ed; color:#9a3412; border:1px solid #fdba74; border-radius:8px; font-size:12px; font-weight:800; cursor:pointer;">✏️ ترمیم</button>
+          <button onclick="deleteMillDraftOrder(${supplierId}, ${po.po_idx})" style="flex:1; padding:7px; background:#fef2f2; color:#b91c1c; border:1px solid #fca5a5; border-radius:8px; font-size:12px; font-weight:800; cursor:pointer;">🗑️ حذف</button>
+        </div>
+        <button onclick="sendMillDraftOrderFinal(${supplierId}, ${po.po_idx})" style="width:100%; padding:9px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;">📤 مکتبے کو حتمی طور پر بھیجیں</button>
+      </div>`;
+  }).join('');
+}
+function editMillDraftOrder(supplierId, poIdx){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  const po = (s?.purchaseHistory || [])[poIdx];
+  if(!s || !po) return;
+  closeMillDraftOrders();
+  openMillOrderModal(supplierId);
+  millOrderEditingDraftIdx = poIdx;
+  millOrderQtyMap = {};
+  po.items.forEach(i => {
+    const match = millItems.find(m => m.supplier_id === supplierId && m.name === i.name && m.packing === (i.packing||i.label));
+    if(match) millOrderQtyMap[match.item_id] = i.qty;
+  });
+  renderMillOrderItemsList();
+}
+function deleteMillDraftOrder(supplierId, poIdx){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  if(!s) return;
+  if(!confirm('کیا آپ واقعی یہ ڈرافٹ آرڈر حذف کرنا چاہتے ہیں؟')) return;
+  s.purchaseHistory.splice(poIdx, 1);
+  saveToStorage('suppliers', suppliersData);
+  renderMillDraftOrdersList(supplierId);
+}
+function sendMillDraftOrderFinal(supplierId, poIdx){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  const po = (s?.purchaseHistory || [])[poIdx];
+  if(!s || !po) return;
+  if(!confirm('کیا آپ واقعی یہ آرڈر مکتبے کو حتمی طور پر بھیجنا چاہتے ہیں؟\n\nبھیجنے کے بعد یہ "میرے بھیجے گئے آرڈرز" میں چلا جائے گا۔')) return;
+  po.isDraft = false;
+  po.finalSentAt = new Date().toISOString();
+  saveToStorage('suppliers', suppliersData);
+  closeMillDraftOrders();
+  openPoPreview(supplierId, poIdx); // ---------- بھیجنے کے لیے پرنٹ/فونٹ/واٹس ایپ پریویو کھولیں ----------
+}
+
+// ---------- 📋 میرے بھیجے گئے آرڈرز — حتمی طور پر بھیجے جا چکے آرڈرز کا مستقل ریکارڈ ---------- //
+function openMillSentOrders(supplierId){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  document.getElementById('millSentOrdersTitle').textContent = `📋 میرے بھیجے گئے آرڈرز — ${s ? s.name : ''}`;
+  renderMillSentOrdersList(supplierId);
+  document.getElementById('millSentOrdersModal').classList.add('show');
+}
+function closeMillSentOrders(){
+  document.getElementById('millSentOrdersModal').classList.remove('show');
+}
+function renderMillSentOrdersList(supplierId){
+  const s = suppliersData.find(x => x.supplier_id === supplierId);
+  const wrap = document.getElementById('millSentOrdersListWrap');
+  const summary = document.getElementById('millSentOrdersSummary');
+  const sent = (s?.purchaseHistory || []).map((po, idx) => ({...po, po_idx: idx})).filter(po => po.simple && !po.isDraft);
+  summary.textContent = `📋 کل ${sent.length} بھیجے گئے آرڈرز`;
+  if(sent.length === 0){
+    wrap.innerHTML = `<div style="text-align:center; color:var(--muted); padding:30px 10px;">ابھی کوئی آرڈر بھیجا نہیں گیا۔</div>`;
+    return;
+  }
+  wrap.innerHTML = sent.map(po => {
+    const itemCount = po.items.length;
+    const totalQty = po.items.reduce((a,i) => a + (i.qty||0), 0);
+    const statusTxt = po.status === 'received' ? '✅ موصول ہو گیا' : '⏳ زیر التوا';
+    return `
+      <div onclick="openPoPreview(${supplierId}, ${po.po_idx})" style="background:#fff; border:1.5px solid #e5e9f0; border-radius:12px; padding:12px; margin-bottom:8px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <span style="font-weight:800; font-size:14px;">🕐 ${po.date}</span>
+          <span style="font-size:11px; color:#fff; background:var(--primary); border-radius:7px; padding:2px 8px; font-weight:700;">${statusTxt}</span>
+        </div>
+        <div style="font-size:12.5px; color:var(--text); font-weight:700;">📦 ${itemCount} اقسام — کل ${totalQty} عدد</div>
+        <div style="display:flex; gap:6px; margin-top:8px;">
+          <button onclick="event.stopPropagation(); openPoPreview(${supplierId}, ${po.po_idx})" style="flex:1; padding:7px; background:#eef2ff; color:var(--primary-dark); border:1px solid var(--primary); border-radius:8px; font-size:12px; font-weight:800; cursor:pointer;">👁️ پریویو</button>
+        </div>
+      </div>`;
+  }).join('');
 }
 
 function sendMillOrderWhatsapp(){
@@ -13406,6 +13638,7 @@ function renderSupplierPoSection(supplierId){
   const s = suppliersData.find(x => x.supplier_id === supplierId);
   if(!s) return;
   let orders = (s.purchaseHistory || []).map((po, idx) => ({...po, po_idx: idx}));
+  orders = orders.filter(po => !po.isDraft); // ---------- ڈرافٹ آرڈرز یہاں نہیں دکھتے — وہ صرف "میرے ڈرافٹ آرڈرز" میں ہیں ----------
 
   if(profilePoFilter.status !== 'all'){
     orders = orders.filter(po => profilePoFilter.status === 'pending' ? po.status !== 'received' : po.status === 'received');
@@ -15413,13 +15646,18 @@ async function renderPoToCanvas(){
   const noW = Math.max(Math.round(24 * scale), measureCtx.measureText('#').width + padX, measureCtx.measureText(String(po.items.length)).width + padX);
   let variantW = measureCtx.measureText('Variant').width + padX;
   let qtyW = measureCtx.measureText('Qty').width + padX;
-  let costW = measureCtx.measureText('Cost').width + padX;
-  let totalW = measureCtx.measureText('Total').width + padX;
+  // ---------- سادہ (سٹاک/قیمت کے بغیر) آرڈر میں Cost/Total کالمز کی جگہ حوالہ نمبر کا کالم ----------
+  let costW = po.simple ? measureCtx.measureText('حوالہ نمبر').width + padX : measureCtx.measureText('Cost').width + padX;
+  let totalW = po.simple ? 0 : measureCtx.measureText('Total').width + padX;
   po.items.forEach(item => {
     variantW = Math.max(variantW, measureCtx.measureText(item.label || '—').width + padX);
     qtyW = Math.max(qtyW, measureCtx.measureText(String(item.qty)).width + padX);
-    costW = Math.max(costW, measureCtx.measureText(fmt(item.cost)).width + padX);
-    totalW = Math.max(totalW, measureCtx.measureText(fmt(item.qty*item.cost)).width + padX);
+    if(po.simple){
+      costW = Math.max(costW, measureCtx.measureText(item.refNo || '—').width + padX);
+    } else {
+      costW = Math.max(costW, measureCtx.measureText(fmt(item.cost)).width + padX);
+      totalW = Math.max(totalW, measureCtx.measureText(fmt(item.qty*item.cost)).width + padX);
+    }
   });
   const itemW = (tableRight - tableLeft) - noW - variantW - qtyW - costW - totalW;
   const colX = [
@@ -15524,8 +15762,12 @@ async function renderPoToCanvas(){
   ctx.textAlign = 'center'; ctx.fillText('Variant', (colX[2]+colX[3])/2, headerBaseline);
   ctx.textAlign = align;
   ctx.fillText('Qty', colCenterX(colX[3], colX[4]), headerBaseline);
-  ctx.fillText('Cost', colCenterX(colX[4], colX[5]), headerBaseline);
-  ctx.fillText('Total', colCenterX(colX[5], colX[6]), headerBaseline);
+  if(po.simple){
+    ctx.fillText('حوالہ نمبر', colCenterX(colX[4], colX[5]), headerBaseline);
+  } else {
+    ctx.fillText('Cost', colCenterX(colX[4], colX[5]), headerBaseline);
+    ctx.fillText('Total', colCenterX(colX[5], colX[6]), headerBaseline);
+  }
   ctx.fillStyle = '#1a1a1a'; // ---------- باقی قطاریں سفید پس منظر پر ہیں، ان کے لیے واپس گہرا رنگ ----------
   hLineY += headerH;
   drawTableHLine(hLineY);
@@ -15559,8 +15801,12 @@ async function renderPoToCanvas(){
 
     ctx.textAlign = align;
     ctx.fillText(String(item.qty), colCenterX(colX[3], colX[4]), rowBaseline);
-    ctx.fillText(fmt(item.cost), colCenterX(colX[4], colX[5]), rowBaseline);
-    ctx.fillText(fmt(item.qty*item.cost), colCenterX(colX[5], colX[6]), rowBaseline);
+    if(po.simple){
+      ctx.fillText(item.refNo || '—', colCenterX(colX[4], colX[5]), rowBaseline);
+    } else {
+      ctx.fillText(fmt(item.cost), colCenterX(colX[4], colX[5]), rowBaseline);
+      ctx.fillText(fmt(item.qty*item.cost), colCenterX(colX[5], colX[6]), rowBaseline);
+    }
 
     hLineY += rowH;
     drawTableHLine(hLineY);
@@ -15579,7 +15825,11 @@ async function renderPoToCanvas(){
 
   ctx.textAlign = 'right';
   ctx.font = F('bold 20px');
-  ctx.fillText('Grand Total: Rs. ' + fmt(po.total), pxWidth-(10*scale), y);
+  if(po.simple && !received){
+    ctx.fillText('قیمت وصولی کے وقت طے ہوگی', pxWidth-(10*scale), y);
+  } else {
+    ctx.fillText('Grand Total: Rs. ' + fmt(po.total), pxWidth-(10*scale), y);
+  }
   y += 30 * scale;
 
   ctx.fillStyle = '#000';
