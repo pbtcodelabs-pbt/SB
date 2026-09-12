@@ -587,6 +587,52 @@
   .billingCategoryRail{display:flex; gap:6px; overflow-x:auto; margin-bottom:10px; padding-bottom:2px;}
   .billingCategoryRail .categoryPill{flex:0 0 auto; white-space:nowrap; padding:7px 13px;}
 
+  /* ---------- 🧾 آرڈر لینے والا صفحہ اب چھوٹا پاپ اپ نہیں — پروفائل کی طرح مکمل فُل پیج (صرف اوپر کی 56px ہیڈر پٹی چھوڑ کر) ---------- */
+  #millOrderModal{ top:56px; align-items:stretch; justify-content:stretch; background:rgba(15,23,42,.35); }
+  #millOrderModal .modalBoxWide{ width:100%; max-width:100%; height:100%; max-height:100%; border-radius:0; }
+  /* ---------- آئٹم کارڈز — جگہ ہو تو دو کالم، تنگ سکرین پر خودکار ایک کالم میں سمٹ جائیں ---------- */
+  .mocItemsGrid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px; align-content:start;}
+  .mocCategoryCard{
+    background:linear-gradient(135deg,#f8fafc,#eef2ff); border:1px solid #e2e8f0; border-radius:14px;
+    padding:12px 12px 10px; margin-bottom:14px;
+  }
+  .mocAddItemBtn{
+    width:100%; padding:11px; background:#fff; color:#3730a3; border:1.5px dashed #a5b4fc;
+    border-radius:10px; font-weight:800; font-size:13.5px; cursor:pointer;
+  }
+  /* ---------- ہر آئٹم کا اپنا کارڈ — اوپر نام/سیریل/پیکنگ، نیچے مقدار اور ترمیم/حذف واضح الگ خانوں میں ---------- */
+  .millOrderCard{
+    background:#fff; border:1px solid #eef1f5; border-radius:12px; padding:10px 12px; margin-bottom:10px;
+    box-shadow:0 1px 4px rgba(15,23,42,.05);
+  }
+  .mocTop{display:flex; align-items:center; gap:8px; margin-bottom:10px;}
+  .mocSerial{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:var(--primary); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800;
+  }
+  .mocName{flex:1; font-size:14px; font-weight:800; color:var(--text);}
+  .mocPacking{
+    flex:0 0 auto; font-size:11px; font-weight:700; color:#3730a3; background:#eef2ff;
+    padding:4px 10px; border-radius:999px;
+  }
+  .mocBottom{display:flex; align-items:center; justify-content:space-between; gap:10px; padding-top:9px; border-top:1px dashed #eef1f5;}
+  .mocQtyGroup{display:flex; align-items:center; gap:7px;}
+  .mocQtyBtn{
+    width:32px; height:32px; border:none; border-radius:9px; font-weight:900; font-size:16px; cursor:pointer;
+  }
+  .mocMinus{background:#fee2e2; color:#b91c1c;}
+  .mocPlus{background:#dcfce7; color:#15803d;}
+  .mocQtyInput{
+    width:48px; height:32px; text-align:center; border:1.5px solid #dbe1ea; border-radius:9px; font-size:13.5px; font-weight:700;
+  }
+  .mocEditGroup{display:flex; align-items:center; gap:8px; padding-inline-start:12px; border-inline-start:1.5px solid #eef1f5;}
+  .mocIconBtn{
+    width:36px; height:36px; border:none; border-radius:10px; font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mocEditBtn{background:#eef2ff;}
+  .mocDeleteBtn{background:#fee2e2;}
+
   /* --- بلنگ ہوم پیج: کمپیکٹ کیٹیگری بٹن (لیفٹ ٹاپ پہ، پروڈکٹ گرڈ کے عین اوپر) —
        دبانے پر نیچے فلوٹنگ پاپ اپ میں کیٹیگری فہرست کھلتی ہے، منتخب کرتے ہی بند ہو جاتی ہے۔
        مقصد: پوری چوڑائی کی پٹی نہ ہونے سے ہوم پیج زیادہ تر پراڈکٹس کے لیے خالی رہے۔ --- */
@@ -2083,7 +2129,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1028AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1108AM</span>
     </div>
   </div>
 
@@ -2934,19 +2980,23 @@
           <span class="closeBtn" onclick="closeSupplierBankAccountModal()">✖</span>
         </div>
         <div class="profileBody">
-          <select id="sbaType" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #dbe1ea; border-radius:8px; font-size:13px;"></select>
+          <select id="sbaType" onchange="updateSbaNumberPlaceholder()" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #dbe1ea; border-radius:8px; font-size:13px;"></select>
           <input type="text" id="sbaTitle" placeholder="Account Title (account holder's name)"
                  style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #dbe1ea; border-radius:8px; font-size:13px;">
           <input type="text" id="sbaNumber" placeholder="Account / Mobile Number"
                  style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #dbe1ea; border-radius:8px; font-size:13px;">
-          <input type="text" id="sbaUan" placeholder="UAN Number (for EasyPaisa/JazzCash, optional)"
+          <input type="text" id="sbaUan" placeholder="IBAN (اختیاری)"
                  style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #dbe1ea; border-radius:8px; font-size:13px;">
           <textarea id="sbaNotes" placeholder="Branch, extra notes, etc. (optional)"
-                    style="width:100%; padding:8px; border:1px solid #dbe1ea; border-radius:8px; font-family:inherit; font-size:13px; min-height:50px; margin-bottom:8px;"></textarea>
+                    style="display:none; width:100%; padding:8px; border:1px solid #dbe1ea; border-radius:8px; font-family:inherit; font-size:13px; min-height:50px; margin-bottom:8px;"></textarea>
           <div id="sbaImagePreview" style="display:none; margin-bottom:8px;">
             <img id="sbaImageImg" style="width:100%; border-radius:8px; max-height:150px; object-fit:contain; background:#fff;">
           </div>
           <button type="button" onclick="attachSupplierBankAccountImage()" style="width:100%; padding:9px; border:1.5px dashed #cbd5e1; background:#fff; border-radius:8px; color:var(--muted); cursor:pointer; font-size:12px; margin-bottom:12px;">📷 Attach Chequebook / Wallet Profile Photo</button>
+          <div id="sbaQrPreview" style="display:none; margin-bottom:8px; text-align:center;">
+            <img id="sbaQrImg" style="width:150px; height:150px; border-radius:8px; object-fit:contain; background:#fff; border:1px solid #dbe1ea;">
+          </div>
+          <button type="button" onclick="attachSupplierBankAccountQr()" style="width:100%; padding:9px; border:1.5px dashed #cbd5e1; background:#fff; border-radius:8px; color:var(--muted); cursor:pointer; font-size:12px; margin-bottom:12px;">🔳 QR کوڈ شامل کریں (اختیاری)</button>
           <div class="modalBtns">
             <button class="cancelBtn" onclick="closeSupplierBankAccountModal()">Cancel</button>
             <button class="checkoutBtn" onclick="saveSupplierBankAccount()">💾 Save Account</button>
@@ -3165,12 +3215,13 @@
     <!-- ---------- 🧾 مکتبہ آرڈر ٹیکنگ — سادہ سیریل+نام+پیکنگ+مقدار والا آسان پرچیز آرڈر نظام
          (کیٹگری وائز، ہر مکتبے کے لیے مشترکہ آئٹم فہرست، کوئی قیمت/سٹاک نہیں دکھتا) ---------- -->
     <div class="modalOverlay" id="millOrderModal" onclick="if(event.target===this) closeMillOrderModal()">
-      <div class="modalBoxWide" style="width:460px; max-height:92vh; overflow-y:auto;">
+      <div class="modalBoxWide" dir="rtl" style="width:460px; max-height:92vh; overflow-y:auto;">
         <h3 id="millOrderModalTitle">🧾 آرڈر لیں</h3>
 
-        <div class="billingCategoryRail" id="millOrderCategoryRail" style="margin-bottom:10px;"></div>
-
-        <button type="button" onclick="openAddMillItemPrompt()" style="width:100%; padding:10px; margin-bottom:10px; background:#eef2ff; color:#3730a3; border:1.5px dashed #a5b4fc; border-radius:10px; font-weight:700; cursor:pointer;">➕ نئی چیز شامل کریں</button>
+        <div class="mocCategoryCard">
+          <div class="billingCategoryRail" id="millOrderCategoryRail" style="margin-bottom:10px;"></div>
+          <button type="button" onclick="openAddMillItemPrompt()" class="mocAddItemBtn">➕ نئی چیز شامل کریں</button>
+        </div>
 
         <div id="millOrderItemsList"></div>
 
@@ -13080,6 +13131,7 @@ let nextMillItemSerial = loadFromStorage('nextMillItemSerial', 1);
 let millOrderDrafts = loadFromStorage('millOrderDrafts', []);
 
 let millOrderQtyMap = {};
+let millOrderQtyBySupplier = loadFromStorage('millOrderQtyBySupplier', {}); // ---------- ہر مکتبے کی ان-پروگریس مقدار خودکار محفوظ — پیج بند ہونے پر بھی ضائع نہ ہو ----------
 let millOrderCategoryFilter = 'all';
 let millOrderActiveSupplierId = null;
 const MILL_PACKING_PRESETS = ['عدد','درجن','گرس','ڈبہ','گز','بنڈل','ریم','پیکٹ','کلو','لٹر'];
@@ -13094,7 +13146,7 @@ function saveMillData(){
 
 function openMillOrderModal(supplierId){
   millOrderActiveSupplierId = supplierId;
-  millOrderQtyMap = {};
+  millOrderQtyMap = millOrderQtyBySupplier[supplierId] || {};
   millOrderCategoryFilter = 'all';
   const s = suppliersData.find(x => x.supplier_id === supplierId);
   document.getElementById('millOrderModalTitle').textContent = `🧾 آرڈر لیں — ${s ? s.name : ''}`;
@@ -13138,53 +13190,51 @@ function renderMillOrderItemsList(){
     wrap.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px 0; font-size:13px;">اس کیٹگری میں ابھی کوئی چیز شامل نہیں — اوپر "➕ نئی چیز شامل کریں" سے شامل کریں</div>';
     return;
   }
+  // ---------- ہر آئٹم اپنے صاف الگ کارڈ میں — اوپر نام/سیریل/پیکنگ، نیچے مقدار الگ اور ترمیم/حذف الگ خانے میں،
+  // بیچ میں ڈیوائیڈر تاکہ موٹی انگلیوں سے بھی غلط بٹن نہ دبے ---------- //
   const rows = items.map(i => {
     const qty = millOrderQtyMap[i.item_id] || 0;
     return `
-    <tr style="border-bottom:1px solid #eef1f5;">
-      <td style="padding:7px 3px; text-align:center; font-size:11px; font-weight:800; color:var(--muted);">${i.serial_no}</td>
-      <td style="padding:7px 3px; font-size:13px; font-weight:700;">${i.name}</td>
-      <td style="padding:7px 3px; text-align:center; font-size:11px; color:var(--muted);">${i.packing || '—'}</td>
-      <td style="padding:7px 3px;">
-        <div style="display:flex; align-items:center; justify-content:center; gap:4px;">
-          <button onclick="stepMillItemQty(${i.item_id},-1)" style="width:24px; height:24px; border:none; border-radius:6px; background:#fee2e2; color:#b91c1c; font-weight:900; cursor:pointer; flex:0 0 auto;">−</button>
-          <input type="number" value="${qty}" min="0" onchange="setMillItemQty(${i.item_id}, this.value)" style="width:38px; text-align:center; padding:3px 2px; border:1px solid #dbe1ea; border-radius:6px; font-size:12px;">
-          <button onclick="stepMillItemQty(${i.item_id},1)" style="width:24px; height:24px; border:none; border-radius:6px; background:#dcfce7; color:#15803d; font-weight:900; cursor:pointer; flex:0 0 auto;">+</button>
+    <div class="millOrderCard" dir="rtl">
+      <div class="mocTop">
+        <span class="mocSerial">${i.serial_no}</span>
+        <span class="mocName">${i.name}</span>
+        <span class="mocPacking">${i.packing || '—'}</span>
+      </div>
+      <div class="mocBottom">
+        <div class="mocQtyGroup">
+          <button class="mocQtyBtn mocMinus" onclick="stepMillItemQty(${i.item_id},-1)">−</button>
+          <input type="number" class="mocQtyInput" value="${qty}" min="0" onchange="setMillItemQty(${i.item_id}, this.value)">
+          <button class="mocQtyBtn mocPlus" onclick="stepMillItemQty(${i.item_id},1)">+</button>
         </div>
-      </td>
-      <td style="padding:7px 3px;">
-        <div style="display:flex; gap:6px; justify-content:center;">
-          <button onclick="editMillItemPrompt(${i.item_id})" title="ترمیم" style="background:none; border:none; cursor:pointer; font-size:14px;">✏️</button>
-          <button onclick="deleteMillItemConfirm(${i.item_id})" title="حذف" style="background:none; border:none; cursor:pointer; font-size:14px;">🗑️</button>
+        <div class="mocEditGroup">
+          <button class="mocIconBtn mocEditBtn" onclick="editMillItemPrompt(${i.item_id})" title="ترمیم">✏️</button>
+          <button class="mocIconBtn mocDeleteBtn" onclick="deleteMillItemConfirm(${i.item_id})" title="حذف">🗑️</button>
         </div>
-      </td>
-    </tr>`;
+      </div>
+    </div>`;
   }).join('');
-  wrap.innerHTML = `
-    <table style="width:100%; border-collapse:collapse;">
-      <thead>
-        <tr style="background:var(--primary); color:#fff;">
-          <th style="padding:7px 3px; font-size:11px; width:22px;">#</th>
-          <th style="padding:7px 3px; font-size:11px; text-align:right;">چیز کا نام</th>
-          <th style="padding:7px 3px; font-size:11px; width:56px;">پیکنگ/قسم</th>
-          <th style="padding:7px 3px; font-size:11px; width:98px;">تعداد</th>
-          <th style="padding:7px 3px; font-size:11px; width:50px;"></th>
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+  wrap.innerHTML = `<div class="mocItemsGrid" dir="rtl">${rows}</div>`;
 }
 
 function stepMillItemQty(itemId, delta){
   const current = Number(millOrderQtyMap[itemId]) || 0;
   const next = Math.max(0, current + delta);
   millOrderQtyMap[itemId] = next;
+  saveMillOrderQtyDraft();
   renderMillOrderItemsList();
 }
 function setMillItemQty(itemId, val){
   const qty = Math.max(0, Number(val) || 0);
   millOrderQtyMap[itemId] = qty;
+  saveMillOrderQtyDraft();
   renderMillOrderItemsList();
+}
+// ---------- ہر تبدیلی فوراً محفوظ — اگر بندہ درمیان میں پیج بند کر دے تو مقدار ضائع نہ ہو ----------
+function saveMillOrderQtyDraft(){
+  if(millOrderActiveSupplierId === null) return;
+  millOrderQtyBySupplier[millOrderActiveSupplierId] = millOrderQtyMap;
+  saveToStorage('millOrderQtyBySupplier', millOrderQtyBySupplier);
 }
 
 function openAddMillItemPrompt(){
@@ -13248,6 +13298,10 @@ function completeMillOrder(){
   lines.forEach((l, idx) => { text += `${idx+1}. ${l.name} — ${l.packing ? l.packing + ' ' : ''}${l.qty}\n`; });
   document.getElementById('millOrderFinishText').value = text;
   document.getElementById('millOrderFinishModal').classList.add('show');
+
+  // ---------- آرڈر جمع ہو گیا — اب یہ عارضی ان-پروگریس ڈرافٹ صاف کر دیں ----------
+  delete millOrderQtyBySupplier[millOrderActiveSupplierId];
+  saveToStorage('millOrderQtyBySupplier', millOrderQtyBySupplier);
 }
 
 function sendMillOrderWhatsapp(){
@@ -13583,9 +13637,10 @@ function buildSupplierBankAccountsHtml(s){
           </div>
         </div>
         <div class="bankAccNumber">${acc.number || '—'}</div>
-        ${acc.uan ? `<div class="bankAccMeta">یو اے این: ${acc.uan}</div>` : ''}
+        ${acc.uan ? `<div class="bankAccMeta">IBAN: ${acc.uan}</div>` : ''}
         ${acc.notes ? `<div class="bankAccMeta">${acc.notes}</div>` : ''}
         ${acc.image ? `<img src="${acc.image}" class="bankAccImg">` : ''}
+        ${acc.qr ? `<div style="text-align:center; margin-top:8px;"><img src="${acc.qr}" style="width:130px; height:130px; object-fit:contain; background:#fff; border:1px solid #dbe1ea; border-radius:8px;"><div style="font-size:10.5px; color:var(--muted); margin-top:3px;">🔳 پیمنٹ کے لیے یہ QR سکین کریں</div></div>` : ''}
       </div>
     `).join('');
   return `
@@ -13598,6 +13653,17 @@ function buildSupplierBankAccountsHtml(s){
 // ---------- Add/Edit Bank Account موڈل ----------
 let editingSupplierBankAccount = { supplierId: null, idx: null };
 let sbaPhotoDataUrl = null;
+let sbaQrDataUrl = null;
+// ---------- بینک منتخب ہو تو "اکاؤنٹ نمبر"، والٹ (ایزی پیسہ/جاز کیش) منتخب ہو تو "موبائل نمبر" — خودکار لیبل ----------
+function updateSbaNumberPlaceholder(){
+  const type = document.getElementById('sbaType').value;
+  const numberInput = document.getElementById('sbaNumber');
+  if(type === 'EasyPaisa' || type === 'JazzCash'){
+    numberInput.placeholder = 'موبائل نمبر (ایزی پیسہ/جاز کیش اکاؤنٹ)';
+  } else {
+    numberInput.placeholder = 'اکاؤنٹ نمبر';
+  }
+}
 function fillSupplierBankAccountModal(acc){
   document.getElementById('sbaType').innerHTML = `<option value="">— Select Bank/Wallet —</option>` +
     Object.keys(BANK_LOGIN_URLS).map(b => `<option value="${b}" ${acc.type===b?'selected':''}>${b}</option>`).join('') +
@@ -13610,6 +13676,11 @@ function fillSupplierBankAccountModal(acc){
   const prevWrap = document.getElementById('sbaImagePreview');
   if(sbaPhotoDataUrl){ document.getElementById('sbaImageImg').src = sbaPhotoDataUrl; prevWrap.style.display = 'block'; }
   else prevWrap.style.display = 'none';
+  sbaQrDataUrl = acc.qr || null;
+  const qrWrap = document.getElementById('sbaQrPreview');
+  if(sbaQrDataUrl){ document.getElementById('sbaQrImg').src = sbaQrDataUrl; qrWrap.style.display = 'block'; }
+  else qrWrap.style.display = 'none';
+  updateSbaNumberPlaceholder();
 }
 function openAddSupplierBankAccount(supplierId){
   editingSupplierBankAccount = { supplierId, idx: null };
@@ -13643,13 +13714,14 @@ function saveSupplierBankAccount(){
     title: document.getElementById('sbaTitle').value.trim(),
     uan: document.getElementById('sbaUan').value.trim(),
     notes: document.getElementById('sbaNotes').value.trim(),
-    image: sbaPhotoDataUrl || null
+    image: sbaPhotoDataUrl || null,
+    qr: sbaQrDataUrl || null
   };
   const accounts = getSupplierBankAccounts(s);
   if(editingSupplierBankAccount.idx === null) accounts.push(acc);
   else accounts[editingSupplierBankAccount.idx] = acc;
   closeSupplierBankAccountModal();
-  renderSupplierPoSection(s.supplier_id);
+  refreshSupplierBankAccountsModalIfOpen(s.supplier_id);
   persistAllData();
 }
 function deleteSupplierBankAccount(supplierId, idx){
@@ -13657,7 +13729,7 @@ function deleteSupplierBankAccount(supplierId, idx){
   if(!s) return;
   if(!confirm('Delete this bank/wallet account?')) return;
   getSupplierBankAccounts(s).splice(idx, 1);
-  renderSupplierPoSection(supplierId);
+  refreshSupplierBankAccountsModalIfOpen(supplierId);
   persistAllData();
 }
 function openBankLoginPageForAccount(supplierId, idx){
@@ -13696,6 +13768,35 @@ function attachSupplierBankAccountImage(){
         sbaPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.8);
         document.getElementById('sbaImageImg').src = sbaPhotoDataUrl;
         document.getElementById('sbaImagePreview').style.display = 'block';
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+// ---------- 🔳 اکاؤنٹ کا اپنا QR کوڈ — پروفائل کھلتے ہی نظر آئے، کوئی بھی سکین کر کے پیمنٹ کر سکے ----------
+function attachSupplierBankAccountQr(){
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        // ---------- QR کی کرِسپ کوالٹی برقرار رکھنے کے لیے تھوڑا بڑا سائز رکھا (فوٹو سے مختلف) ----------
+        const canvas = document.createElement('canvas');
+        const maxW = 500;
+        const scale = Math.min(1, maxW / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        sbaQrDataUrl = canvas.toDataURL('image/png');
+        document.getElementById('sbaQrImg').src = sbaQrDataUrl;
+        document.getElementById('sbaQrPreview').style.display = 'block';
       };
       img.src = ev.target.result;
     };
