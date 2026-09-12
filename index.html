@@ -1491,6 +1491,18 @@
   .profileBox.themeCustomer .profileHead{background:linear-gradient(135deg, #0f766e, #065f52);}
   .profileBox.themeSupplier{background:linear-gradient(180deg, #eff6ff 0%, #f5f9ff 220px, #ffffff 420px);}
   .profileBox.themeSupplier .profileHead{background:linear-gradient(135deg, #1d4ed8, #1e3a8a);}
+  /* ---------- پارٹی پروفائل اب "شارٹ پیج" نہیں — صرف سب سے اوپر والی 56px ہیڈر پٹی چھوڑ کر مکمل فُل پیج بن جاتی ہے ---------- */
+  #profileModal{ top:56px; align-items:stretch; justify-content:stretch; background:rgba(15,23,42,.35); }
+  #profileModal .profileBox{ width:100%; max-width:100%; height:100%; max-height:100%; border-radius:0; }
+  /* ---------- سپلائر پروفائل کے ہیڈر میں چھوٹا کیپسول — کل قابلِ ادائیگی + فوری ➕ رقم شامل کرنے کا بٹن ---------- */
+  .pfCapsule{
+    display:inline-flex; align-items:center; gap:8px; margin-top:8px; padding:6px 12px;
+    background:rgba(0,0,0,.22); border-radius:999px; font-size:13px; font-weight:800; color:#fff;
+  }
+  .pfCapsulePlusBtn{
+    width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.25);
+    display:flex; align-items:center; justify-content:center; font-size:13px; cursor:pointer; flex:0 0 auto;
+  }
 
   .profileBody{
     padding:18px 20px;
@@ -2071,7 +2083,7 @@
     <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
       <span id="connStatusBadge" class="online">Online</span>
       <!-- ---------- بلڈ نمبر بیج — سفید پس منظر، گہرا موٹا ڈیجیٹل نمبر، تاکہ ورژن واضح نظر آئے ---------- -->
-      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1023AM</span>
+      <span style="font-size:13px; font-family:'Courier New',monospace; color:#0f172a; font-weight:900; letter-spacing:.5px; background:#ffffff; padding:3px 9px; border-radius:7px; box-shadow:0 1px 4px rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08);">SB12SEPSA1028AM</span>
     </div>
   </div>
 
@@ -2710,7 +2722,7 @@
           <!-- ---------- پہلے سے موجود ایریا/سٹی ناموں کی فہرست — ڈپلیکیٹ (FP, F.P, FP2 وغیرہ) بننے سے بچانے کے لیے ---------- -->
           <div id="npPartyAreaListWrap" class="custPickList" style="position:absolute; left:0; right:0; top:calc(100% + 3px); z-index:80;"></div>
         </div>
-        <input type="text" id="npPartyKeywords" placeholder="Nickname / Keyword for search (e.g. Jago, Peshawar)">
+        <input type="text" id="npPartyKeywords" placeholder="Nickname / Keyword for search (e.g. Jago, Peshawar)" style="display:none;">
         <div class="modalBtns">
           <button class="cancelBtn" onclick="closeNewPartyModal()">Cancel</button>
           <button class="saveBtn" onclick="saveNewParty()">Save</button>
@@ -2886,6 +2898,7 @@
             <div class="pMeta" id="profileMeta">—</div>
             <div class="pNicknameTag" id="profileNicknameTag" onclick="editProfileNickname()" style="display:none;"></div>
             <div class="profileHeadContacts" id="profileHeadContacts"></div>
+            <div class="pfCapsule" id="profilePayableCapsule" style="display:none;"></div>
           </div>
           <span class="closeBtn" onclick="openEditPartyModal()" title="ترمیم" style="margin-inline-end:6px;">✏️</span>
           <span class="closeBtn" onclick="closeProfileModal()">✖</span>
@@ -12753,6 +12766,7 @@ function openCustomerProfile(customerId){
 
   const boxEl = document.getElementById('profileBoxEl');
   boxEl.classList.remove('themeSupplier'); boxEl.classList.add('themeCustomer');
+  document.getElementById('profilePayableCapsule').style.display = 'none';
 
   renderAvatarInto('profileAvatar', c.photo, '👤');
   document.getElementById('profileName').textContent = c.name;
@@ -13304,12 +13318,12 @@ function openSupplierProfile(supplierId){
 
   const figuresEl = document.getElementById('profileFigures');
   figuresEl.className = 'profileFigures single';
-  figuresEl.innerHTML = `
-    <div class="pfBox pfBoxPayableBig">
-      <div class="pfLabel">📤 قابلِ ادائیگی (ہم نے دینا ہے)</div>
-      <div class="pfValue payable">Rs. ${s.total_payable.toLocaleString()}</div>
-      <button type="button" class="pfAddAmountBtn" onclick="addManualPayableAmount(${s.supplier_id})">➕ رقم شامل کریں</button>
-    </div>
+  figuresEl.innerHTML = '';
+  const payCapsule = document.getElementById('profilePayableCapsule');
+  payCapsule.style.display = 'inline-flex';
+  payCapsule.innerHTML = `
+    <span>📤 Rs. ${s.total_payable.toLocaleString()}</span>
+    <span class="pfCapsulePlusBtn" onclick="event.stopPropagation(); addManualPayableAmount(${s.supplier_id})">➕</span>
   `;
 
   // --- دائیں طرف چھوٹے 3D آئیکن بٹنوں کا کالم؛ Transactions سب سے نیچے ---
